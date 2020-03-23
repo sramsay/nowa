@@ -7,6 +7,7 @@
 #include "conditions.h"
 #include "json.h"
 #include "license.h"
+#include "stations.h"
 
 struct MemoryStruct {
   char *memory;
@@ -19,13 +20,14 @@ int main(int argc, char *argv[]) {
   static struct option long_options[] = {
       {"help", no_argument, (void *)0, 'h'},
       {"version", no_argument, (void *)0, 'V'},
+			{"stations", required_argument, 0, 's'},
       {0, 0, 0, 0}};
 
   int opt = 0;
   int option_index = 0;
 
   for (;;) {
-    opt = getopt_long(argc, argv, "hV", long_options, &option_index);
+    opt = getopt_long(argc, argv, "hVs:", long_options, &option_index);
 
     if (opt == -1) {
       break;
@@ -40,6 +42,8 @@ int main(int argc, char *argv[]) {
       case 'V':
         print_version();
         return EXIT_SUCCESS;
+			case 's':
+				print_stations(optarg);
       default:
         print_usage();
         return EXIT_SUCCESS;

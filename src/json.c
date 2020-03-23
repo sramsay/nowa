@@ -23,7 +23,7 @@ cJSON* json_init(char* url) {
   if (curl_handle) {
     curl_easy_setopt(curl_handle, CURLOPT_URL, url);
     curl_easy_setopt(curl_handle, CURLOPT_USERAGENT,
-                     "drouth, https://github.com/sramsay/drouth/issues");
+                     "nowa, https://github.com/sramsay/nowa/issues");
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, write_memory_callback);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)&chunk);
     res = curl_easy_perform(curl_handle);
@@ -32,11 +32,11 @@ cJSON* json_init(char* url) {
               curl_easy_strerror(res));
     } else {
       json = cJSON_Parse(chunk.memory);
-      curl_easy_cleanup(curl_handle);
-			free(chunk.memory);
     }
   }
 
+	curl_easy_cleanup(curl_handle);
+	free(chunk.memory);
   curl_global_cleanup();
 	return json;
 }

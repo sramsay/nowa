@@ -1,6 +1,6 @@
 
 AC_PREREQ([2.69])
-AC_INIT([nowa], [0.2.0], [https://github.com/sramsay/nowa/issues])
+AC_INIT([nowa], [0.3.0], [https://github.com/sramsay/nowa/issues])
 AC_CONFIG_SRCDIR([src/nowa.c])
 AC_DEFINE([COPYRIGHT_DATES], ["2020"], [current copyright dates])
 AC_CONFIG_AUX_DIR([build-aux])
@@ -10,6 +10,7 @@ AC_PROG_CC
 AC_PROG_CC_C99
 
 AC_CHECK_LIB([curl],[curl_easy_setopt])
+AX_PATH_LIB_PCRE
 
 # Checks for library headers
 AC_CHECK_HEADER([check.h])
