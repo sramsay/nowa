@@ -1,3 +1,4 @@
+
 # http://www.gnu.org/software/automake
 
 Makefile.in
@@ -6,6 +7,7 @@ Makefile.in
 /py-compile
 /test-driver
 /ylwrap
+.deps/
 
 # http://www.gnu.org/software/autoconf
 
@@ -15,6 +17,7 @@ autom4te.cache
 /aclocal.m4
 /compile
 /config.guess
+/config.h
 /config.h.in
 /config.log
 /config.status
@@ -25,6 +28,7 @@ autom4te.cache
 /install-sh
 /missing
 /stamp-h1
+/build-aux
 
 # https://www.gnu.org/software/libtool/
 
@@ -47,3 +51,26 @@ m4/lt~obsolete.m4
 # can automatically generate from config.status script
 # (which is called by configure script))
 Makefile
+
+# Binaries
+src/nowa
+
+# object files, etc.
+*~
+*.log
+*.o
+*.la
+*.so*
+*.a
+.deps
+*.tar*
+*.zip
+*.lo
+*.gcno
+*.gcda
+
+# Local scripts
+build
+
+compile_commands.json
+coverity_model.c

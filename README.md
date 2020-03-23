@@ -1,2 +1,3 @@
 # nowa
-A fast, command-line weather app that uses the NOAA API.
+
+You should ignore this for now.  But it's going to be awesome.
