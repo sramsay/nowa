@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#include "cJSON.h"
+#include "third_party/cJSON.h"
 
 typedef struct memoryStruct memoryStruct;
 struct memoryStruct {

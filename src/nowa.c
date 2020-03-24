@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "cJSON.h"
+#include "third_party/cJSON.h"
+
 #include "conditions.h"
 #include "json.h"
 #include "license.h"
