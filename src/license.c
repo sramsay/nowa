@@ -1,6 +1,5 @@
+#include <config.h>
 #include <stdio.h>
-
-#include <config.h> 
 
 void print_version() {
   printf("%s %s\n", PACKAGE, PACKAGE_VERSION);

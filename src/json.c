@@ -1,6 +1,7 @@
 #include "json.h"
 
 #include <curl/curl.h>
+#include <stdio.h>
 #include <string.h>
 
 static size_t write_memory_callback(void* contents, size_t size, size_t nmemb,
@@ -10,7 +11,7 @@ cJSON* json_init(char* url) {
   CURL* curl_handle = (void*)0;
   CURLcode res = 0;
 
-	cJSON* json = { 0 };
+  cJSON* json = {0};
 
   memoryStruct chunk;
 
@@ -35,10 +36,10 @@ cJSON* json_init(char* url) {
     }
   }
 
-	curl_easy_cleanup(curl_handle);
-	free(chunk.memory);
+  curl_easy_cleanup(curl_handle);
+  free(chunk.memory);
   curl_global_cleanup();
-	return json;
+  return json;
 }
 
 static size_t write_memory_callback(void* contents, size_t size, size_t nmemb,

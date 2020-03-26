@@ -3,12 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "third_party/cJSON.h"
-
 #include "conditions.h"
 #include "json.h"
 #include "license.h"
 #include "stations.h"
+#include "third_party/cJSON.h"
 
 struct MemoryStruct {
   char *memory;
@@ -21,7 +20,7 @@ int main(int argc, char *argv[]) {
   static struct option long_options[] = {
       {"help", no_argument, (void *)0, 'h'},
       {"version", no_argument, (void *)0, 'V'},
-			{"stations", required_argument, 0, 's'},
+      {"stations", required_argument, 0, 's'},
       {0, 0, 0, 0}};
 
   int opt = 0;
@@ -43,20 +42,26 @@ int main(int argc, char *argv[]) {
       case 'V':
         print_version();
         return EXIT_SUCCESS;
-			case 's':
-				print_stations(optarg);
+      case 's':
+        if (print_stations(optarg) == 0) {
+          return EXIT_SUCCESS;
+        } else {
+          return EXIT_FAILURE;
+        }
       default:
         print_usage();
         return EXIT_SUCCESS;
     }
   }
 
-	char* url = "https://api.weather.gov/stations/KLNK/observations/latest";
+  /*
+  char* url = "https://api.weather.gov/stations/KLNK/observations/latest";
 
-  init_conditions(url);
-	print_conditions();
+init_conditions(url);
+  print_conditions();
 
-  return EXIT_SUCCESS;
+return EXIT_SUCCESS;
+  */
 }
 
 static void print_usage(void) {
