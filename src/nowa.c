@@ -20,14 +20,16 @@ int main(int argc, char *argv[]) {
   static struct option long_options[] = {
       {"help", no_argument, (void *)0, 'h'},
       {"version", no_argument, (void *)0, 'V'},
-      {"stations", required_argument, 0, 's'},
+      {"stationid", required_argument, 0, 's'},
+      {"list-stations", required_argument, 0, 'l'},
       {0, 0, 0, 0}};
 
   int opt = 0;
   int option_index = 0;
+	char* station_id = { 0 };
 
   for (;;) {
-    opt = getopt_long(argc, argv, "hVs:", long_options, &option_index);
+    opt = getopt_long(argc, argv, "hVs:l:", long_options, &option_index);
 
     if (opt == -1) {
       break;
@@ -42,30 +44,34 @@ int main(int argc, char *argv[]) {
       case 'V':
         print_version();
         return EXIT_SUCCESS;
-      case 's':
+      case 'l':
         if (print_stations(optarg) == 0) {
           return EXIT_SUCCESS;
         } else {
           return EXIT_FAILURE;
         }
+			case 's':
+				station_id = optarg;
+				puts(station_id);
+			case 'c':
+				if (print_conditions(station_id) == 0) {
+					return EXIT_SUCCESS;
+				} else {
+					return EXIT_FAILURE;
+				}
       default:
         print_usage();
         return EXIT_SUCCESS;
     }
   }
 
-  /*
-  char* url = "https://api.weather.gov/stations/KLNK/observations/latest";
-
-init_conditions(url);
-  print_conditions();
-
-return EXIT_SUCCESS;
-  */
 }
 
 static void print_usage(void) {
-  puts("Usage: drouth [options]...:");
-  puts("  -h [--help]     Print this message");
-  puts("  -V [--version]  Print version number and license info");
+  puts("Usage:");
+	puts("  nowa --list-stations \"39.809734,-98.555620\"");
+	puts("");
+	puts("Options:");
+  puts("  -h  --help     Print this message");
+  puts("  -V  --version  Print version number and license info");
 }
