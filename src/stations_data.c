@@ -17,33 +17,25 @@ struct station* init_stations(char lat_long[restrict static 1]) {
 	char* points_url = construct_points_url(lat_long);
 	cJSON* points_json = json_init(points_url);
 
-  cJSON* points_properties_json =
-      cJSON_GetObjectItemCaseSensitive(points_json, "properties");
-  cJSON* observation_stations_json = cJSON_GetObjectItemCaseSensitive(
-      points_properties_json, "observationStations");
-
-  char* station_url = observation_stations_json->valuestring;
-
-  cJSON* stations_json = json_init(station_url);
-
-  cJSON* features_json = cJSON_GetObjectItemCaseSensitive(stations_json, "features");
+  cJSON* features_json = cJSON_GetObjectItemCaseSensitive(points_json, "features");
 
 	struct station* station_list = malloc(sizeof(struct station) * cJSON_GetArraySize(features_json));
 
-  const cJSON* feature = NULL; // TODO: NULL?
+  const cJSON* feature_json = NULL; // TODO: NULL?
 	int count = 0;
-  cJSON_ArrayForEach(feature, features_json) {
-    cJSON* station_properties = cJSON_GetObjectItemCaseSensitive(feature, "properties");
-    cJSON* stationIdentifier = cJSON_GetObjectItemCaseSensitive(station_properties, "stationIdentifier");
-    cJSON* name = cJSON_GetObjectItemCaseSensitive(station_properties, "name");
-		strcpy(station_list[count].station_id, stationIdentifier->valuestring);
-    strcpy(station_list[count].name, name->valuestring);
+  cJSON_ArrayForEach(feature_json, features_json) {
+    cJSON* station_properties_json = cJSON_GetObjectItemCaseSensitive(feature_json, "properties");
+
+    cJSON* station_identifier_json = cJSON_GetObjectItemCaseSensitive(station_properties_json, "stationIdentifier");
+    cJSON* name_json = cJSON_GetObjectItemCaseSensitive(station_properties_json, "name");
+
+		strcpy(station_list[count].station_id, station_identifier_json->valuestring);
+    strcpy(station_list[count].name, name_json->valuestring);
 		count++;
   }
 
 	free(points_url);
 	cJSON_Delete(points_json);
-	cJSON_Delete(stations_json);
 
 	return station_list;
 
