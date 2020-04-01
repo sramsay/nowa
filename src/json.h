@@ -6,6 +6,7 @@
 #include "third_party/cJSON.h"
 
 typedef struct memoryStruct memoryStruct;
+
 struct memoryStruct {
   char* memory;
   size_t size;
