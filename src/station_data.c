@@ -34,7 +34,7 @@ station_info* init_station(char station_id[restrict static 1]) {
 
   cJSON* name_json = cJSON_GetObjectItemCaseSensitive(properties_json, "name");
 
-  strcpy(info->name, name_json->valuestring);
+  strlcpy(info->name, name_json->valuestring, sizeof(info->name));
 
   free(url);
   cJSON_Delete(station_json);

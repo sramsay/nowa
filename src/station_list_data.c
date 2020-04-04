@@ -41,9 +41,9 @@ struct station* init_stations(char lat_long[restrict static 1]) {
     cJSON* name_json =
         cJSON_GetObjectItemCaseSensitive(station_properties_json, "name");
 
-    strcpy(station_list[count].station_id,
-           station_identifier_json->valuestring);
-    strcpy(station_list[count].name, name_json->valuestring);
+    strlcpy(station_list[count].station_id,
+           station_identifier_json->valuestring, sizeof(station_list[count].station_id));
+    strlcpy(station_list[count].name, name_json->valuestring, sizeof(station_list[count].name));
     count++;
   }
 
