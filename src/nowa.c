@@ -4,7 +4,7 @@
 
 #include "conditions.h"
 #include "license.h"
-#include "stations.h"
+#include "station_list.h"
 
 struct MemoryStruct {
   char *memory;
@@ -42,18 +42,14 @@ int main(int argc, char *argv[]) {
         print_version();
         return EXIT_SUCCESS;
       case 'l':
-        print_stations(optarg);
-        /*
-if (print_stations(optarg) == 0) {
-return EXIT_SUCCESS;
-} else {
-return EXIT_FAILURE;
-}
-        */
+        if (print_stations(optarg) == 0) {
+          return EXIT_SUCCESS;
+        } else {
+          return EXIT_FAILURE;
+        }
         return EXIT_SUCCESS;
       case 's':
         station_id = optarg;
-        puts(station_id);
       case 'c':
         if (print_conditions(station_id) == 0) {
           return EXIT_SUCCESS;

@@ -1,4 +1,4 @@
 bin_PROGRAMS = nowa
-nowa_SOURCES = license.h license.c json.h json.c stations_data.h stations_data.c stations.h stations.c conditions_data.h conditions_data.c conditions.h conditions.c third_party/cJSON.h third_party/cJSON.c nowa.c
+nowa_SOURCES = third_party/cJSON.c third_party/cJSON.h conditions.c conditions_data.c json.c license.c nowa.c station_data.c station_list.c station_list_data.c utils.c conditions.h conditions_data.h json.h license.h station_data.h station_list.h station_list_data.h utils.h
 
 nowa_CFLAGS = -Wall -Wextra -Winvalid-pch -Wpedantic

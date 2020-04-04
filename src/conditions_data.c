@@ -7,45 +7,51 @@
 #include "json.h"
 #include "third_party/cJSON.h"
 
-currentConditions* init_conditions(char station_id[restrict static 1]) {
-  char* url = malloc(50);  // TODO: ??
+current_conditions* init_conditions(char station_id[restrict static 1]) {
+  char* url = malloc(60);
   sprintf(url, "%s%s%s", "https://api.weather.gov/stations/", station_id,
           "/observations/latest");
-  puts(url);
-  cJSON* json = json_init(url);
+  cJSON* conditions_json = json_init(url);
 
-  cJSON* json_properties = cJSON_GetObjectItemCaseSensitive(json, "properties");
+  cJSON* properties_json =
+      cJSON_GetObjectItemCaseSensitive(conditions_json, "properties");
 
-  cJSON* json_text_description =
-      cJSON_GetObjectItemCaseSensitive(json_properties, "textDescription");
-  cJSON* json_temperature =
-      cJSON_GetObjectItemCaseSensitive(json_properties, "temperature");
-  cJSON* json_dewpoint =
-      cJSON_GetObjectItemCaseSensitive(json_properties, "dewpoint");
-  cJSON* json_wind_direction =
-      cJSON_GetObjectItemCaseSensitive(json_properties, "windDirection");
-  cJSON* json_wind_speed =
-      cJSON_GetObjectItemCaseSensitive(json_properties, "windSpeed");
+  cJSON* text_description_json =
+      cJSON_GetObjectItemCaseSensitive(properties_json, "textDescription");
 
-  cJSON* json_temperature_v =
-      cJSON_GetObjectItemCaseSensitive(json_temperature, "value");
-  cJSON* json_dewpoint_v =
-      cJSON_GetObjectItemCaseSensitive(json_dewpoint, "value");
-  cJSON* json_wind_direction_v =
-      cJSON_GetObjectItemCaseSensitive(json_wind_direction, "value");
-  cJSON* json_wind_speed_v =
-      cJSON_GetObjectItemCaseSensitive(json_wind_speed, "value");
+  current_conditions* current = malloc(sizeof(current_conditions));
+  strcpy(current->summary, text_description_json->valuestring);
 
-  currentConditions* current = malloc(sizeof(currentConditions));
+  cJSON* temperature_json =
+      cJSON_GetObjectItemCaseSensitive(properties_json, "temperature");
+  cJSON* temperature_value_json =
+      cJSON_GetObjectItemCaseSensitive(temperature_json, "value");
 
-  strcpy(current->summary, json_text_description->valuestring);
-  current->temperature = json_temperature_v->valuedouble;
-  current->dewpoint = json_dewpoint_v->valuedouble;
-  current->wind_direction = json_wind_direction_v->valueint;
-  current->wind_speed = json_wind_speed_v->valuedouble;
+  current->temperature = temperature_value_json->valuedouble;
+
+  cJSON* dewpoint_json =
+      cJSON_GetObjectItemCaseSensitive(properties_json, "dewpoint");
+  cJSON* dewpoint_value_json =
+      cJSON_GetObjectItemCaseSensitive(dewpoint_json, "value");
+
+  current->dewpoint = dewpoint_value_json->valuedouble;
+
+  cJSON* wind_direction_json =
+      cJSON_GetObjectItemCaseSensitive(properties_json, "windDirection");
+  cJSON* wind_direction_value_json =
+      cJSON_GetObjectItemCaseSensitive(wind_direction_json, "value");
+
+  current->wind_direction = wind_direction_value_json->valueint;
+
+  cJSON* wind_speed_json =
+      cJSON_GetObjectItemCaseSensitive(properties_json, "windSpeed");
+  cJSON* wind_speed_value_json =
+      cJSON_GetObjectItemCaseSensitive(wind_speed_json, "value");
+
+  current->wind_speed = wind_speed_value_json->valuedouble;
 
   free(url);
-  cJSON_Delete(json);
+  cJSON_Delete(conditions_json);
 
   return current;
 }

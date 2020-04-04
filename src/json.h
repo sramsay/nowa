@@ -5,13 +5,13 @@
 
 #include "third_party/cJSON.h"
 
-typedef struct memoryStruct memoryStruct;
+typedef struct memory_struct memory_struct;
 
-struct memoryStruct {
+struct memory_struct {
   char* memory;
   size_t size;
 };
 
-cJSON* json_init(char* url);
+cJSON* json_init(char const url[restrict static 1]);
 
 #endif

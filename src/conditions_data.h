@@ -1,9 +1,9 @@
 #ifndef CONDITIONS_DATA_INCLUDED
 #define CONDITIONS_DATA_INCLUDED
 
-typedef struct currentConditions currentConditions;
+typedef struct current_conditions current_conditions;
 
-struct currentConditions {
+struct current_conditions {
   char summary[50];
   double temperature;
   double dewpoint;
@@ -11,6 +11,6 @@ struct currentConditions {
   double wind_speed;
 };
 
-currentConditions* init_conditions(char station_id[restrict static 1]);
+current_conditions* init_conditions(char station_id[restrict static 1]);
 
 #endif
