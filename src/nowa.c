@@ -6,11 +6,6 @@
 #include "license.h"
 #include "station_list.h"
 
-struct MemoryStruct {
-  char *memory;
-  size_t size;
-};
-
 static void print_usage(void);
 
 int main(int argc, char *argv[]) {
@@ -21,12 +16,11 @@ int main(int argc, char *argv[]) {
       {"list-stations", required_argument, 0, 'l'},
       {0, 0, 0, 0}};
 
-  int opt = 0;
   int option_index = 0;
   char *station_id = {0};
 
   for (;;) {
-    opt = getopt_long(argc, argv, "hVs:l:", long_options, &option_index);
+    int opt = getopt_long(argc, argv, "hVs:l:", long_options, &option_index);
 
     if (opt == -1) {
       break;

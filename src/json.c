@@ -8,7 +8,6 @@ static size_t write_memory_callback(void* contents, size_t size, size_t nmemb,
                                     void* userp);
 
 cJSON* json_init(char const url[restrict static 1]) {
-  CURLcode res = {0};
   cJSON* json = {0};
 
   memory_struct chunk;
@@ -24,7 +23,7 @@ cJSON* json_init(char const url[restrict static 1]) {
                      "nowa, https://github.com/sramsay/nowa/issues");
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, write_memory_callback);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)&chunk);
-    res = curl_easy_perform(curl_handle);
+    CURLcode res = curl_easy_perform(curl_handle);
     if (res != CURLE_OK) {
       fprintf(stderr, "curl_easy_perform() failed: %s\n",
               curl_easy_strerror(res));
