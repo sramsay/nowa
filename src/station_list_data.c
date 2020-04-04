@@ -47,6 +47,7 @@ struct station* init_stations(char lat_long[restrict static 1]) {
     count++;
   }
 
+	free(points_url);
   cJSON_Delete(points_json);
   cJSON_Delete(stations_json);
 
