@@ -11,6 +11,6 @@ struct current_conditions {
   double wind_speed;
 };
 
-current_conditions* init_conditions(char station_id[restrict static 1]);
+struct current_conditions* init_conditions(char station_id[restrict static 1]);
 
 #endif

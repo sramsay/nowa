@@ -7,7 +7,7 @@
 #include "json.h"
 #include "third_party/cJSON.h"
 
-current_conditions* init_conditions(char station_id[restrict static 1]) {
+struct current_conditions* init_conditions(char station_id[restrict static 1]) {
   char* url = malloc(60);
   sprintf(url, "%s%s%s", "https://api.weather.gov/stations/", station_id,
           "/observations/latest");

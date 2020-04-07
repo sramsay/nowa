@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "conditions.h"
+#include "forecast.h"
 #include "license.h"
 #include "station_list.h"
 
@@ -14,13 +15,15 @@ int main(int argc, char *argv[]) {
       {"version", no_argument, (void *)0, 'V'},
       {"stationid", required_argument, 0, 's'},
       {"list-stations", required_argument, 0, 'l'},
+      {"conditions", required_argument, 0, 'c'},
+      {"forecast", required_argument, 0, 'f'},
       {0, 0, 0, 0}};
 
   int option_index = 0;
   char *station_id = {0};
 
   for (;;) {
-    int opt = getopt_long(argc, argv, "hVs:l:", long_options, &option_index);
+    int opt = getopt_long(argc, argv, "hVs:l:f:", long_options, &option_index);
 
     if (opt == -1) {
       break;
@@ -46,6 +49,12 @@ int main(int argc, char *argv[]) {
         station_id = optarg;
       case 'c':
         if (print_conditions(station_id) == 0) {
+          return EXIT_SUCCESS;
+        } else {
+          return EXIT_FAILURE;
+        }
+			case 'f':
+				if (print_forecast(optarg) == 0) {
           return EXIT_SUCCESS;
         } else {
           return EXIT_FAILURE;
