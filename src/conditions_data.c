@@ -7,7 +7,7 @@
 #include "json.h"
 #include "third_party/cJSON.h"
 
-struct current_conditions* init_conditions(char station_id[restrict static 1]) {
+bool init_conditions(char station_id[restrict static 1], struct current_conditions* current) {
   char* url = malloc(60);
   sprintf(url, "%s%s%s", "https://api.weather.gov/stations/", station_id,
           "/observations/latest");
@@ -19,7 +19,6 @@ struct current_conditions* init_conditions(char station_id[restrict static 1]) {
   cJSON* text_description_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "textDescription");
 
-  current_conditions* current = malloc(sizeof(current_conditions));
   strcpy(current->summary, text_description_json->valuestring);
 
   cJSON* temperature_json =
@@ -53,5 +52,5 @@ struct current_conditions* init_conditions(char station_id[restrict static 1]) {
   free(url);
   cJSON_Delete(conditions_json);
 
-  return current;
+  return true;
 }

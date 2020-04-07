@@ -1,6 +1,8 @@
 #ifndef CONDITIONS_DATA_INCLUDED
 #define CONDITIONS_DATA_INCLUDED
 
+#include <stdbool.h>
+
 typedef struct current_conditions current_conditions;
 
 struct current_conditions {
@@ -11,6 +13,6 @@ struct current_conditions {
   double wind_speed;
 };
 
-struct current_conditions* init_conditions(char station_id[restrict static 1]);
+bool init_conditions(char station_id[restrict static 1], struct current_conditions* current);
 
 #endif

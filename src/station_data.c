@@ -7,7 +7,7 @@
 #include "json.h"
 #include "third_party/cJSON.h"
 
-station_info* init_station(char station_id[restrict static 1]) {
+bool init_station(char station_id[restrict static 1], struct station_info* info) {
   char* url = malloc(40);
   sprintf(url, "%s%s", "https://api.weather.gov/stations/", station_id);
   cJSON* station_json = json_init(url);
@@ -20,7 +20,6 @@ station_info* init_station(char station_id[restrict static 1]) {
   cJSON* longitude_json = cJSON_GetArrayItem(coordinates_json, 0);
   cJSON* latitude_json = cJSON_GetArrayItem(coordinates_json, 1);
 
-  station_info* info = malloc(sizeof(station_info));
   info->latitude = latitude_json->valuedouble;
   info->longitude = longitude_json->valuedouble;
 
@@ -40,5 +39,5 @@ station_info* init_station(char station_id[restrict static 1]) {
   free(url);
   cJSON_Delete(station_json);
 
-  return info;
+  return true;
 }
