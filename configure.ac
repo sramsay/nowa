@@ -17,6 +17,7 @@ AC_C_RESTRICT
 AC_FUNC_STRTOD
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
+AC_FUNC_MKTIME
 AC_TYPE_SIZE_T
 
 # Check for libraries
@@ -26,6 +27,9 @@ AX_PATH_LIB_PCRE
 # Checks for library functions
 AC_CHECK_FUNCS([localeconv])
 AC_CHECK_FUNCS([memset])
+AC_CHECK_FUNCS([localtime_r])
+AC_CHECK_FUNCS([modf])
+AC_CHECK_FUNCS([tzset])
 
 # Checks for library headers
 AC_CHECK_HEADER([check.h])
@@ -33,7 +37,10 @@ AC_CHECK_HEADER([getopt.h])
 AC_CHECK_HEADERS([limits.h])
 AC_CHECK_HEADERS([locale.h])
 AC_CHECK_HEADERS([stddef.h])
+AC_CHECK_HEADERS([float.h])
 
+# Checks for header signatures
+AC_CHECK_HEADER_STDBOOL
 
 AM_INIT_AUTOMAKE([-Wall subdir-objects foreign])
 
