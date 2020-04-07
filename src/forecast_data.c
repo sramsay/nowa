@@ -10,9 +10,10 @@
 #include "third_party/cJSON.h"
 
 void init_forecast(char lat_long[restrict static 1], struct tm* last_updated, struct forecast forecasts[static 14]) {
-	struct points_info* points = init_points(lat_long);
+	struct points_info points = {0};
+	init_points(lat_long, &points);
 
-	char* forecast_url = points->forecast_url;
+	char* forecast_url = points.forecast_url;
 
 	puts(forecast_url);
 

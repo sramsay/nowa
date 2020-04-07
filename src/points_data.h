@@ -1,6 +1,8 @@
 #ifndef POINTS_DATA_INCLUDED
 #define POINTS_DATA_INCLUDED
 
+#include <stdbool.h>
+
 typedef struct points_info points_info;
 
 struct points_info {
@@ -13,9 +15,8 @@ struct points_info {
 	char fire_weather_zone_url[43];
 	char radar_station[5];
 };
-
 // This JSON also includes bearing and distance (from what, exactly?) and timezone.
 
-struct points_info* init_points(char lat_long[restrict static 1]);
+bool init_points(char lat_long[restrict static 1], struct points_info* points);
 
 #endif

@@ -1,5 +1,6 @@
 #include "points_data.h"
 
+#include <stdbool.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <pcre.h>
@@ -9,26 +10,15 @@
 #include "json.h"
 #include "third_party/cJSON.h"
 
-/*
-struct points_info {
-	char forecast_url[55];
-	char forecast_hourly_url[62];
-	char forecast_grid_data_url[46];
-	char observation_stations_url[55];
-	char forecast_zone_url[47];
-	char county_url[45];
-	char fire_weather_zone_url[43];
-	char radar_station[5];
-};
-*/
+bool construct_points_url(char lat_long[restrict static 1], char points_url[static 1]);
 
-static char* construct_points_url(char lat_long[restrict static 1]);
+bool init_points(char lat_long[restrict static 1], struct points_info* points) {
+	char* points_url = malloc(50); // TODO: check??
+	if (!construct_points_url(lat_long, points_url)) {
+		puts("Bad things happened!"); // TODO: exit out
+	}
 
-struct points_info* init_points(char lat_long[restrict static 1]) {
-	char* points_url = construct_points_url(lat_long);
 	cJSON* points_json = json_init(points_url);
-
-	struct points_info* points = malloc(sizeof(points_info));
 
 	cJSON* properties_json = cJSON_GetObjectItemCaseSensitive(points_json, "properties");
 
@@ -60,11 +50,10 @@ struct points_info* init_points(char lat_long[restrict static 1]) {
 	cJSON_Delete(points_json);
 
 	return points;
-
 }
 
 
-static char* construct_points_url(char lat_long[restrict static 1]) {
+bool construct_points_url(char lat_long[restrict static 1], char points_url[static 1]) {
   // Matches lat/longs of the general form 39.809734,-98.555620
   char* regex_str = "(-?[0-9]*\\.[0-9]+),(-?[0-9]*\\.[0-9]+)";
 
@@ -105,8 +94,7 @@ static char* construct_points_url(char lat_long[restrict static 1]) {
   double latitude = strtod(latitude_match, &end);
   double longitude = strtod(longitude_match, &end);
 
-  char* url = malloc(50);
-  sprintf(url, "%s%.4g,%.4g", "https://api.weather.gov/points/", latitude,
+  sprintf(points_url, "%s%.4g,%.4g", "https://api.weather.gov/points/", latitude,
           longitude);
 
   pcre_free_substring(latitude_match);
@@ -120,9 +108,5 @@ static char* construct_points_url(char lat_long[restrict static 1]) {
     pcre_free(extra);
 #endif
   }
-  return url;
+  return true;
 }
-
-
-
-
