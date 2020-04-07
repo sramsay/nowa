@@ -1,6 +1,5 @@
 #include "forecast_data.h"
 
-#include <time.h>
 #include <string.h>
 #include <stdio.h>
 
@@ -24,7 +23,6 @@ void init_forecast(char lat_long[restrict static 1], struct tm* last_updated, st
 
 
 	char* timestamp = updated_json->valuestring;
-	tzset();
 	convert_iso8601(timestamp, last_updated);
 
 	cJSON* periods_json = cJSON_GetObjectItemCaseSensitive(properties_json, "periods");
@@ -42,8 +40,3 @@ void init_forecast(char lat_long[restrict static 1], struct tm* last_updated, st
 	free(forecast_url);
 	cJSON_Delete(forecast_json);
 }
-
-
-
-
-
