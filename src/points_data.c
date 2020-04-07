@@ -33,28 +33,28 @@ struct points_info* init_points(char lat_long[restrict static 1]) {
 	cJSON* properties_json = cJSON_GetObjectItemCaseSensitive(points_json, "properties");
 
 	cJSON* forecast_url_json = cJSON_GetObjectItemCaseSensitive(properties_json, "forecast");
-	strlcpy(points->forecast_url, forecast_url_json->valuestring, sizeof(points->forecast_url));
+	strcpy(points->forecast_url, forecast_url_json->valuestring);
 
 	cJSON* forecast_hourly_url_json = cJSON_GetObjectItemCaseSensitive(properties_json, "forecastHourly");
-	strlcpy(points->forecast_hourly_url, forecast_hourly_url_json->valuestring, sizeof(points->forecast_hourly_url));
+	strcpy(points->forecast_hourly_url, forecast_hourly_url_json->valuestring);
 
 	cJSON* forecast_grid_data_url_json = cJSON_GetObjectItemCaseSensitive(properties_json, "forecastGridData");
-	strlcpy(points->forecast_grid_data_url, forecast_grid_data_url_json->valuestring, sizeof(points->forecast_grid_data_url));
+	strcpy(points->forecast_grid_data_url, forecast_grid_data_url_json->valuestring);
 
 	cJSON* observation_stations_url_json = cJSON_GetObjectItemCaseSensitive(properties_json, "observationStations");
-	strlcpy(points->observation_stations_url, observation_stations_url_json->valuestring, sizeof(points->observation_stations_url));
+	strcpy(points->observation_stations_url, observation_stations_url_json->valuestring);
 
 	cJSON* forecast_zone_url_json = cJSON_GetObjectItemCaseSensitive(properties_json, "forecastZone");
-	strlcpy(points->forecast_zone_url, forecast_zone_url_json->valuestring, sizeof(points->forecast_zone_url));
+	strcpy(points->forecast_zone_url, forecast_zone_url_json->valuestring);
 
 	cJSON* county_url_json = cJSON_GetObjectItemCaseSensitive(properties_json, "county");
-	strlcpy(points->county_url, county_url_json->valuestring, sizeof(points->county_url));
+	strcpy(points->county_url, county_url_json->valuestring);
 
 	cJSON* fire_weather_zone_url_json = cJSON_GetObjectItemCaseSensitive(properties_json, "fireWeatherZone");
-	strlcpy(points->fire_weather_zone_url, fire_weather_zone_url_json->valuestring, sizeof(points->fire_weather_zone_url));
+	strcpy(points->fire_weather_zone_url, fire_weather_zone_url_json->valuestring);
 
 	cJSON* radar_station_json = cJSON_GetObjectItemCaseSensitive(properties_json, "radarStation");
-	strlcpy(points->radar_station, radar_station_json->valuestring, sizeof(points->radar_station));
+	strcpy(points->radar_station, radar_station_json->valuestring);
 
 	free(points_url);
 	cJSON_Delete(points_json);

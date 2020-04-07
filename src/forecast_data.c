@@ -34,8 +34,8 @@ void init_forecast(char lat_long[restrict static 1], struct tm* last_updated, st
 	cJSON_ArrayForEach(period_json, periods_json) { 
 		cJSON* name_json = cJSON_GetObjectItemCaseSensitive(period_json, "name");
 		cJSON* detailed_forecast_json = cJSON_GetObjectItemCaseSensitive(period_json, "detailedForecast");
-		strlcpy(forecasts[count].name, name_json->valuestring, sizeof(forecasts[count].name));
-		strlcpy(forecasts[count].detailed_forecast, detailed_forecast_json->valuestring, sizeof(forecasts[count].detailed_forecast));
+		strcpy(forecasts[count].name, name_json->valuestring);
+		strcpy(forecasts[count].detailed_forecast, detailed_forecast_json->valuestring);
 		count++;
 	}
 
