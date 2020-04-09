@@ -10,10 +10,10 @@ struct station_info {
   double longitude;
   double elevation;  // meters
   char name[80];
+	char forecast_url[50];
+	char county_url[50];
+	char fire_weather_zone_url[50];
 };
-
-// TODO: Note that this JSON structure contains links for forecast, "county,"
-// and "fireWeatherZone"
 
 bool init_station(char station_id[restrict static 1], struct station_info* info);
 

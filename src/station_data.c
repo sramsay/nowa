@@ -8,9 +8,9 @@
 #include "third_party/cJSON.h"
 
 bool init_station(char station_id[restrict static 1], struct station_info* info) {
-  char* url = malloc(40);
-  sprintf(url, "%s%s", "https://api.weather.gov/stations/", station_id);
-  cJSON* station_json = json_init(url);
+  char* station_url = malloc(40);
+  sprintf(station_url, "%s%s", "https://api.weather.gov/stations/", station_id);
+  cJSON* station_json = json_init(station_url);
 
   cJSON* geometry_json =
       cJSON_GetObjectItemCaseSensitive(station_json, "geometry");
@@ -36,7 +36,7 @@ bool init_station(char station_id[restrict static 1], struct station_info* info)
 
   strcpy(info->name, name_json->valuestring);
 
-  free(url);
+  free(station_url);
   cJSON_Delete(station_json);
 
   return true;
