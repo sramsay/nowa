@@ -22,7 +22,7 @@ AC_TYPE_SIZE_T
 
 # Check for libraries
 AC_CHECK_LIB([curl],[curl_easy_setopt])
-AX_PATH_LIB_PCRE
+AC_CHECK_LIB([pcre2-8],[pcre2_compile_8])
 
 # Checks for library functions
 AC_CHECK_FUNCS([localeconv])

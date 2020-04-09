@@ -1,9 +1,11 @@
 #include "points_data.h"
 
+#define PCRE2_CODE_UNIT_WIDTH 8
+#include <pcre2.h>
+
 #include <stdbool.h>
 #include <assert.h>
 #include <stdlib.h>
-#include <pcre.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -55,58 +57,62 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
 
 bool construct_points_url(char lat_long[restrict static 1], char points_url[static 1]) {
   // Matches lat/longs of the general form 39.809734,-98.555620
-  char* regex_str = "(-?[0-9]*\\.[0-9]+),(-?[0-9]*\\.[0-9]+)";
+  PCRE2_SPTR pattern = (PCRE2_SPTR)"(-?[0-9]*\\.[0-9]+),(-?[0-9]*\\.[0-9]+)";
+	PCRE2_SPTR subject = (PCRE2_SPTR)lat_long;
 
-  const char* pcre_error_msg = {0};
-  int pcre_error_offset = {0};
-  pcre* regex =
-      pcre_compile(regex_str, 0, &pcre_error_msg, &pcre_error_offset, NULL);
 
-  if (regex == NULL) {
-    printf("Error: Could not compile '%s': %s\n", regex_str, pcre_error_msg);
+  int error_num_pcre2 = {0};
+  PCRE2_SIZE error_offset_pcre2 = {0};
+  pcre2_code* regex_pcre2 =
+      pcre2_compile(pattern, PCRE2_ZERO_TERMINATED, 0, &error_num_pcre2, &error_offset_pcre2, NULL);
+
+	// TODO: Maybe check the value of pcre2_error_num and see if there's a "success" code we
+	// can initialize the variable with?
+
+  if (regex_pcre2 == NULL) {
+		PCRE2_UCHAR buffer[256];
+		pcre2_get_error_message(error_num_pcre2, buffer, sizeof(buffer));
+		printf("PCRE2 compilation failed at offset %d: %s\n", (int)error_offset_pcre2, buffer);
     exit(1);
   }
 
-  // Optimize the regex
-  pcre_extra* extra = pcre_study(regex, 0, &pcre_error_msg);
+	pcre2_match_data* match_data = pcre2_match_data_create_from_pattern(regex_pcre2, NULL);
 
-  if (pcre_error_msg != NULL) {
-    printf("ERROR: Could not study '%s': %s\n", regex_str, pcre_error_msg);
-    exit(1);
+	int return_code_pcre2 = pcre2_match(regex_pcre2, subject, strlen((char *)subject), 0, 0, match_data, NULL);
+
+	if (return_code_pcre2 < 0) {
+		switch (return_code_pcre2) {
+		case PCRE2_ERROR_NOMATCH:
+			printf("No match\n");
+			break;
+    default:
+			printf("Matching error %d\n", return_code_pcre2);
+			break;
+    }
+		pcre2_match_data_free(match_data);   /* Release memory used for the match */
+		pcre2_code_free(regex_pcre2);        /* data and the compiled pattern.    */
+		return false;
   }
 
-  // NWS will only accept four digits of precision (which is plenty), and
-  // insists on truncated trailing zeros.  So this magic number is really just
-  // based on something like -98.5556
-  int sub_str[10] = {0};
-  int pcre_exec_ret =
-      pcre_exec(regex, extra, lat_long, strlen(lat_long), 0, 0, sub_str, 50);
-
-  const char* latitude_match = {0};
-  const char* longitude_match = {0};
-  pcre_get_substring(lat_long, sub_str, pcre_exec_ret, 1, &(latitude_match));
-  pcre_get_substring(lat_long, sub_str, pcre_exec_ret, 2, &(longitude_match));
+  PCRE2_UCHAR8* latitude_match = {0};
+  PCRE2_UCHAR8* longitude_match = {0};
+	size_t latitude_length;
+	size_t longitude_length;
+  pcre2_substring_get_bynumber(match_data, 1, &(latitude_match), &latitude_length);
+  pcre2_substring_get_bynumber(match_data, 2, &(longitude_match), &longitude_length);
   char* end = {0};
-  assert(strlen(latitude_match) <= 10);
-  assert(strlen(longitude_match) <= 10);
+  assert(latitude_length <= 10);
+  assert(longitude_length <= 10);
   // Converting these strings to actual doubles so we can set precision and
   // truncate zeros
-  double latitude = strtod(latitude_match, &end);
-  double longitude = strtod(longitude_match, &end);
+  double latitude = strtod((const char*)latitude_match, &end);
+  double longitude = strtod((const char*)longitude_match, &end);
 
   sprintf(points_url, "%s%.4g,%.4g", "https://api.weather.gov/points/", latitude,
           longitude);
 
-  pcre_free_substring(latitude_match);
-  pcre_free_substring(longitude_match);
-  pcre_free(regex);
+	pcre2_match_data_free(match_data);
+	pcre2_code_free(regex_pcre2);
 
-  if (extra != NULL) {
-#ifdef PCRE_CONFIG_JIT
-    pcre_free_study(extra);
-#else
-    pcre_free(extra);
-#endif
-  }
   return true;
 }
