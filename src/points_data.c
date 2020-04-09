@@ -60,7 +60,6 @@ bool construct_points_url(char lat_long[restrict static 1], char points_url[stat
   PCRE2_SPTR pattern = (PCRE2_SPTR)"(-?[0-9]*\\.[0-9]+),(-?[0-9]*\\.[0-9]+)";
 	PCRE2_SPTR subject = (PCRE2_SPTR)lat_long;
 
-
   int error_num_pcre2 = {0};
   PCRE2_SIZE error_offset_pcre2 = {0};
   pcre2_code* regex_pcre2 =
@@ -113,6 +112,8 @@ bool construct_points_url(char lat_long[restrict static 1], char points_url[stat
 
 	pcre2_match_data_free(match_data);
 	pcre2_code_free(regex_pcre2);
+  pcre2_substring_free(latitude_match);
+  pcre2_substring_free(longitude_match);
 
   return true;
 }
