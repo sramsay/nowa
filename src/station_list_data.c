@@ -32,11 +32,12 @@ struct station* init_station_list(char lat_long[restrict static 1]) {
 
     cJSON* station_identifier_json = cJSON_GetObjectItemCaseSensitive(
         station_properties_json, "stationIdentifier");
+    strcpy(station_list[count].station_id, station_identifier_json->valuestring);
+
     cJSON* name_json =
         cJSON_GetObjectItemCaseSensitive(station_properties_json, "name");
-
-    strcpy(station_list[count].station_id, station_identifier_json->valuestring);
     strcpy(station_list[count].name, name_json->valuestring);
+
     count++;
   }
 

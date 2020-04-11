@@ -3,10 +3,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <stdbool.h>
 
 #include "forecast_data.h"
 
-int print_forecast(char lat_long[restrict static 1]) {
+bool print_forecast(char lat_long[restrict static 1]) {
 	struct tm last_updated;
 	//struct forecast* forecasts = malloc(sizeof(struct forecast) * 14); // TODO: 14 macro
 	struct forecast forecasts[14];

@@ -6,7 +6,7 @@
 
 #include "station_list_data.h"
 
-extern int stations_count;
+extern size_t stations_count;
 
 bool print_stations(char lat_long[static 1]) {
 	struct station* station_list = init_station_list(lat_long);

@@ -2,12 +2,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "conditions_data.h"
 #include "station_data.h"
 #include "utils.h"
 
-int print_conditions(char station_id[restrict static 1]) {
+bool print_conditions(char station_id[restrict static 1]) {
   struct station_info info = {0};
 	if (!init_station(station_id, &info)) {
 		puts("Bad things"); // TODO return value
@@ -32,5 +33,5 @@ int print_conditions(char station_id[restrict static 1]) {
   free(dms_latitude);
   free(dms_longitude);
 
-  return 0;
+  return true;
 }

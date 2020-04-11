@@ -39,25 +39,25 @@ int main(int argc, char *argv[]) {
         print_version();
         return EXIT_SUCCESS;
       case 'l':
-        if (print_stations(optarg) == 0) {
-          return EXIT_SUCCESS;
-        } else {
+        if (!print_stations(optarg)) {
           return EXIT_FAILURE;
+        } else {
+          return EXIT_SUCCESS;
         }
         return EXIT_SUCCESS;
       case 's':
         station_id = optarg;
       case 'c':
-        if (print_conditions(station_id) == 0) {
-          return EXIT_SUCCESS;
-        } else {
+        if (!print_conditions(station_id)) {
           return EXIT_FAILURE;
+        } else {
+          return EXIT_SUCCESS;
         }
 			case 'f':
-				if (print_forecast(optarg) == 0) {
-          return EXIT_SUCCESS;
-        } else {
+				if (!print_forecast(optarg)) {
           return EXIT_FAILURE;
+        } else {
+          return EXIT_SUCCESS;
         }
       default:
         print_usage();
