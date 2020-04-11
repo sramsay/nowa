@@ -15,8 +15,6 @@ bool init_forecast(char lat_long[restrict static 1], struct tm* last_updated, st
 
 	char* forecast_url = points.forecast_url;
 
-	puts(forecast_url);
-
 	cJSON* forecast_json = json_init(forecast_url);
 
 	cJSON* properties_json = cJSON_GetObjectItemCaseSensitive(forecast_json, "properties");
@@ -38,7 +36,6 @@ bool init_forecast(char lat_long[restrict static 1], struct tm* last_updated, st
 		count++;
 	}
 
-	free(forecast_url);
 	cJSON_Delete(forecast_json);
 
 	return true;

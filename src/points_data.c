@@ -19,7 +19,6 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
 	if (!construct_points_url(lat_long, points_url)) {
 		puts("Bad things happened!"); // TODO: exit out
 	}
-	puts(points_url);
 
 	cJSON* points_json = json_init(points_url);
 
