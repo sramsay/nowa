@@ -10,11 +10,13 @@ struct station_info {
   double longitude;
   double elevation;  // meters
   char name[80];
-	char forecast_url[50];
-	char county_url[50];
-	char fire_weather_zone_url[50];
+  char timezone[50];
+  char forecast_url[50];
+  char county_url[50];
+  char fire_weather_zone_url[50];
 };
 
-bool init_station(char station_id[restrict static 1], struct station_info* info);
+bool init_station(char station_id[restrict static 1],
+                  struct station_info* info);
 
 #endif

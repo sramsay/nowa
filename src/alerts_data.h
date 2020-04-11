@@ -6,9 +6,9 @@
 typedef struct alert alert;
 
 struct alert {
-	char* headline;
-	char* description;
-	char* instruction;
+  char* headline;
+  char* description;
+  char* instruction;
 };
 
 struct alert* init_alerts(char zone_id[restrict static 1]);

@@ -1,8 +1,8 @@
 #include "conditions.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 #include "conditions_data.h"
 #include "station_data.h"
@@ -10,14 +10,14 @@
 
 bool print_conditions(char station_id[restrict static 1]) {
   struct station_info info = {0};
-	if (!init_station(station_id, &info)) {
-		puts("Bad things"); // TODO return value
-	}
+  if (!init_station(station_id, &info)) {
+    puts("Bad things");  // TODO return value
+  }
 
-	struct current_conditions current = {0};
-	if (!init_conditions(station_id, &current)) {
-		puts("Bad things"); // TODO return value
-	}
+  struct current_conditions current = {0};
+  if (!init_conditions(station_id, &current)) {
+    puts("Bad things");  // TODO return value
+  }
 
   printf("Current conditions at %s (%s)\n", info.name, station_id);
 
