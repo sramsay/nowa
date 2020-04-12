@@ -6,7 +6,7 @@
 typedef struct current_conditions current_conditions;
 
 struct current_conditions {
-  char summary[50];
+  char* summary;
   double temperature;
   double dewpoint;
   int wind_direction;

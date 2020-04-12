@@ -26,7 +26,7 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
   alerts_count = cJSON_GetArraySize(features_json);
   struct alert* alerts_list = malloc(sizeof(struct alert) * alerts_count);
 
-  cJSON* feature_json = 0;
+  cJSON* feature_json = {0};
   int count = 0;
   cJSON_ArrayForEach(feature_json, features_json) {
     cJSON* properties_json =

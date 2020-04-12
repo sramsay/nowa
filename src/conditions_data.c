@@ -20,7 +20,8 @@ bool init_conditions(char station_id[restrict static 1],
   cJSON* text_description_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "textDescription");
 
-  strcpy(current->summary, text_description_json->valuestring);
+	current->summary = malloc(sizeof(text_description_json->valuestring));
+  current->summary = strdup(text_description_json->valuestring);
 
   cJSON* temperature_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "temperature");
