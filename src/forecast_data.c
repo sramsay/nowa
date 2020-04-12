@@ -1,6 +1,5 @@
 #include "forecast_data.h"
 
-#include <stdio.h>
 #include <string.h>
 
 #include "json.h"
