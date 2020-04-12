@@ -21,19 +21,28 @@ bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo* info) {
 
   cJSON* properties_json =
       cJSON_GetObjectItemCaseSensitive(zone_json, "properties");
-  cJSON* id_json = cJSON_GetObjectItemCaseSensitive(properties_json, "id");
 
+  cJSON* id_json = cJSON_GetObjectItemCaseSensitive(properties_json, "id");
+	size_t id_size = strlen(id_json->valuestring);
+	info->id = malloc(id_size + 1);
   strcpy(info->id, id_json->valuestring);
 
   cJSON* name_json = cJSON_GetObjectItemCaseSensitive(properties_json, "name");
-
+	size_t name_size = strlen(name_json->valuestring);
+	info->name = malloc(name_size + 1);
   strcpy(info->name, name_json->valuestring);
 
   cJSON* state_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "state");
-
+	size_t state_size = strlen(state_json->valuestring);
+	info->state = malloc(state_size + 1);
   strcpy(info->state, state_json->valuestring);
 
+	free(sinfo.name);
+	free(sinfo.timezone);
+	free(sinfo.forecast_url);
+	free(sinfo.county_url);
+	free(sinfo.fire_weather_zone_url);
   cJSON_Delete(zone_json);
 
   return true;

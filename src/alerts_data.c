@@ -10,14 +10,14 @@
 #include "zoneinfo_data.h"
 
 struct alert* init_alerts(char station_id[restrict static 1]) {
-  struct zoneinfo info = {0};
-  if (!init_zoneinfo(station_id, &info)) {
+  struct zoneinfo zinfo = {0};
+  if (!init_zoneinfo(station_id, &zinfo)) {
     puts("Bad things");  // TODO return value
   }
 
   char* alerts_url = malloc(50);
   sprintf(alerts_url, "%s%s", "https://api.weather.gov/alerts/active/zone/",
-          info.id);
+          zinfo.id);
   cJSON* alerts_json = json_init(alerts_url);
 
   cJSON* features_json =
@@ -34,27 +34,30 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
 
     cJSON* headline_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "headline");
+		size_t headline_size = strlen(headline_json->valuestring);
     alerts_list[count].headline =
-        malloc(sizeof(headline_json->valuestring) + 1);  // TODO: +1?
-    alerts_list[count].headline = strdup(headline_json->valuestring);
+        malloc(headline_size + 1);
+    strcpy(alerts_list[count].headline, headline_json->valuestring);
 
     cJSON* description_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "description");
-    alerts_list[count].description =
-        malloc(sizeof(description_json->valuestring) + 1);  // TODO: +1?
-    alerts_list[count].description = strdup(description_json->valuestring);
+		size_t description_size = strlen(description_json->valuestring);
+    alerts_list[count].description = malloc(description_size + 1);
+    strcpy(alerts_list[count].description, description_json->valuestring);
 
     cJSON* instruction_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "instruction");
-    alerts_list[count].instruction =
-        malloc(sizeof(instruction_json->valuestring) + 1);  // TODO: +1?
-    alerts_list[count].instruction = strdup(instruction_json->valuestring);
+		size_t instruction_size = strlen(instruction_json->valuestring);
+    alerts_list[count].instruction = malloc(instruction_size + 1);
+    strcpy(alerts_list[count].instruction, instruction_json->valuestring);
 
     count++;
   }
 
-  // TODO: These needs a destructor object for all these inner strings
-
+	free(zinfo.id);
+	free(zinfo.name);
+	free(zinfo.state);
+	free(alerts_url);
   cJSON_Delete(alerts_json);
 
   return alerts_list;

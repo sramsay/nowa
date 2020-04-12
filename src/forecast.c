@@ -1,5 +1,6 @@
 #include "forecast.h"
 
+#include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <time.h>
@@ -20,6 +21,8 @@ bool print_forecast(char lat_long[restrict static 1]) {
 
   for (size_t i = 0; i < 14; i++) {
     printf("%s: %s\n", forecasts[i].name, forecasts[i].detailed_forecast);
+		free(forecasts[i].name);
+		free(forecasts[i].detailed_forecast);
   }
 
   return 0;

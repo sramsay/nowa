@@ -31,9 +31,13 @@ bool init_forecast(char lat_long[restrict static 1], struct tm* last_updated,
   int count = 0;
   cJSON_ArrayForEach(period_json, periods_json) {
     cJSON* name_json = cJSON_GetObjectItemCaseSensitive(period_json, "name");
+		size_t name_size = strlen(name_json->valuestring);
+		forecasts[count].name = malloc(name_size + 1);
+    strcpy(forecasts[count].name, name_json->valuestring);
     cJSON* detailed_forecast_json =
         cJSON_GetObjectItemCaseSensitive(period_json, "detailedForecast");
-    strcpy(forecasts[count].name, name_json->valuestring);
+		size_t detailed_forecast_size = strlen(detailed_forecast_json->valuestring);
+		forecasts[count].detailed_forecast = malloc(detailed_forecast_size + 1);
     strcpy(forecasts[count].detailed_forecast,
            detailed_forecast_json->valuestring);
     count++;

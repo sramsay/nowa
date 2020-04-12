@@ -7,8 +7,8 @@
 typedef struct forecast_day forecast_day;
 
 struct forecast {
-  char name[500];
-  char detailed_forecast[500];
+  char* name;
+  char* detailed_forecast;
 };
 
 bool init_forecast(char lat_long[restrict static 1], struct tm* last_updated,

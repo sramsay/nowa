@@ -9,8 +9,8 @@
 #include "utils.h"
 
 bool print_conditions(char station_id[restrict static 1]) {
-  struct station_info info = {0};
-  if (!init_station(station_id, &info)) {
+  struct station_info sinfo = {0};
+  if (!init_station(station_id, &sinfo)) {
     puts("Bad things");  // TODO return value
   }
 
@@ -19,19 +19,25 @@ bool print_conditions(char station_id[restrict static 1]) {
     puts("Bad things");  // TODO return value
   }
 
-  printf("Current conditions at %s (%s)\n", info.name, station_id);
+  printf("Current conditions at %s (%s)\n", sinfo.name, station_id);
 
-  char* dms_latitude = dd_to_dms(info.latitude);
-  char latdir = lat_dir(info.latitude);
-  char* dms_longitude = dd_to_dms(info.longitude);
-  char lngdir = lng_dir(info.longitude);
+  char* dms_latitude = dd_to_dms(sinfo.latitude);
+  char latdir = lat_dir(sinfo.latitude);
+  char* dms_longitude = dd_to_dms(sinfo.longitude);
+  char lngdir = lng_dir(sinfo.longitude);
   printf("%s %c, %s %c\n", dms_latitude, latdir, dms_longitude, lngdir);
 
   printf("   Summary: %s\n", current.summary);
   printf("   Temperature: %.1f\u00B0F\n", ftemp(current.temperature));
 
+	free(sinfo.name);
+	free(sinfo.timezone);
+	free(sinfo.forecast_url);
+	free(sinfo.county_url);
+	free(sinfo.fire_weather_zone_url);
   free(dms_latitude);
   free(dms_longitude);
+	free(current.summary);
 
   return true;
 }

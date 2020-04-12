@@ -17,8 +17,14 @@ bool print_alerts(char station_id[restrict static 1]) {
 			printf("### %s\n\n", alerts[i].headline);
 			printf("%s\n\n", alerts[i].description);
 			printf("%s\n\n", alerts[i].instruction);
+
+			free(alerts[i].headline);
+			free(alerts[i].description);
+			free(alerts[i].instruction);
 		}
 	}
+
+	free(alerts);
 
   return true;
 }

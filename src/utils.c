@@ -15,12 +15,10 @@ double ftemp(const double raw_temp) {
   return f_temp;
 }
 
-/*
 double ctemp(const double raw_temp) {
   double c_temp = (raw_temp - C1) * C2 / C3;
   return c_temp;
 }
-*/
 
 char* dd_to_dms(const double coordinate) {
   char* dms = malloc(15);
