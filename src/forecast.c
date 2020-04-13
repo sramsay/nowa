@@ -7,11 +7,11 @@
 
 #include "forecast_data.h"
 
-bool print_forecast(char lat_long[restrict static 1]) {
+bool print_forecast(char station_id[restrict static 1]) {
   struct tm last_updated;
   struct forecast forecasts[14];
 
-  init_forecast(lat_long, &last_updated, forecasts);
+  init_forecast(station_id, &last_updated, forecasts);
 
   char buf[53];  // TODO: ?? predictable size
   long ts = mktime(&last_updated) - timezone;

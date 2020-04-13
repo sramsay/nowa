@@ -1,16 +1,28 @@
 #include "forecast_data.h"
 
 #include <string.h>
+#include <stdio.h>
 
 #include "json.h"
+#include "station_data.h"
 #include "points_data.h"
 #include "third_party/cJSON.h"
 #include "utils.h"
 
-bool init_forecast(char lat_long[restrict static 1], struct tm* last_updated,
+bool init_forecast(char station_id[restrict static 1], struct tm* last_updated,
                    struct forecast forecasts[static 14]) {
+	struct station_info sinfo = {0};
+	if (!init_station(station_id, &sinfo)) {
+		puts("Bad things");  // TODO return value
+	}
+
+	char lat_long[41];
+	sprintf(lat_long, "%f,%f", sinfo.latitude, sinfo.longitude);
+
   struct points_info points = {0};
-  init_points(lat_long, &points);
+	if (!init_points(lat_long, &points)) {
+		puts("Bad things");  // TODO return value
+	}
 
   char* forecast_url = points.forecast_url;
 
@@ -43,6 +55,11 @@ bool init_forecast(char lat_long[restrict static 1], struct tm* last_updated,
     count++;
   }
 
+	free(sinfo.name);
+  free(sinfo.timezone);
+  free(sinfo.forecast_url);
+  free(sinfo.county_url);
+  free(sinfo.fire_weather_zone_url);
 	free(points.forecast_url);
   free(points.forecast_hourly_url);
   free(points.forecast_grid_data_url);
