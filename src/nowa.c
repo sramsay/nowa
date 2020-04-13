@@ -1,5 +1,3 @@
-#include "nowa.h"
-
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +24,7 @@ int main(int argc, char *argv[]) {
       {0, 0, 0, 0}};
 
   int option_index = 0;
+	bool json_output;
 
   for (;;) {
     int opt =
@@ -53,7 +52,7 @@ int main(int argc, char *argv[]) {
         }
 				break;
       case 'c':
-        if (!print_conditions(optarg)) {
+        if (!print_conditions(optarg, json_output)) {
           return EXIT_FAILURE;
         }
 				break;
@@ -63,7 +62,7 @@ int main(int argc, char *argv[]) {
         }
 				break;
       case 'a':
-        if (!print_alerts(optarg)) {
+        if (!print_alerts(optarg, json_output)) {
           return EXIT_FAILURE;
         }
 				break;

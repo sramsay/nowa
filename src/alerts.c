@@ -7,8 +7,13 @@
 
 extern size_t alerts_count;
 
-bool print_alerts(char station_id[restrict static 1]) {
-  struct alert* alerts = init_alerts(station_id);
+bool print_alerts(char station_id[restrict static 1], bool json_output) {
+	if (json_output) {
+		init_alerts(station_id, json_output);
+		return true;
+	}
+
+  struct alert* alerts = init_alerts(station_id, json_output);
 
   if (alerts_count == 0) {
     puts("No active alerts.");

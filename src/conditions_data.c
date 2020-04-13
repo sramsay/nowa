@@ -3,16 +3,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "json.h"
 #include "third_party/cJSON.h"
 
+extern bool json_output;
+
 bool init_conditions(char station_id[restrict static 1],
-                     struct current_conditions* current) {
+                     struct current_conditions* current, bool json_output) {
   char* conditions_url = malloc(60);
   sprintf(conditions_url, "%s%s%s", "https://api.weather.gov/stations/",
           station_id, "/observations/latest");
   cJSON* conditions_json = json_init(conditions_url);
+
+	if (json_output) {
+		puts("here");
+		char* output = cJSON_Print(conditions_json);
+		puts(output);
+		free(conditions_url);
+		cJSON_Delete(conditions_json);
+		return true;
+	}
 
   cJSON* properties_json =
       cJSON_GetObjectItemCaseSensitive(conditions_json, "properties");
@@ -56,4 +68,8 @@ bool init_conditions(char station_id[restrict static 1],
   cJSON_Delete(conditions_json);
 
   return true;
+}
+
+void cleanup_conditions(struct current_conditions* current) {
+	free(current->summary);
 }

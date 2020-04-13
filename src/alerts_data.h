@@ -2,6 +2,7 @@
 #define ALERTS_DATA_INCLUDED
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct alert alert;
 
@@ -11,7 +12,7 @@ struct alert {
   char* instruction;
 };
 
-struct alert* init_alerts(char zone_id[restrict static 1]);
+struct alert* init_alerts(char zone_id[restrict static 1], bool json_output);
 
 size_t alerts_count;
 

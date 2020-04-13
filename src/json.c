@@ -1,5 +1,4 @@
 #include "json.h"
-#include "nowa.h"
 
 #include <curl/curl.h>
 #include <stdio.h>
@@ -8,8 +7,6 @@
 
 static size_t write_memory_callback(void* contents, size_t size, size_t nmemb,
                                     void* userp);
-
-extern bool json_output;
 
 cJSON* json_init(char const url[restrict static 1]) {
   cJSON* json = {0};
@@ -39,12 +36,6 @@ cJSON* json_init(char const url[restrict static 1]) {
   curl_easy_cleanup(curl_handle);
   free(chunk.memory);
   curl_global_cleanup();
-	if (json_output) {
-		char* output = cJSON_Print(json);
-		puts(output);
-		free(json);
-		exit(0);
-	}
   return json;
 }
 

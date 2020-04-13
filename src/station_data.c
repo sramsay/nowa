@@ -66,3 +66,12 @@ bool init_station(char station_id[restrict static 1],
 
   return true;
 }
+
+
+void cleanup_station_info(struct station_info* sinfo) {
+  free(sinfo->name);
+  free(sinfo->timezone);
+  free(sinfo->forecast_url);
+  free(sinfo->county_url);
+  free(sinfo->fire_weather_zone_url);
+}
