@@ -13,6 +13,8 @@ bool print_stations(char lat_long[static 1]) {
 
   for (size_t i = 0; i < station_count; i++) {
     printf("%s: %s\n", station_list[i].station_id, station_list[i].name);
+		free(station_list[i].station_id);
+		free(station_list[i].name);
   }
 
   free(station_list);

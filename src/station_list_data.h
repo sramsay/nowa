@@ -6,9 +6,8 @@
 typedef struct station station;
 
 struct station {
-  char station_id[5];
-  char name[50];
-  char forecast_url[55];
+  char* station_id;
+  char* name;
 };
 
 struct station* init_station_list(char lat_long[restrict static 1]);
