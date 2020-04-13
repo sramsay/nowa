@@ -10,8 +10,8 @@
 bool init_conditions(char station_id[restrict static 1],
                      struct current_conditions* current) {
   char* conditions_url = malloc(60);
-  sprintf(conditions_url, "%s%s%s", "https://api.weather.gov/stations/", station_id,
-          "/observations/latest");
+  sprintf(conditions_url, "%s%s%s", "https://api.weather.gov/stations/",
+          station_id, "/observations/latest");
   cJSON* conditions_json = json_init(conditions_url);
 
   cJSON* properties_json =
@@ -20,8 +20,8 @@ bool init_conditions(char station_id[restrict static 1],
   cJSON* text_description_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "textDescription");
 
-	size_t size = strlen(text_description_json->valuestring);
-	current->summary = malloc(size + 1);
+  size_t size = strlen(text_description_json->valuestring);
+  current->summary = malloc(size + 1);
   strcpy(current->summary, text_description_json->valuestring);
 
   cJSON* temperature_json =

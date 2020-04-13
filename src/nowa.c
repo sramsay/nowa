@@ -21,9 +21,6 @@ int main(int argc, char *argv[]) {
       {"alerts", required_argument, 0, 'a'},
       {0, 0, 0, 0}};
 
-  // TODO: Maybe station_ids, lat_longs, and any other identifiers should just
-  // be arguments to the various switches.
-
   int option_index = 0;
 
   for (;;) {

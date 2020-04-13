@@ -12,7 +12,8 @@
 struct alert* init_alerts(char station_id[restrict static 1]) {
   struct zoneinfo zinfo = {0};
   if (!init_zoneinfo(station_id, &zinfo)) {
-    puts("Bad things");  // TODO return value
+    fprintf(stderr, "Error: %s", "Unable to retrieve zone info.\n");
+    exit(1);
   }
 
   char* alerts_url = malloc(50);
@@ -34,30 +35,29 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
 
     cJSON* headline_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "headline");
-		size_t headline_size = strlen(headline_json->valuestring);
-    alerts_list[count].headline =
-        malloc(headline_size + 1);
+    size_t headline_size = strlen(headline_json->valuestring);
+    alerts_list[count].headline = malloc(headline_size + 1);
     strcpy(alerts_list[count].headline, headline_json->valuestring);
 
     cJSON* description_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "description");
-		size_t description_size = strlen(description_json->valuestring);
+    size_t description_size = strlen(description_json->valuestring);
     alerts_list[count].description = malloc(description_size + 1);
     strcpy(alerts_list[count].description, description_json->valuestring);
 
     cJSON* instruction_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "instruction");
-		size_t instruction_size = strlen(instruction_json->valuestring);
+    size_t instruction_size = strlen(instruction_json->valuestring);
     alerts_list[count].instruction = malloc(instruction_size + 1);
     strcpy(alerts_list[count].instruction, instruction_json->valuestring);
 
     count++;
   }
 
-	free(zinfo.id);
-	free(zinfo.name);
-	free(zinfo.state);
-	free(alerts_url);
+  free(zinfo.id);
+  free(zinfo.name);
+  free(zinfo.state);
+  free(alerts_url);
   cJSON_Delete(alerts_json);
 
   return alerts_list;

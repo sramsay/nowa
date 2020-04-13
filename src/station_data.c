@@ -32,34 +32,33 @@ bool init_station(char station_id[restrict static 1],
       cJSON_GetObjectItemCaseSensitive(elevation_json, "value");
   info->elevation = elevation_value_json->valuedouble;
 
-
   cJSON* name_json = cJSON_GetObjectItemCaseSensitive(properties_json, "name");
-	size_t name_size = strlen(name_json->valuestring);
-	info->name = malloc(name_size + 1);
+  size_t name_size = strlen(name_json->valuestring);
+  info->name = malloc(name_size + 1);
   strcpy(info->name, name_json->valuestring);
 
   cJSON* timezone_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "timeZone");
-	size_t timezone_size = strlen(timezone_json->valuestring);
-	info->timezone = malloc(timezone_size + 1);
+  size_t timezone_size = strlen(timezone_json->valuestring);
+  info->timezone = malloc(timezone_size + 1);
   strcpy(info->timezone, timezone_json->valuestring);
 
   cJSON* forecast_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "forecast");
-	size_t forecast_size = strlen(forecast_json->valuestring);
-	info->forecast_url = malloc(forecast_size + 1);
+  size_t forecast_size = strlen(forecast_json->valuestring);
+  info->forecast_url = malloc(forecast_size + 1);
   strcpy(info->forecast_url, forecast_json->valuestring);
 
   cJSON* county_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "county");
-	size_t county_size = strlen(county_json->valuestring);
-	info->county_url = malloc(county_size + 1);
+  size_t county_size = strlen(county_json->valuestring);
+  info->county_url = malloc(county_size + 1);
   strcpy(info->county_url, county_json->valuestring);
 
   cJSON* fire_weather_zone_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "fireWeatherZone");
-	size_t fireweather_size = strlen(fire_weather_zone_json->valuestring);
-	info->fire_weather_zone_url = malloc(fireweather_size + 1);
+  size_t fireweather_size = strlen(fire_weather_zone_json->valuestring);
+  info->fire_weather_zone_url = malloc(fireweather_size + 1);
   strcpy(info->fire_weather_zone_url, fire_weather_zone_json->valuestring);
 
   free(station_url);

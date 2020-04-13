@@ -17,7 +17,8 @@ bool construct_points_url(char lat_long[restrict static 1],
 bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   char* points_url = {0};
   if (!construct_points_url(lat_long, &points_url)) {
-    puts("Bad things happened!");  // TODO: exit out
+    fprintf(stderr, "Error: %s", "Unable to retrieve points data.\n");
+    return false;
   }
 
   cJSON* points_json = json_init(points_url);
@@ -27,53 +28,53 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
 
   cJSON* forecast_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "forecast");
-	size_t forecast_size = strlen(forecast_url_json->valuestring);
-	points->forecast_url = malloc(forecast_size + 1);
+  size_t forecast_size = strlen(forecast_url_json->valuestring);
+  points->forecast_url = malloc(forecast_size + 1);
   strcpy(points->forecast_url, forecast_url_json->valuestring);
 
   cJSON* forecast_hourly_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "forecastHourly");
-	size_t forecast_hourly_size = strlen(forecast_hourly_url_json->valuestring);
-	points->forecast_hourly_url = malloc(forecast_hourly_size + 1);
+  size_t forecast_hourly_size = strlen(forecast_hourly_url_json->valuestring);
+  points->forecast_hourly_url = malloc(forecast_hourly_size + 1);
   strcpy(points->forecast_hourly_url, forecast_hourly_url_json->valuestring);
 
   cJSON* forecast_grid_data_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "forecastGridData");
-	size_t forecast_grid_size = strlen(forecast_grid_data_url_json->valuestring);
-	points->forecast_grid_data_url = malloc(forecast_grid_size + 1);
+  size_t forecast_grid_size = strlen(forecast_grid_data_url_json->valuestring);
+  points->forecast_grid_data_url = malloc(forecast_grid_size + 1);
   strcpy(points->forecast_grid_data_url,
          forecast_grid_data_url_json->valuestring);
 
   cJSON* observation_stations_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "observationStations");
-	size_t observation_size = strlen(observation_stations_url_json->valuestring);
-	points->observation_stations_url = malloc(observation_size + 1);
+  size_t observation_size = strlen(observation_stations_url_json->valuestring);
+  points->observation_stations_url = malloc(observation_size + 1);
   strcpy(points->observation_stations_url,
          observation_stations_url_json->valuestring);
 
   cJSON* forecast_zone_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "forecastZone");
-	size_t zone_size = strlen(forecast_zone_url_json->valuestring);
-	points->forecast_zone_url = malloc(zone_size + 1);
+  size_t zone_size = strlen(forecast_zone_url_json->valuestring);
+  points->forecast_zone_url = malloc(zone_size + 1);
   strcpy(points->forecast_zone_url, forecast_zone_url_json->valuestring);
 
   cJSON* county_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "county");
-	size_t county_size = strlen(county_url_json->valuestring);
-	points->county_url = malloc(county_size + 1);
+  size_t county_size = strlen(county_url_json->valuestring);
+  points->county_url = malloc(county_size + 1);
   strcpy(points->county_url, county_url_json->valuestring);
 
   cJSON* fire_weather_zone_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "fireWeatherZone");
-	size_t fire_size = strlen(fire_weather_zone_url_json->valuestring);
-	points->fire_weather_zone_url = malloc(fire_size + 1);
+  size_t fire_size = strlen(fire_weather_zone_url_json->valuestring);
+  points->fire_weather_zone_url = malloc(fire_size + 1);
   strcpy(points->fire_weather_zone_url,
          fire_weather_zone_url_json->valuestring);
 
   cJSON* radar_station_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "radarStation");
-	size_t radar_size = strlen(radar_station_json->valuestring);
-	points->radar_station = malloc(radar_size + 1);
+  size_t radar_size = strlen(radar_station_json->valuestring);
+  points->radar_station = malloc(radar_size + 1);
   strcpy(points->radar_station, radar_station_json->valuestring);
 
   free(points_url);
@@ -88,14 +89,11 @@ bool construct_points_url(char lat_long[restrict static 1],
   PCRE2_SPTR pattern = (PCRE2_SPTR) "(-?[0-9]*\\.[0-9]+),(-?[0-9]*\\.[0-9]+)";
   PCRE2_SPTR subject = (PCRE2_SPTR)lat_long;
 
-  int error_num_pcre2 = {0};
+  int error_num_pcre2 = 0;
   PCRE2_SIZE error_offset_pcre2 = {0};
   pcre2_code* regex_pcre2 =
       pcre2_compile(pattern, PCRE2_ZERO_TERMINATED, 0, &error_num_pcre2,
                     &error_offset_pcre2, NULL);
-
-  // TODO: Maybe check the value of pcre2_error_num and see if there's a
-  // "success" code we can initialize the variable with?
 
   if (regex_pcre2 == NULL) {
     PCRE2_UCHAR buffer[256];
@@ -141,7 +139,7 @@ bool construct_points_url(char lat_long[restrict static 1],
   double latitude = strtod((const char*)latitude_match, &end);
   double longitude = strtod((const char*)longitude_match, &end);
 
-	*points_url = malloc(50);
+  *points_url = malloc(50);
   sprintf(*points_url, "%s%.4g,%.4g", "https://api.weather.gov/points/",
           latitude, longitude);
 
