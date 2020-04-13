@@ -2,6 +2,7 @@
 #define JSON_INCLUDED
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "third_party/cJSON.h"
 
