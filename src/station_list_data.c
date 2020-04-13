@@ -46,6 +46,15 @@ struct station* init_station_list(char lat_long[restrict static 1]) {
     count++;
   }
 
+	free(points.forecast_url);
+  free(points.forecast_hourly_url);
+  free(points.forecast_grid_data_url);
+  free(points.observation_stations_url);
+  free(points.forecast_zone_url);
+  free(points.county_url);
+  free(points.fire_weather_zone_url);
+  free(points.radar_station);
+
   cJSON_Delete(stations_json);
 
   return station_list;
