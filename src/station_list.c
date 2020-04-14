@@ -4,10 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "json.h"
 #include "points_data.h"
 #include "station_list_data.h"
-#include "json.h"
-
 #include "third_party/cJSON.h"
 
 extern size_t stations_count;
@@ -26,21 +25,20 @@ bool print_stations(char lat_long[static 1]) {
   return true;
 }
 
-
 bool print_stations_json(char lat_long[static 1]) {
-	struct points_info points = {0};
+  struct points_info points = {0};
   if (!init_points(lat_long, &points)) {
     fprintf(stderr, "Error: %s\n", "Unable to retrieve points data.");
-		return false;
+    return false;
   }
 
-	char* stations_url = points.observation_stations_url;
+  char* stations_url = points.observation_stations_url;
 
-	cJSON* stations_json = json_init(stations_url);
-	char* output = cJSON_Print(stations_json);
-	puts(output);
+  cJSON* stations_json = json_init(stations_url);
+  char* output = cJSON_Print(stations_json);
+  puts(output);
 
-	free(points.forecast_url);
+  free(points.forecast_url);
   free(points.forecast_hourly_url);
   free(points.forecast_grid_data_url);
   free(points.observation_stations_url);
@@ -49,8 +47,8 @@ bool print_stations_json(char lat_long[static 1]) {
   free(points.fire_weather_zone_url);
   free(points.radar_station);
 
-	cJSON_Delete(stations_json);
-	free(output);
+  cJSON_Delete(stations_json);
+  free(output);
 
-	return true;
+  return true;
 }

@@ -4,15 +4,13 @@
 #include <stdio.h>
 
 #include "alerts_data.h"
-#include "zoneinfo_data.h"
 #include "json.h"
-
 #include "third_party/cJSON.h"
+#include "zoneinfo_data.h"
 
 extern size_t alerts_count;
 
 bool print_alerts(char station_id[restrict static 1]) {
-
   struct alert* alerts = init_alerts(station_id);
 
   if (alerts_count == 0) {
@@ -34,11 +32,10 @@ bool print_alerts(char station_id[restrict static 1]) {
   return true;
 }
 
-
 bool print_alerts_json(char station_id[restrict static 1]) {
   struct zoneinfo zinfo = {0};
   if (!init_zoneinfo(station_id, &zinfo)) {
-		fprintf(stderr, "Error: %s\n", "Unable to retrieve zone info.");
+    fprintf(stderr, "Error: %s\n", "Unable to retrieve zone info.");
     return false;
   }
 
@@ -46,14 +43,14 @@ bool print_alerts_json(char station_id[restrict static 1]) {
   sprintf(alerts_url, "%s%s", "https://api.weather.gov/alerts/active/zone/",
           zinfo.id);
   cJSON* alerts_json = json_init(alerts_url);
-	char* output = cJSON_Print(alerts_json);
-	puts(output);
-	free(zinfo.id);
-	free(zinfo.name);
-	free(zinfo.state);
-	free(alerts_url);
-	cJSON_Delete(alerts_json);
-	free(output);
+  char* output = cJSON_Print(alerts_json);
+  puts(output);
+  free(zinfo.id);
+  free(zinfo.name);
+  free(zinfo.state);
+  free(alerts_url);
+  cJSON_Delete(alerts_json);
+  free(output);
 
-	return true;
+  return true;
 }

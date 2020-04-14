@@ -1,7 +1,7 @@
 #include <getopt.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 #include "alerts.h"
 #include "conditions.h"
@@ -20,11 +20,11 @@ int main(int argc, char *argv[]) {
       {"conditions", required_argument, 0, 'c'},
       {"forecast", required_argument, 0, 'f'},
       {"alerts", required_argument, 0, 'a'},
-			{"json", no_argument, 0, 'j'},
+      {"json", no_argument, 0, 'j'},
       {0, 0, 0, 0}};
 
   int option_index = 0;
-	bool json_output = false;
+  bool json_output = false;
 
   for (;;) {
     int opt =
@@ -39,49 +39,47 @@ int main(int argc, char *argv[]) {
         break;
       case 'h':
         print_usage();
-				break;
+        break;
       case 'V':
         print_version();
-				break;
-			case 'j':
-				json_output = true;
-				break;
+        break;
+      case 'j':
+        json_output = true;
+        break;
       case 'l':
-				if (json_output) {
-					print_stations_json(optarg);
-				} else if (!print_stations(optarg)) {
+        if (json_output) {
+          print_stations_json(optarg);
+        } else if (!print_stations(optarg)) {
           return EXIT_FAILURE;
         }
-				break;
+        break;
       case 'c':
-				if (json_output) {
-					print_conditions_json(optarg);
-				} else if (!print_conditions(optarg)) {
+        if (json_output) {
+          print_conditions_json(optarg);
+        } else if (!print_conditions(optarg)) {
           return EXIT_FAILURE;
         }
-				break;
+        break;
       case 'f':
-				if (json_output) {
-					print_forecast_json(optarg);
-				} else if (!print_forecast(optarg)) {
+        if (json_output) {
+          print_forecast_json(optarg);
+        } else if (!print_forecast(optarg)) {
           return EXIT_FAILURE;
         }
-				break;
+        break;
       case 'a':
-				if (json_output) {
-					print_alerts_json(optarg);
-				} else if (!print_alerts(optarg)) {
+        if (json_output) {
+          print_alerts_json(optarg);
+        } else if (!print_alerts(optarg)) {
           return EXIT_FAILURE;
         }
-				break;
+        break;
       default:
         print_usage();
     }
   }
-	return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }
-
-
 
 static void print_usage(void) {
   puts("Usage:");

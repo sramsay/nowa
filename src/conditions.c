@@ -5,11 +5,10 @@
 #include <stdlib.h>
 
 #include "conditions_data.h"
-#include "station_data.h"
 #include "json.h"
-#include "utils.h"
-
+#include "station_data.h"
 #include "third_party/cJSON.h"
+#include "utils.h"
 
 bool print_conditions(char station_id[restrict static 1]) {
   struct station_info sinfo = {0};
@@ -35,9 +34,9 @@ bool print_conditions(char station_id[restrict static 1]) {
   printf("   Summary: %s\n", current.summary);
   printf("   Temperature: %.1f\u00B0F\n", ftemp(current.temperature));
 
-	cleanup_conditions(&current);
-	cleanup_station_info(&sinfo);
-	
+  cleanup_conditions(&current);
+  cleanup_station_info(&sinfo);
+
   free(dms_latitude);
   free(dms_longitude);
 
@@ -45,17 +44,17 @@ bool print_conditions(char station_id[restrict static 1]) {
 }
 
 bool print_conditions_json(char station_id[restrict static 1]) {
-	char* conditions_url = {0};
-	if (!construct_conditions_url(station_id, &conditions_url)) {
-		fprintf(stderr, "Error: %s\n", "Unable to construction conditions URL.");
-		return false;
-	}
+  char* conditions_url = {0};
+  if (!construct_conditions_url(station_id, &conditions_url)) {
+    fprintf(stderr, "Error: %s\n", "Unable to construction conditions URL.");
+    return false;
+  }
   cJSON* conditions_json = json_init(conditions_url);
-	char* output = cJSON_Print(conditions_json);
-	puts(output);
-	free(conditions_url);
-	cJSON_Delete(conditions_json);
-	free(output);
-	
-	return true;
+  char* output = cJSON_Print(conditions_json);
+  puts(output);
+  free(conditions_url);
+  cJSON_Delete(conditions_json);
+  free(output);
+
+  return true;
 }

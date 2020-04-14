@@ -21,7 +21,6 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
           zinfo.id);
   cJSON* alerts_json = json_init(alerts_url);
 
-
   cJSON* features_json =
       cJSON_GetObjectItemCaseSensitive(alerts_json, "features");
 

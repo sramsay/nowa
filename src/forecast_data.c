@@ -11,20 +11,20 @@
 
 bool init_forecast(char station_id[restrict static 1], struct tm* last_updated,
                    struct forecast forecasts[static 14]) {
-	struct station_info sinfo = {0};
-	if (!init_station(station_id, &sinfo)) {
-		fprintf(stderr, "Error: %s\n", "Unable to retrieve station data");
-		return false;
-	}
+  struct station_info sinfo = {0};
+  if (!init_station(station_id, &sinfo)) {
+    fprintf(stderr, "Error: %s\n", "Unable to retrieve station data");
+    return false;
+  }
 
   char lat_long[41];
   sprintf(lat_long, "%f,%f", sinfo.latitude, sinfo.longitude);
 
   struct points_info points = {0};
-	if (!init_points(lat_long, &points)) {
-		fprintf(stderr, "Error: %s\n", "Unable to retrieve points data");
-		return false;
-	}
+  if (!init_points(lat_long, &points)) {
+    fprintf(stderr, "Error: %s\n", "Unable to retrieve points data");
+    return false;
+  }
 
   char* forecast_url = points.forecast_url;
 
