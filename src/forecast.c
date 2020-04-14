@@ -58,6 +58,7 @@ bool print_forecast_json(char station_id[restrict static 1]) {
 	puts(output);
 	free(points.forecast_url);
 	cJSON_Delete(forecast_json);
+	free(output);
 
 	return true;
 }

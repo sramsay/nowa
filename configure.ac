@@ -1,6 +1,6 @@
 
 AC_PREREQ([2.69])
-AC_INIT([nowa], [0.7.0], [https://github.com/sramsay/nowa/issues])
+AC_INIT([nowa], [0.7.1], [https://github.com/sramsay/nowa/issues])
 AC_CONFIG_SRCDIR([src/nowa.c])
 AC_DEFINE([COPYRIGHT_DATES], ["2020"], [current copyright dates])
 AC_CONFIG_AUX_DIR([build-aux])

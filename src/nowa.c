@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
       {0, 0, 0, 0}};
 
   int option_index = 0;
-	bool json_output;
+	bool json_output = false;
 
   for (;;) {
     int opt =

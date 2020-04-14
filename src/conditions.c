@@ -55,6 +55,7 @@ bool print_conditions_json(char station_id[restrict static 1]) {
 	puts(output);
 	free(conditions_url);
 	cJSON_Delete(conditions_json);
+	free(output);
 	
 	return true;
 }

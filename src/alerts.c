@@ -48,8 +48,11 @@ bool print_alerts_json(char station_id[restrict static 1]) {
 	char* output = cJSON_Print(alerts_json);
 	puts(output);
 	free(zinfo.id);
+	free(zinfo.name);
+	free(zinfo.state);
 	free(alerts_url);
 	cJSON_Delete(alerts_json);
+	free(output);
 
 	return true;
 }
