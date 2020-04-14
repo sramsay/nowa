@@ -1,9 +1,11 @@
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "alerts.h"
 #include "conditions.h"
+#include "conditions_data.h"
 #include "forecast.h"
 #include "license.h"
 #include "station_list.h"
@@ -19,16 +21,15 @@ int main(int argc, char *argv[]) {
       {"conditions", required_argument, 0, 'c'},
       {"forecast", required_argument, 0, 'f'},
       {"alerts", required_argument, 0, 'a'},
+			{"json", no_argument, 0, 'j'},
       {0, 0, 0, 0}};
 
-  // TODO: Maybe station_ids, lat_longs, and any other identifiers should just
-  // be arguments to the various switches.
-
   int option_index = 0;
+	bool json_output;
 
   for (;;) {
     int opt =
-        getopt_long(argc, argv, "hVc:s:l:f:a:", long_options, &option_index);
+        getopt_long(argc, argv, "hVc:s:l:f:a:j", long_options, &option_index);
 
     if (opt == -1) {
       break;
@@ -39,41 +40,43 @@ int main(int argc, char *argv[]) {
         break;
       case 'h':
         print_usage();
-        return EXIT_SUCCESS;
+				break;
       case 'V':
         print_version();
-        return EXIT_SUCCESS;
+				break;
+			case 'j':
+				json_output = true;
+				break;
       case 'l':
         if (!print_stations(optarg)) {
           return EXIT_FAILURE;
-        } else {
-          return EXIT_SUCCESS;
         }
-        return EXIT_SUCCESS;
+				break;
       case 'c':
-        if (!print_conditions(optarg)) {
+				if (json_output) {
+					print_conditions_json(optarg);
+				} else if (!print_conditions(optarg)) {
           return EXIT_FAILURE;
-        } else {
-          return EXIT_SUCCESS;
         }
+				break;
       case 'f':
         if (!print_forecast(optarg)) {
           return EXIT_FAILURE;
-        } else {
-          return EXIT_SUCCESS;
         }
+				break;
       case 'a':
         if (!print_alerts(optarg)) {
           return EXIT_FAILURE;
-        } else {
-          return EXIT_SUCCESS;
         }
+				break;
       default:
         print_usage();
-        return EXIT_SUCCESS;
     }
   }
+	return EXIT_SUCCESS;
 }
+
+
 
 static void print_usage(void) {
   puts("Usage:");

@@ -11,12 +11,14 @@
 bool print_conditions(char station_id[restrict static 1]) {
   struct station_info sinfo = {0};
   if (!init_station(station_id, &sinfo)) {
-    puts("Bad things");  // TODO return value
+    fprintf(stderr, "Error: %s", "Unable to retrieve station info.\n");
+    return false;
   }
 
   struct current_conditions current = {0};
   if (!init_conditions(station_id, &current)) {
-    puts("Bad things");  // TODO return value
+    fprintf(stderr, "Error: %s", "Unable to retrieve current conditions.\n");
+    return false;
   }
 
   printf("Current conditions at %s (%s)\n", sinfo.name, station_id);
@@ -30,14 +32,11 @@ bool print_conditions(char station_id[restrict static 1]) {
   printf("   Summary: %s\n", current.summary);
   printf("   Temperature: %.1f\u00B0F\n", ftemp(current.temperature));
 
-	free(sinfo.name);
-	free(sinfo.timezone);
-	free(sinfo.forecast_url);
-	free(sinfo.county_url);
-	free(sinfo.fire_weather_zone_url);
+	cleanup_conditions(&current);
+	cleanup_station_info(&sinfo);
+	
   free(dms_latitude);
   free(dms_longitude);
-	free(current.summary);
 
   return true;
 }

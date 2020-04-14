@@ -3,6 +3,7 @@
 #include <curl/curl.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 static size_t write_memory_callback(void* contents, size_t size, size_t nmemb,
                                     void* userp);

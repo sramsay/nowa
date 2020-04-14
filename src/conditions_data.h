@@ -15,5 +15,7 @@ struct current_conditions {
 
 bool init_conditions(char station_id[restrict static 1],
                      struct current_conditions* current);
-
+bool print_conditions_json(char station_id[restrict static 1]);
+void cleanup_conditions(struct current_conditions* current);
+ 
 #endif

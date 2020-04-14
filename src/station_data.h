@@ -19,4 +19,6 @@ struct station_info {
 bool init_station(char station_id[restrict static 1],
                   struct station_info* info);
 
+void cleanup_station_info(struct station_info* sinfo);
+
 #endif
