@@ -8,8 +8,6 @@
 #include "json.h"
 #include "third_party/cJSON.h"
 
-extern bool json_output;
-
 bool init_conditions(char station_id[restrict static 1],
                      struct current_conditions* current) {
 	char* conditions_url = {0};
@@ -18,15 +16,6 @@ bool init_conditions(char station_id[restrict static 1],
 		return false;
 	}
   cJSON* conditions_json = json_init(conditions_url);
-
-	if (json_output) {
-		puts("here");
-		char* output = cJSON_Print(conditions_json);
-		puts(output);
-		free(conditions_url);
-		cJSON_Delete(conditions_json);
-		return true;
-	}
 
   cJSON* properties_json =
       cJSON_GetObjectItemCaseSensitive(conditions_json, "properties");
