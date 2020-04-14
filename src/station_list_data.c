@@ -11,7 +11,7 @@
 struct station* init_station_list(char lat_long[restrict static 1]) {
   struct points_info points = {0};
   if (!init_points(lat_long, &points)) {
-    fprintf(stderr, "Error: %s", "Unable to retrieve points data.\n");
+    fprintf(stderr, "Error: %s", "Unable to retrieve points data\n");
     exit(1);
   }
 

@@ -12,7 +12,7 @@ struct alert {
   char* instruction;
 };
 
-struct alert* init_alerts(char zone_id[restrict static 1], bool json_output);
+struct alert* init_alerts(char zone_id[restrict static 1]);
 
 size_t alerts_count;
 

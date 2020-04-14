@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
       {0, 0, 0, 0}};
 
   int option_index = 0;
-	bool json_output;
+	bool json_output = false;
 
   for (;;) {
     int opt =
@@ -47,22 +47,30 @@ int main(int argc, char *argv[]) {
 				json_output = true;
 				break;
       case 'l':
-        if (!print_stations(optarg)) {
+				if (json_output) {
+					print_stations_json(optarg);
+				} else if (!print_stations(optarg)) {
           return EXIT_FAILURE;
         }
 				break;
       case 'c':
-        if (!print_conditions(optarg, json_output)) {
+				if (json_output) {
+					print_conditions_json(optarg);
+				} else if (!print_conditions(optarg)) {
           return EXIT_FAILURE;
         }
 				break;
       case 'f':
-        if (!print_forecast(optarg)) {
+				if (json_output) {
+					print_forecast_json(optarg);
+				} else if (!print_forecast(optarg)) {
           return EXIT_FAILURE;
         }
 				break;
       case 'a':
-        if (!print_alerts(optarg, json_output)) {
+				if (json_output) {
+					print_alerts_json(optarg);
+				} else if (!print_alerts(optarg)) {
           return EXIT_FAILURE;
         }
 				break;

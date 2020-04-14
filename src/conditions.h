@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 
-bool print_conditions(char station_id[restrict static 1], bool json_output);
+bool print_conditions(char station_id[restrict static 1]);
+bool print_conditions_json(char station_id[restrict static 1]);
 
 #endif

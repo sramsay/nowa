@@ -11,10 +11,12 @@
 extern bool json_output;
 
 bool init_conditions(char station_id[restrict static 1],
-                     struct current_conditions* current, bool json_output) {
-  char* conditions_url = malloc(60);
-  sprintf(conditions_url, "%s%s%s", "https://api.weather.gov/stations/",
-          station_id, "/observations/latest");
+                     struct current_conditions* current) {
+	char* conditions_url = {0};
+	if (!construct_conditions_url(station_id, &conditions_url)) {
+		fprintf(stderr, "Error: %s\n", "Unable to construct conditions URL.");
+		return false;
+	}
   cJSON* conditions_json = json_init(conditions_url);
 
 	if (json_output) {
@@ -70,6 +72,15 @@ bool init_conditions(char station_id[restrict static 1],
   return true;
 }
 
+
 void cleanup_conditions(struct current_conditions* current) {
 	free(current->summary);
+}
+
+
+bool construct_conditions_url(char station_id[restrict static 1], char* conditions_url[static 1]) {
+  *conditions_url = malloc(60);
+  sprintf(*conditions_url, "%s%s%s", "https://api.weather.gov/stations/", station_id,
+          "/observations/latest");
+	return true;
 }

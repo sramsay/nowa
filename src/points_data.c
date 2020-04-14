@@ -17,7 +17,7 @@ bool construct_points_url(char lat_long[restrict static 1],
 bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   char* points_url = {0};
   if (!construct_points_url(lat_long, &points_url)) {
-    fprintf(stderr, "Error: %s", "Unable to retrieve points data.\n");
+    fprintf(stderr, "Error: %s", "Unable to retrieve points data\n");
     return false;
   }
 

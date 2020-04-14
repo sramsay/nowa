@@ -9,10 +9,10 @@
 #include "third_party/cJSON.h"
 #include "zoneinfo_data.h"
 
-struct alert* init_alerts(char station_id[restrict static 1], bool json_output) {
+struct alert* init_alerts(char station_id[restrict static 1]) {
   struct zoneinfo zinfo = {0};
   if (!init_zoneinfo(station_id, &zinfo)) {
-    fprintf(stderr, "Error: %s", "Unable to retrieve zone info.\n");
+    fprintf(stderr, "Error: %s", "Unable to retrieve zone info\n");
     exit(1);
   }
 
@@ -21,18 +21,6 @@ struct alert* init_alerts(char station_id[restrict static 1], bool json_output) 
           zinfo.id);
   cJSON* alerts_json = json_init(alerts_url);
 
-	if (json_output) {
-		struct alert* empty_struct = {0};
-		char* output = cJSON_Print(alerts_json);
-		puts(output);
-		free(output);
-		free(zinfo.id);
-		free(zinfo.name);
-		free(zinfo.state);
-		free(alerts_url);
-		cJSON_Delete(alerts_json);
-		return empty_struct;
-	}
 
   cJSON* features_json =
       cJSON_GetObjectItemCaseSensitive(alerts_json, "features");

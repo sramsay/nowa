@@ -11,7 +11,7 @@
 bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo* info) {
   struct station_info sinfo = {0};
   if (!init_station(station_id, &sinfo)) {
-    fprintf(stderr, "Error: %s", "Unable to retrieve station info.\n");
+    fprintf(stderr, "Error: %s", "Unable to retrieve station info\n");
     return false;
   }
 
