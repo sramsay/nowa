@@ -11,7 +11,8 @@
 bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo* info) {
   struct station_info sinfo = {0};
   if (!init_station(station_id, &sinfo)) {
-    puts("Bad things");  // TODO return value
+		fprintf(stderr, "Error: %s\n", "Unable to retrieve station data");
+		return false;
   }
 
   cJSON* zone_json =

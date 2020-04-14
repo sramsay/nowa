@@ -12,7 +12,8 @@
 struct alert* init_alerts(char station_id[restrict static 1]) {
   struct zoneinfo zinfo = {0};
   if (!init_zoneinfo(station_id, &zinfo)) {
-    puts("Bad things");  // TODO return value
+		fprintf(stderr, "Error: %s\n", "Unable to retrieve zone info.");
+		return false;
   }
 
   char* alerts_url = malloc(50);

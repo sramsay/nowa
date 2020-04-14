@@ -17,7 +17,8 @@ bool construct_points_url(char lat_long[restrict static 1],
 bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   char* points_url = {0};
   if (!construct_points_url(lat_long, &points_url)) {
-    puts("Bad things happened!");  // TODO: exit out
+		fprintf(stderr, "Error: %s\n", "Unable to retrieve points data");
+		return false;
   }
 
   cJSON* points_json = json_init(points_url);
@@ -88,14 +89,11 @@ bool construct_points_url(char lat_long[restrict static 1],
   PCRE2_SPTR pattern = (PCRE2_SPTR) "(-?[0-9]*\\.[0-9]+),(-?[0-9]*\\.[0-9]+)";
   PCRE2_SPTR subject = (PCRE2_SPTR)lat_long;
 
-  int error_num_pcre2 = {0};
+  int error_num_pcre2 = 0;
   PCRE2_SIZE error_offset_pcre2 = {0};
   pcre2_code* regex_pcre2 =
       pcre2_compile(pattern, PCRE2_ZERO_TERMINATED, 0, &error_num_pcre2,
                     &error_offset_pcre2, NULL);
-
-  // TODO: Maybe check the value of pcre2_error_num and see if there's a
-  // "success" code we can initialize the variable with?
 
   if (regex_pcre2 == NULL) {
     PCRE2_UCHAR buffer[256];

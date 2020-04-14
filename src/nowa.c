@@ -5,7 +5,6 @@
 
 #include "alerts.h"
 #include "conditions.h"
-#include "conditions_data.h"
 #include "forecast.h"
 #include "license.h"
 #include "station_list.h"
@@ -48,7 +47,9 @@ int main(int argc, char *argv[]) {
 				json_output = true;
 				break;
       case 'l':
-        if (!print_stations(optarg)) {
+				if (json_output) {
+					print_stations_json(optarg);
+				} else if (!print_stations(optarg)) {
           return EXIT_FAILURE;
         }
 				break;
@@ -60,12 +61,16 @@ int main(int argc, char *argv[]) {
         }
 				break;
       case 'f':
-        if (!print_forecast(optarg)) {
+				if (json_output) {
+					print_forecast_json(optarg);
+				} else if (!print_forecast(optarg)) {
           return EXIT_FAILURE;
         }
 				break;
       case 'a':
-        if (!print_alerts(optarg)) {
+				if (json_output) {
+					print_alerts_json(optarg);
+				} else if (!print_alerts(optarg)) {
           return EXIT_FAILURE;
         }
 				break;
