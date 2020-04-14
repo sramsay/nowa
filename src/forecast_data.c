@@ -1,7 +1,9 @@
 #include "forecast_data.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "json.h"
 #include "points_data.h"
