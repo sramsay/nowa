@@ -59,20 +59,8 @@ bool init_forecast(char station_id[restrict static 1], struct tm* last_updated,
     count++;
   }
 
-  free(sinfo.name);
-  free(sinfo.timezone);
-  free(sinfo.forecast_url);
-  free(sinfo.county_url);
-  free(sinfo.fire_weather_zone_url);
-  free(points.forecast_url);
-  free(points.forecast_hourly_url);
-  free(points.forecast_grid_data_url);
-  free(points.observation_stations_url);
-  free(points.forecast_zone_url);
-  free(points.county_url);
-  free(points.fire_weather_zone_url);
-  free(points.radar_station);
-
+	cleanup_station_info(&sinfo);
+	cleanup_points(&points);
   cJSON_Delete(forecast_json);
 
   return true;

@@ -10,5 +10,6 @@ char lat_dir(double latitude);
 char lng_dir(double longitude);
 int convert_iso8601(const char date_string[restrict static 1],
                     struct tm* date_data);
+char* bearing_to_compass_dir(int bearing);
 
 #endif

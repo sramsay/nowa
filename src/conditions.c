@@ -10,6 +10,7 @@
 #include "third_party/cJSON.h"
 #include "utils.h"
 
+
 bool print_conditions(char station_id[restrict static 1]) {
   struct station_info sinfo = {0};
   if (!init_station(station_id, &sinfo)) {
@@ -33,6 +34,13 @@ bool print_conditions(char station_id[restrict static 1]) {
 
   printf("   Summary: %s\n", current.summary);
   printf("   Temperature: %.1f\u00B0F\n", ftemp(current.temperature));
+	if (current.heat_index >= 26.7) { // 80°F
+		printf("   Heat Index: %.1f\u00B0F\n", ftemp(current.heat_index));
+	}
+	printf("%f\n", current.wind_speed);
+	if (current.wind_speed > 0.0) {
+		printf("   Wind: From the %s (%d\u00B0) at %.1f mph, gusting to %.1f", bearing_to_compass_dir(current.wind_direction), current.wind_direction, current.wind_speed, current.wind_gust);
+	}
 
   cleanup_conditions(&current);
   cleanup_station_info(&sinfo);
@@ -42,6 +50,7 @@ bool print_conditions(char station_id[restrict static 1]) {
 
   return true;
 }
+
 
 bool print_conditions_json(char station_id[restrict static 1]) {
   char* conditions_url = {0};

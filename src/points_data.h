@@ -19,5 +19,6 @@ struct points_info {
 // timezone.
 
 bool init_points(char lat_long[restrict static 1], struct points_info* points);
+void cleanup_points(struct points_info* points);
 
 #endif

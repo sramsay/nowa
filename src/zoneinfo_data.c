@@ -40,11 +40,7 @@ bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo* info) {
   info->state = malloc(state_size + 1);
   strcpy(info->state, state_json->valuestring);
 
-  free(sinfo.name);
-  free(sinfo.timezone);
-  free(sinfo.forecast_url);
-  free(sinfo.county_url);
-  free(sinfo.fire_weather_zone_url);
+	cleanup_station_info(&sinfo);
   cJSON_Delete(zone_json);
 
   return true;

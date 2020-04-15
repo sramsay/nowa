@@ -10,15 +10,18 @@
 
 #define TOTAL_MINUTES 60;
 
+
 double ftemp(const double raw_temp) {
   double f_temp = raw_temp * C3 / C2 + C1;
   return f_temp;
 }
 
+
 double ctemp(const double raw_temp) {
   double c_temp = (raw_temp - C1) * C2 / C3;
   return c_temp;
 }
+
 
 char* dd_to_dms(const double coordinate) {
   char* dms = malloc(15);
@@ -34,6 +37,7 @@ char* dd_to_dms(const double coordinate) {
   return dms;
 }
 
+
 char lat_dir(double latitude) {
   if (latitude >= 0.0) {
     return 'N';
@@ -42,6 +46,7 @@ char lat_dir(double latitude) {
   }
 }
 
+
 char lng_dir(double longitude) {
   if (longitude >= 0.0) {
     return 'E';
@@ -49,6 +54,7 @@ char lng_dir(double longitude) {
     return 'W';
   }
 }
+
 
 int convert_iso8601(const char date_string[restrict static 1],
                     struct tm* date_data) {
@@ -74,3 +80,52 @@ int convert_iso8601(const char date_string[restrict static 1],
 
   return 0;
 }
+
+
+char* bearing_to_compass_dir(int bearing) {
+	char* direction = malloc(4);
+	if ((bearing >= 349 && bearing <= 360) || (bearing >= 0 && bearing <= 11)) {
+		direction = "N";
+	} else if (bearing >= 12 && bearing <= 33) {
+		direction = "NNE";
+	} else if (bearing >= 34 && bearing <= 56) {
+		direction = "NE";
+	} else if (bearing >= 57 && bearing <= 78) {
+		direction = "ENE";
+	} else if (bearing >= 79 && bearing <= 101) {
+		direction = "E";
+	} else if (bearing >= 102 && bearing <= 123) {
+		direction = "ESE";
+	} else if (bearing >= 124 && bearing <= 146) {
+		direction = "SE";
+	} else if (bearing >= 147 && bearing <= 168) {
+		direction = "SSE";
+	} else if (bearing >= 169 && bearing <= 191) {
+		direction = "S";
+	} else if (bearing >= 192 && bearing <= 213) {
+		direction = "SSW";
+	} else if (bearing >= 214 && bearing <= 236) {
+		direction = "SW";
+	} else if (bearing >= 237 && bearing <= 258) {
+		direction = "WSW";
+	} else if (bearing >= 259 && bearing <= 281) {
+		direction = "W";
+	} else if (bearing >= 282 && bearing <= 303) {
+		direction = "WNW";
+	} else if (bearing >= 304 && bearing <= 326) {
+		direction = "NW";	
+	} else if (bearing >= 327 && bearing <= 348) {
+		direction = "NNW";
+	}
+
+	return direction;
+}
+
+
+
+
+
+
+
+
+
