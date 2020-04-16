@@ -34,6 +34,7 @@ bool print_conditions(char station_id[restrict static 1]) {
 
   printf("   Summary: %s\n", current.summary);
   printf("   Temperature: %.1f\u00B0F\n", ftemp(current.temperature));
+	printf("   Dewpoint: %.f\u00B0F\n", ftemp(current.dewpoint)); // TODO: Move
 	if (current.heat_index >= 26.7) { // 80°F
 		printf("   Heat Index: %.1f\u00B0F\n", ftemp(current.heat_index));
 	}
