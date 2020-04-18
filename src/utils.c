@@ -82,8 +82,8 @@ int convert_iso8601(const char date_string[restrict static 1],
 }
 
 
-char* bearing_to_compass_dir(int bearing) {
-	char* direction = malloc(4);
+const char* bearing_to_compass_dir(int bearing) {
+	const char* direction;
 	if ((bearing >= 349 && bearing <= 360) || (bearing >= 0 && bearing <= 11)) {
 		direction = "N";
 	} else if (bearing >= 12 && bearing <= 33) {
@@ -117,15 +117,5 @@ char* bearing_to_compass_dir(int bearing) {
 	} else if (bearing >= 327 && bearing <= 348) {
 		direction = "NNW";
 	}
-
 	return direction;
 }
-
-
-
-
-
-
-
-
-

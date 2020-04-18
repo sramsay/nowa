@@ -12,6 +12,12 @@
 static void print_usage(void);
 
 int main(int argc, char *argv[]) {
+
+	if (argc == 1) {
+		print_usage();
+		return EXIT_SUCCESS;
+	}
+
   static struct option long_options[] = {
       {"help", no_argument, (void *)0, 'h'},
       {"version", no_argument, (void *)0, 'V'},
