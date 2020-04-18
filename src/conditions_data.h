@@ -7,17 +7,14 @@ typedef struct current_conditions current_conditions;
 
 struct current_conditions {
 	int elevation;
-	char* timestamp;
-	char* metar;
-  char* summary;
-  double temperature;
-  double dewpoint;
   int wind_direction;
-  double wind_speed;
-	double wind_gust; // double?
 	int pressure;
 	int sl_pressure;
 	int visibility;
+  double temperature;
+  double dewpoint;
+  double wind_speed;
+	double wind_gust;
 	double max_temp_24;
 	double min_temp_24;
 	double precip_hour;
@@ -26,6 +23,9 @@ struct current_conditions {
 	double relative_humidity;
 	double wind_chill;
 	double heat_index;
+  char* summary;
+	char* timestamp;
+	char* metar;
 };
 
 // Also includes cloudLayers, though it's not clear if this is useful.

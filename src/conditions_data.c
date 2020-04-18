@@ -25,59 +25,12 @@ bool init_conditions(char station_id[restrict static 1],
 	cJSON* elevation_value_json = cJSON_GetObjectItemCaseSensitive(elevation_json, "value");
   current->elevation = elevation_value_json->valueint;
 
-	// Timestamp
-	cJSON* timestamp_json = cJSON_GetObjectItemCaseSensitive(properties_json, "timestamp");
-	size_t timestamp_size = strlen(timestamp_json->valuestring);
-	current->timestamp = malloc(timestamp_size + 1);
-  strcpy(current->timestamp, timestamp_json->valuestring);
-
-	// METAR
-	cJSON* metar_json = cJSON_GetObjectItemCaseSensitive(properties_json, "rawMessage");
-	size_t metar_size = strlen(metar_json->valuestring);
-	current->metar = malloc(metar_size + 1);
-  strcpy(current->metar, metar_json->valuestring);
-
-	// Summary
-  cJSON* text_description_json =
-      cJSON_GetObjectItemCaseSensitive(properties_json, "textDescription");
-  size_t summary_size = strlen(text_description_json->valuestring);
-  current->summary = malloc(summary_size + 1);
-  strcpy(current->summary, text_description_json->valuestring);
-
-	// Temperature
-  cJSON* temperature_json =
-      cJSON_GetObjectItemCaseSensitive(properties_json, "temperature");
-  cJSON* temperature_value_json =
-      cJSON_GetObjectItemCaseSensitive(temperature_json, "value");
-  current->temperature = temperature_value_json->valuedouble;
-
-	// Dewpoint
-  cJSON* dewpoint_json =
-      cJSON_GetObjectItemCaseSensitive(properties_json, "dewpoint");
-  cJSON* dewpoint_value_json =
-      cJSON_GetObjectItemCaseSensitive(dewpoint_json, "value");
-  current->dewpoint = dewpoint_value_json->valuedouble;
-
 	// Wind Direction
   cJSON* wind_direction_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "windDirection");
   cJSON* wind_direction_value_json =
       cJSON_GetObjectItemCaseSensitive(wind_direction_json, "value");
   current->wind_direction = wind_direction_value_json->valueint;
-
-	// Wind Speed
-  cJSON* wind_speed_json =
-      cJSON_GetObjectItemCaseSensitive(properties_json, "windSpeed");
-  cJSON* wind_speed_value_json =
-      cJSON_GetObjectItemCaseSensitive(wind_speed_json, "value");
-  current->wind_speed = wind_speed_value_json->valuedouble;
-
-	// Wind Gust
-  cJSON* wind_gust_json =
-      cJSON_GetObjectItemCaseSensitive(properties_json, "windGust");
-  cJSON* wind_gust_value_json =
-      cJSON_GetObjectItemCaseSensitive(wind_gust_json, "value");
-  current->wind_speed = wind_gust_value_json->valuedouble;
 
 	// Pressure
   cJSON* pressure_json =
@@ -99,6 +52,34 @@ bool init_conditions(char station_id[restrict static 1],
   cJSON* visibility_value_json =
       cJSON_GetObjectItemCaseSensitive(visibility_json, "value");
   current->visibility = visibility_value_json->valueint;
+
+	// Temperature
+  cJSON* temperature_json =
+      cJSON_GetObjectItemCaseSensitive(properties_json, "temperature");
+  cJSON* temperature_value_json =
+      cJSON_GetObjectItemCaseSensitive(temperature_json, "value");
+  current->temperature = temperature_value_json->valuedouble;
+
+	// Dewpoint
+  cJSON* dewpoint_json =
+      cJSON_GetObjectItemCaseSensitive(properties_json, "dewpoint");
+  cJSON* dewpoint_value_json =
+      cJSON_GetObjectItemCaseSensitive(dewpoint_json, "value");
+  current->dewpoint = dewpoint_value_json->valuedouble;
+
+	// Wind Speed
+  cJSON* wind_speed_json =
+      cJSON_GetObjectItemCaseSensitive(properties_json, "windSpeed");
+  cJSON* wind_speed_value_json =
+      cJSON_GetObjectItemCaseSensitive(wind_speed_json, "value");
+  current->wind_speed = wind_speed_value_json->valuedouble;
+
+	// Wind Gust
+  cJSON* wind_gust_json =
+      cJSON_GetObjectItemCaseSensitive(properties_json, "windGust");
+  cJSON* wind_gust_value_json =
+      cJSON_GetObjectItemCaseSensitive(wind_gust_json, "value");
+  current->wind_gust = wind_gust_value_json->valuedouble;
 
 	// Max Temperature Last 24 Hours
   cJSON* max_temp_24_json =
@@ -155,6 +136,25 @@ bool init_conditions(char station_id[restrict static 1],
   cJSON* heat_index_value_json =
       cJSON_GetObjectItemCaseSensitive(heat_index_json, "value");
   current->heat_index = heat_index_value_json->valuedouble;
+
+	// Timestamp
+	cJSON* timestamp_json = cJSON_GetObjectItemCaseSensitive(properties_json, "timestamp");
+	size_t timestamp_size = strlen(timestamp_json->valuestring);
+	current->timestamp = malloc(timestamp_size + 1);
+  strcpy(current->timestamp, timestamp_json->valuestring);
+
+	// METAR
+	cJSON* metar_json = cJSON_GetObjectItemCaseSensitive(properties_json, "rawMessage");
+	size_t metar_size = strlen(metar_json->valuestring);
+	current->metar = malloc(metar_size + 1);
+  strcpy(current->metar, metar_json->valuestring);
+
+	// Summary
+  cJSON* text_description_json =
+      cJSON_GetObjectItemCaseSensitive(properties_json, "textDescription");
+  size_t summary_size = strlen(text_description_json->valuestring);
+  current->summary = malloc(summary_size + 1);
+  strcpy(current->summary, text_description_json->valuestring);
 
   free(conditions_url);
   cJSON_Delete(conditions_json);

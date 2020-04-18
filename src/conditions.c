@@ -18,8 +18,8 @@ bool print_conditions(char station_id[restrict static 1]) {
     return false;
   }
 
-  struct current_conditions current = {0};
-  if (!init_conditions(station_id, &current)) {
+	struct current_conditions* current = malloc(sizeof(struct current_conditions));
+  if (!init_conditions(station_id, current)) {
     fprintf(stderr, "Error: %s", "Unable to retrieve current conditions.\n");
     return false;
   }
@@ -32,20 +32,26 @@ bool print_conditions(char station_id[restrict static 1]) {
   char lngdir = lng_dir(sinfo.longitude);
   printf("%s %c, %s %c\n", dms_latitude, latdir, dms_longitude, lngdir);
 
-  printf("   Summary: %s\n", current.summary);
-  printf("   Temperature: %.1f\u00B0F\n", ftemp(current.temperature));
-	printf("   Dewpoint: %.f\u00B0F\n", ftemp(current.dewpoint)); // TODO: Move
-	if (current.heat_index >= 26.7) { // 80°F
-		printf("   Heat Index: %.1f\u00B0F\n", ftemp(current.heat_index));
+  printf("   Summary: %s\n", current->summary);
+  printf("   Temperature: %.1f\u00B0F\n", ftemp(current->temperature));
+	printf("   Dewpoint: %.f\u00B0F\n", ftemp(current->dewpoint)); // TODO: Move
+	if (current->heat_index >= 26.7) { // 80°F
+		printf("   Heat Index: %.1f\u00B0F\n", ftemp(current->heat_index));
 	}
-	printf("%f\n", current.wind_speed);
-	if (current.wind_speed > 0.0) {
-		printf("   Wind: From the %s (%d\u00B0) at %.1f mph, gusting to %.1f", bearing_to_compass_dir(current.wind_direction), current.wind_direction, current.wind_speed, current.wind_gust);
+	if (current->wind_speed > 0.0) {
+		printf("   Wind: From the %s (%d\u00B0) at %.1f mph", bearing_to_compass_dir(current->wind_direction), current->wind_direction, current->wind_speed);
+		if (current->wind_gust > 0.0) {
+			printf(", gusting to %.1f\n", current->wind_gust);
+		} else {
+			printf("\n");
+		}
+
 	}
 
-  cleanup_conditions(&current);
+  cleanup_conditions(current);
   cleanup_station_info(&sinfo);
 
+	free(current);
   free(dms_latitude);
   free(dms_longitude);
 
