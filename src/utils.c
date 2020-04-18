@@ -38,6 +38,18 @@ char* dd_to_dms(const double coordinate) {
 }
 
 
+double m_to_mi(double m) {
+	double mi = m / 1609.344;
+	return mi;
+}
+
+
+double mps_to_mph(double mps) {
+	double mph = mps / 0.44704;
+	return mph;
+}
+
+
 char lat_dir(double latitude) {
   if (latitude >= 0.0) {
     return 'N';
@@ -83,7 +95,7 @@ int convert_iso8601(const char date_string[restrict static 1],
 
 
 const char* bearing_to_compass_dir(int bearing) {
-	const char* direction;
+	char* direction = {0};
 	if ((bearing >= 349 && bearing <= 360) || (bearing >= 0 && bearing <= 11)) {
 		direction = "N";
 	} else if (bearing >= 12 && bearing <= 33) {
@@ -119,3 +131,5 @@ const char* bearing_to_compass_dir(int bearing) {
 	}
 	return direction;
 }
+
+
