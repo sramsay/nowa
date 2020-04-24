@@ -24,7 +24,7 @@ double ctemp(const double raw_temp) {
 
 
 char* dd_to_dms(const double coordinate) {
-  char* dms = malloc(15);
+  char* dms = malloc(15 * sizeof(char));
   double degrees = 0.0;
   double minutes = 0.0;
 
@@ -132,4 +132,37 @@ const char* bearing_to_compass_dir(int bearing) {
 	return direction;
 }
 
+
+// Categories from Lin, Tzu Ping.  "Thermal Perception, Adaptation and
+// Attendance in a Public Square in Hot and Humid Regions."  *Building and
+// Environment*  44.10 (2009): 2017-2026
+const char* comfort_scale(double dewpoint) {
+	char* comfort = {0};
+	if (dewpoint < 50.0) {
+		comfort = "dry";
+	} else if (dewpoint >= 50.0 && dewpoint < 55.0) {
+		comfort = "very comfortable";
+	} else if (dewpoint >= 55.0 && dewpoint < 60.0) {
+		comfort = "comfortable";
+	} else if (dewpoint >= 60.0 && dewpoint < 65.0) {
+		comfort = "okay for most";
+	} else if (dewpoint >= 65.0 && dewpoint < 70.0) {
+		comfort = "somewhat uncomfortable";
+	} else if (dewpoint >= 70.0 && dewpoint < 75.0)  {
+		comfort = "very humid";
+	} else if (dewpoint >= 75.0 && dewpoint < 80.0) {
+		comfort = "oppressive";
+	} else if (dewpoint >= 80.0) {
+		comfort = "dangerously high";
+	}
+
+	return comfort;
+}
+
+
+double pa_to_mb(int pascals) {
+	double pressure = pascals * .01;
+
+	return pressure;
+}
 

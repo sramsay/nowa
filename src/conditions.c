@@ -34,7 +34,9 @@ bool print_conditions(char station_id[restrict static 1]) {
 
   printf("   Summary: %s\n", current->summary);
   printf("   Temperature: %.1f\u00B0F\n", ftemp(current->temperature));
-	printf("   Dewpoint: %.f\u00B0F\n", ftemp(current->dewpoint)); // TODO: Move
+	printf("   Relative Humidity: %.1f%%\n", current->relative_humidity);
+	double dewpoint = current->dewpoint;
+	printf("   Dewpoint: %.1f\u00B0F (%s)\n", ftemp(dewpoint), comfort_scale(dewpoint)); // TODO: Move
 	if (current->heat_index >= 26.7) { // 80°F
 		printf("   Heat Index: %.1f\u00B0F\n", ftemp(current->heat_index));
 	}
@@ -46,6 +48,10 @@ bool print_conditions(char station_id[restrict static 1]) {
 			printf("\n");
 		}
 	}
+	if (current->wind_chill > 0.0) {
+		printf("   Wind Chill: %f.1\u00B0F", ftemp(current->wind_chill));
+	}
+	printf("   Pressure: %.1f mb\n", pa_to_mb(current->pressure)); 
 	if (current->visibility > 0) {
 		printf("   Visibility: %.1f mi\n", m_to_mi(current->visibility));
 	}
