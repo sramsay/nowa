@@ -49,7 +49,7 @@ bool print_conditions(char station_id[restrict static 1]) {
 		}
 	}
 	if (current->wind_chill > 0.0) {
-		printf("   Wind Chill: %f.1\u00B0F", ftemp(current->wind_chill));
+		printf("   Wind Chill: %.1f\u00B0F\n", ftemp(current->wind_chill));
 	}
 	printf("   Pressure: %.1f mb\n", pa_to_mb(current->pressure)); 
 	if (current->visibility > 0) {
