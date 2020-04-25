@@ -6,22 +6,44 @@
 #include <time.h>
 
 #include "forecast_data.h"
+#include "station_data.h"
 #include "json.h"
 #include "points_data.h"
 #include "station_data.h"
+#include "utils.h"
+
 #include "third_party/cJSON.h"
 
 bool print_forecast(char station_id[restrict static 1]) {
   struct tm last_updated;
   struct forecast forecasts[14];
 
-  init_forecast(station_id, &last_updated, forecasts);
+  if (!init_forecast(station_id, &last_updated, forecasts)) {
+		fprintf(stderr, "Error: %s", "Unable to retrieve forecast info.\n");
+    return false;
+  }
 
-  char* buf = malloc(53);
+	struct station_info sinfo = {0};
+  if (!init_station(station_id, &sinfo)) {
+    fprintf(stderr, "Error: %s", "Unable to retrieve station info.\n");
+    return false;
+  }
+
+	printf("Current forecast for %s (%s)\n", sinfo.name, station_id);
+
+	char* dms_latitude = dd_to_dms(sinfo.latitude);
+  char latdir = lat_dir(sinfo.latitude);
+  char* dms_longitude = dd_to_dms(sinfo.longitude);
+  char lngdir = lng_dir(sinfo.longitude);
+  printf("%s %c, %s %c\n", dms_latitude, latdir, dms_longitude, lngdir);
+
+  char* update_string = malloc(55 * sizeof(char));
   long ts = mktime(&last_updated) - timezone;
   localtime_r(&ts, &last_updated);
-  strftime(buf, sizeof(buf), "Last Updated: %A, %d %B %Y, %I:%M:%S %p %Z",
+  strftime(update_string, 55, "Last Updated: %A, %d %B %Y, %I:%M:%S %p %Z",
            &last_updated);
+
+	printf("%s\n\n", update_string);
 
   for (size_t i = 0; i < 14; i++) {
     printf("%s: %s\n", forecasts[i].name, forecasts[i].detailed_forecast);
@@ -29,7 +51,11 @@ bool print_forecast(char station_id[restrict static 1]) {
     free(forecasts[i].detailed_forecast);
   }
 
-  free(buf);
+	cleanup_station_info(&sinfo);
+
+  free(update_string);
+	free(dms_latitude);
+	free(dms_longitude);
 
   return 0;
 }
