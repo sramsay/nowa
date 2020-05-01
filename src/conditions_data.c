@@ -141,6 +141,10 @@ bool init_conditions(char station_id[restrict static 1],
 	cJSON* timestamp_json = cJSON_GetObjectItemCaseSensitive(properties_json, "timestamp");
 	size_t timestamp_size = strlen(timestamp_json->valuestring);
 	current->timestamp = malloc(timestamp_size + 1);
+	if (!current->timestamp) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(current->timestamp, timestamp_json->valuestring);
 
 	// METAR
@@ -154,6 +158,10 @@ bool init_conditions(char station_id[restrict static 1],
       cJSON_GetObjectItemCaseSensitive(properties_json, "textDescription");
   size_t summary_size = strlen(text_description_json->valuestring);
   current->summary = malloc(summary_size + 1);
+	if (!current->summary) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(current->summary, text_description_json->valuestring);
 
   free(conditions_url);
@@ -171,6 +179,10 @@ void cleanup_conditions(struct current_conditions* current) {
 bool construct_conditions_url(char station_id[restrict static 1],
                               char* conditions_url[static 1]) {
   *conditions_url = malloc(60);
+	if (!conditions_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   sprintf(*conditions_url, "%s%s%s", "https://api.weather.gov/stations/",
           station_id, "/observations/latest");
   return true;

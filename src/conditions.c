@@ -19,6 +19,11 @@ bool print_conditions(char station_id[restrict static 1]) {
   }
 
 	struct current_conditions* current = malloc(sizeof(struct current_conditions));
+	if (!current) {
+		fprintf(stderr, "Fatal Error: No available memory.\n");
+		return false;
+	}
+
   if (!init_conditions(station_id, current)) {
     fprintf(stderr, "Error: %s", "Unable to retrieve current conditions.\n");
     return false;

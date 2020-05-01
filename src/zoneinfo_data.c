@@ -27,6 +27,10 @@ bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo* info) {
   cJSON* id_json = cJSON_GetObjectItemCaseSensitive(properties_json, "id");
   size_t id_size = strlen(id_json->valuestring);
   info->id = malloc(id_size + 1);
+	if (!info->id) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(info->id, id_json->valuestring);
 
   cJSON* name_json = cJSON_GetObjectItemCaseSensitive(properties_json, "name");
@@ -38,6 +42,10 @@ bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo* info) {
       cJSON_GetObjectItemCaseSensitive(properties_json, "state");
   size_t state_size = strlen(state_json->valuestring);
   info->state = malloc(state_size + 1);
+	if (!info->state) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(info->state, state_json->valuestring);
 
 	cleanup_station_info(&sinfo);

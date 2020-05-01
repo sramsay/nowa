@@ -24,6 +24,10 @@ struct station* init_station_list(char lat_long[restrict static 1]) {
 
   station_count = cJSON_GetArraySize(features_json);
   struct station* station_list = malloc(sizeof(struct station) * station_count);
+	if (!station_list) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		exit(1);
+	}
 
   cJSON* feature_json = {0};
   int count = 0;
@@ -35,6 +39,10 @@ struct station* init_station_list(char lat_long[restrict static 1]) {
         station_properties_json, "stationIdentifier");
     size_t station_id_size = strlen(station_identifier_json->valuestring);
     station_list[count].station_id = malloc(station_id_size + 1);
+		if (!station_list[count].station_id) {
+			fprintf(stderr, "Fatal Error: No available memory\n");
+			exit(1);
+		}
     strcpy(station_list[count].station_id,
            station_identifier_json->valuestring);
 
@@ -42,6 +50,11 @@ struct station* init_station_list(char lat_long[restrict static 1]) {
         cJSON_GetObjectItemCaseSensitive(station_properties_json, "name");
     size_t name_size = strlen(name_json->valuestring);
     station_list[count].name = malloc(name_size + 1);
+		if (!station_list[count].name) {
+			fprintf(stderr, "Fatal Error: No available memory\n");
+			exit(1);
+		}
+
     strcpy(station_list[count].name, name_json->valuestring);
 
     count++;

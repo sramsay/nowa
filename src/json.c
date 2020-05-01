@@ -11,7 +11,11 @@ cJSON* json_init(char const url[restrict static 1]) {
   cJSON* json = {0};
 
   memory_struct chunk;
-  chunk.memory = malloc(1);
+  chunk.memory = malloc(sizeof(memory_struct));
+	if (!chunk.memory) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		exit(1);
+	}
   chunk.size = 0;
 
   curl_global_init(CURL_GLOBAL_ALL);

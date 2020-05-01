@@ -30,18 +30,30 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
       cJSON_GetObjectItemCaseSensitive(properties_json, "forecast");
   size_t forecast_size = strlen(forecast_url_json->valuestring);
   points->forecast_url = malloc(forecast_size + 1);
+	if(!points->forecast_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(points->forecast_url, forecast_url_json->valuestring);
 
   cJSON* forecast_hourly_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "forecastHourly");
   size_t forecast_hourly_size = strlen(forecast_hourly_url_json->valuestring);
   points->forecast_hourly_url = malloc(forecast_hourly_size + 1);
+	if(!points->forecast_hourly_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(points->forecast_hourly_url, forecast_hourly_url_json->valuestring);
 
   cJSON* forecast_grid_data_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "forecastGridData");
   size_t forecast_grid_size = strlen(forecast_grid_data_url_json->valuestring);
   points->forecast_grid_data_url = malloc(forecast_grid_size + 1);
+	if(!points->forecast_grid_data_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(points->forecast_grid_data_url,
          forecast_grid_data_url_json->valuestring);
 
@@ -49,6 +61,10 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
       cJSON_GetObjectItemCaseSensitive(properties_json, "observationStations");
   size_t observation_size = strlen(observation_stations_url_json->valuestring);
   points->observation_stations_url = malloc(observation_size + 1);
+	if(!points->observation_stations_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(points->observation_stations_url,
          observation_stations_url_json->valuestring);
 
@@ -56,18 +72,30 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
       cJSON_GetObjectItemCaseSensitive(properties_json, "forecastZone");
   size_t zone_size = strlen(forecast_zone_url_json->valuestring);
   points->forecast_zone_url = malloc(zone_size + 1);
+	if(!points->forecast_zone_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(points->forecast_zone_url, forecast_zone_url_json->valuestring);
 
   cJSON* county_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "county");
   size_t county_size = strlen(county_url_json->valuestring);
   points->county_url = malloc(county_size + 1);
+	if(!points->county_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(points->county_url, county_url_json->valuestring);
 
   cJSON* fire_weather_zone_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "fireWeatherZone");
   size_t fire_size = strlen(fire_weather_zone_url_json->valuestring);
   points->fire_weather_zone_url = malloc(fire_size + 1);
+	if(!points->fire_weather_zone_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(points->fire_weather_zone_url,
          fire_weather_zone_url_json->valuestring);
 
@@ -75,6 +103,10 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
       cJSON_GetObjectItemCaseSensitive(properties_json, "radarStation");
   size_t radar_size = strlen(radar_station_json->valuestring);
   points->radar_station = malloc(radar_size + 1);
+	if(!points->radar_station) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(points->radar_station, radar_station_json->valuestring);
 
   free(points_url);

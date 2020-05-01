@@ -25,6 +25,10 @@ double ctemp(const double raw_temp) {
 
 char* dd_to_dms(const double coordinate) {
   char* dms = malloc(15 * sizeof(char));
+	if (!dms) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		exit(1);
+	}
   double degrees = 0.0;
   double minutes = 0.0;
 

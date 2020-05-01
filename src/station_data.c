@@ -10,6 +10,10 @@
 bool init_station(char station_id[restrict static 1],
                   struct station_info* info) {
   char* station_url = malloc(40);
+	if (!station_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   sprintf(station_url, "%s%s", "https://api.weather.gov/stations/", station_id);
   cJSON* station_json = json_init(station_url);
 
@@ -35,18 +39,30 @@ bool init_station(char station_id[restrict static 1],
   cJSON* name_json = cJSON_GetObjectItemCaseSensitive(properties_json, "name");
   size_t name_size = strlen(name_json->valuestring);
   info->name = malloc(name_size + 1);
+	if (!info->name) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(info->name, name_json->valuestring);
 
   cJSON* timezone_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "timeZone");
   size_t timezone_size = strlen(timezone_json->valuestring);
   info->timezone = malloc(timezone_size + 1);
+	if (!info->timezone) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(info->timezone, timezone_json->valuestring);
 
   cJSON* forecast_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "forecast");
   size_t forecast_size = strlen(forecast_json->valuestring);
   info->forecast_url = malloc(forecast_size + 1);
+	if (!info->forecast_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(info->forecast_url, forecast_json->valuestring);
 
   cJSON* county_json =
@@ -59,6 +75,10 @@ bool init_station(char station_id[restrict static 1],
       cJSON_GetObjectItemCaseSensitive(properties_json, "fireWeatherZone");
   size_t fireweather_size = strlen(fire_weather_zone_json->valuestring);
   info->fire_weather_zone_url = malloc(fireweather_size + 1);
+	if (!info->fire_weather_zone_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   strcpy(info->fire_weather_zone_url, fire_weather_zone_json->valuestring);
 
   free(station_url);

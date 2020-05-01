@@ -45,7 +45,7 @@ bool print_alerts_json(char station_id[restrict static 1]) {
 		sprintf(alerts_url, "%s%s", "https://api.weather.gov/alerts/active/zone/",
           zinfo.id);
 	} else {
-		fprintf(stderr, "Fatal Error: Not enough memory");
+		fprintf(stderr, "Fatal Error: No available memory\n");
 		return false;
 	}
 
