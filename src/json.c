@@ -25,8 +25,9 @@ cJSON* json_init(char const url[restrict static 1]) {
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)&chunk);
     CURLcode res = curl_easy_perform(curl_handle);
     if (res != CURLE_OK) {
-      fprintf(stderr, "curl_easy_perform() failed: %s\n",
+      fprintf(stderr, "Network Error: %s\n",
               curl_easy_strerror(res));
+			exit(1);
     } else {
       json = cJSON_Parse(chunk.memory);
     }

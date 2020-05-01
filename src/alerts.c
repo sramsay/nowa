@@ -40,9 +40,15 @@ bool print_alerts_json(char station_id[restrict static 1]) {
     return false;
   }
 
-  char* alerts_url = malloc(50);
-  sprintf(alerts_url, "%s%s", "https://api.weather.gov/alerts/active/zone/",
+  char* alerts_url = malloc(50 * sizeof(char));
+	if (alerts_url) {
+		sprintf(alerts_url, "%s%s", "https://api.weather.gov/alerts/active/zone/",
           zinfo.id);
+	} else {
+		fprintf(stderr, "Fatal Error: Not enough memory");
+		return false;
+	}
+
   cJSON* alerts_json = json_init(alerts_url);
   char* output = cJSON_Print(alerts_json);
   puts(output);
