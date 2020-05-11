@@ -29,12 +29,15 @@ int main(int argc, char *argv[]) {
       {"json", no_argument, 0, 'j'},
       {0, 0, 0, 0}};
 
-  int option_index = 0;
+	extern int optind;
+	extern char* optarg;
+	char* station = {0};
   bool json_output = false;
+	bool conditions = false;
 
   for (;;) {
     int opt =
-        getopt_long(argc, argv, "hVc:s:l:f:a:j", long_options, &option_index);
+        getopt_long(argc, argv, "hVc:s:l:f:a:j", long_options, &optind);
 
     if (opt == -1) {
       break;
@@ -60,11 +63,8 @@ int main(int argc, char *argv[]) {
         }
         break;
       case 'c':
-        if (json_output) {
-          print_conditions_json(optarg);
-        } else if (!print_conditions(optarg)) {
-          return EXIT_FAILURE;
-        }
+				conditions = true;
+				station = optarg;
         break;
       case 'f':
         if (json_output) {
@@ -84,6 +84,23 @@ int main(int argc, char *argv[]) {
         print_usage();
     }
   }
+
+	if (json_output) {
+		if (conditions) {
+			if (!print_conditions_json(station)) {
+				return EXIT_FAILURE;
+			}
+		}
+	} else {
+		if (conditions) {
+			if (!print_conditions(station)) {
+				return EXIT_FAILURE;
+			}
+		}
+	}
+
+
+
   return EXIT_SUCCESS;
 }
 

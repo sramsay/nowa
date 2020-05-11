@@ -1,3 +1,5 @@
+#include "license.h"
+
 #include <config.h>
 #include <stdio.h>
 

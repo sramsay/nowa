@@ -74,4 +74,3 @@ build
 
 compile_commands.json
 coverity_model.c
-/src/third_party/.dirstamp
