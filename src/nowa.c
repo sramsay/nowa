@@ -19,9 +19,8 @@ int main(int argc, char *argv[]) {
 	}
 
   static struct option long_options[] = {
-      {"help", no_argument, (void *)0, 'h'},
-      {"version", no_argument, (void *)0, 'V'},
-      {"stationid", required_argument, 0, 's'},
+      {"help", no_argument, 0, 'h'},
+      {"version", no_argument, 0, 'V'},
       {"list-stations", required_argument, 0, 'l'},
       {"conditions", required_argument, 0, 'c'},
       {"forecast", required_argument, 0, 'f'},
@@ -29,15 +28,19 @@ int main(int argc, char *argv[]) {
       {"json", no_argument, 0, 'j'},
       {0, 0, 0, 0}};
 
-	extern int optind;
+	int option_index = 0;;
 	extern char* optarg;
-	char* station = {0};
-  bool json_output = false;
+  bool json = false;
+	bool list_stations = false;
 	bool conditions = false;
+	bool forecast = false;
+	bool alerts = false;
+	char* station = {0};
+	char* lat_long = {0};
 
   for (;;) {
     int opt =
-        getopt_long(argc, argv, "hVc:s:l:f:a:j", long_options, &optind);
+        getopt_long(argc, argv, "hVjc:l:f:a:", long_options, &option_index);
 
     if (opt == -1) {
       break;
@@ -53,53 +56,66 @@ int main(int argc, char *argv[]) {
         print_version();
         break;
       case 'j':
-        json_output = true;
+        json = true;
         break;
       case 'l':
-        if (json_output) {
-          print_stations_json(optarg);
-        } else if (!print_stations(optarg)) {
-          return EXIT_FAILURE;
-        }
+				list_stations = true;
+				lat_long = optarg;
         break;
       case 'c':
 				conditions = true;
 				station = optarg;
         break;
       case 'f':
-        if (json_output) {
-          print_forecast_json(optarg);
-        } else if (!print_forecast(optarg)) {
-          return EXIT_FAILURE;
-        }
+				forecast = true;
+				station = optarg;
         break;
       case 'a':
-        if (json_output) {
-          print_alerts_json(optarg);
-        } else if (!print_alerts(optarg)) {
-          return EXIT_FAILURE;
-        }
+				alerts = true;
+				station = optarg;
         break;
       default:
         print_usage();
     }
   }
 
-	if (json_output) {
-		if (conditions) {
+	if (json) {
+		if (list_stations) {
+			if (!print_stations_json(lat_long)) {
+			return EXIT_FAILURE;
+			}
+		} else if (conditions) {
 			if (!print_conditions_json(station)) {
+				return EXIT_FAILURE;
+			}
+		} else if (forecast) {
+			if (!print_forecast_json(station)) {
+				return EXIT_FAILURE;
+			}
+		} else if (alerts) {
+			if (!print_alerts_json(station)) {
 				return EXIT_FAILURE;
 			}
 		}
 	} else {
-		if (conditions) {
+		if (list_stations) {
+			if (!print_stations(lat_long)) {
+			return EXIT_FAILURE;
+			}
+		} else if (conditions) {
 			if (!print_conditions(station)) {
+				return EXIT_FAILURE;
+			}
+		} else if (forecast) {
+			if (!print_forecast(station)) {
+				return EXIT_FAILURE;
+			}
+		} else if (alerts) {
+			if (!print_alerts(station)) {
 				return EXIT_FAILURE;
 			}
 		}
 	}
-
-
 
   return EXIT_SUCCESS;
 }
@@ -111,4 +127,11 @@ static void print_usage(void) {
   puts("Options:");
   puts("  -h  --help     Print this message");
   puts("  -V  --version  Print version number and license info");
+	puts("");
+	puts("  -l  --list-stations [lat,long]   Retrieve list of area stations");
+	puts("  -c  --conditions [stationid]     Current conditions");
+	puts("  -f  --forecast [stationid]       7-day forecast");
+	puts("  -a  --alerts [stationid]         Active alerts (if any)");
+	puts("");
+	puts("  -j  --json                       Raw JSON output from NWS");
 }

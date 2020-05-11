@@ -1,6 +1,6 @@
 #ifndef INCLUDE_LICENSE
 #define INCLUDE_LICENSE
 
-void print_version();
+void print_version(void);
 
 #endif

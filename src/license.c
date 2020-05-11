@@ -3,7 +3,7 @@
 #include <config.h>
 #include <stdio.h>
 
-void print_version() {
+void print_version(void) {
   printf("%s %s\n", PACKAGE, PACKAGE_VERSION);
   printf("Copyright © %s by Stephen Ramsay\n", COPYRIGHT_DATES);
   printf(
