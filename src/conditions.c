@@ -73,7 +73,11 @@ bool print_conditions(char station_id[restrict static 1]) {
 
 
 bool print_conditions_json(char station_id[restrict static 1]) {
-  char* conditions_url = {0};
+  char* conditions_url = malloc(60);
+	if (!conditions_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
   if (!construct_conditions_url(station_id, &conditions_url)) {
     fprintf(stderr, "Error: %s\n", "Unable to construction conditions URL.");
     return false;
@@ -81,9 +85,10 @@ bool print_conditions_json(char station_id[restrict static 1]) {
   cJSON* conditions_json = json_init(conditions_url);
   char* output = cJSON_Print(conditions_json);
   puts(output);
-  free(conditions_url);
   cJSON_Delete(conditions_json);
+
   free(output);
+	free(conditions_url);
 
   return true;
 }

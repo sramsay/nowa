@@ -10,11 +10,14 @@
 
 bool init_conditions(char station_id[restrict static 1],
                      struct current_conditions* current) {
-  char* conditions_url = {0};
-  if (!construct_conditions_url(station_id, &conditions_url)) {
-    fprintf(stderr, "Error: %s\n", "Unable to construct conditions URL.");
-    return false;
-  }
+  char* conditions_url = malloc(60);
+	if (!conditions_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		return false;
+	}
+  sprintf(conditions_url, "%s%s%s", "https://api.weather.gov/stations/",
+          station_id, "/observations/latest");
+
   cJSON* conditions_json = json_init(conditions_url);
 
   cJSON* properties_json =
@@ -170,20 +173,16 @@ bool init_conditions(char station_id[restrict static 1],
   return true;
 }
 
+bool construct_conditions_url(char station_id[restrict static 1],
+                              char* conditions_url[]) {
+  sprintf(*conditions_url, "%s%s%s", "https://api.weather.gov/stations/",
+          station_id, "/observations/latest");
+  return true;
+}
+
 void cleanup_conditions(struct current_conditions* current) {
 	free(current->timestamp);
 	free(current->metar);
   free(current->summary);
 }
 
-bool construct_conditions_url(char station_id[restrict static 1],
-                              char* conditions_url[static 1]) {
-  *conditions_url = malloc(60);
-	if (!conditions_url) {
-		fprintf(stderr, "Fatal Error: No available memory\n");
-		return false;
-	}
-  sprintf(*conditions_url, "%s%s%s", "https://api.weather.gov/stations/",
-          station_id, "/observations/latest");
-  return true;
-}

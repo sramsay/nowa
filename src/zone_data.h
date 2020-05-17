@@ -1,7 +1,7 @@
 #ifndef ALERTS_INCLUDED
 #define ALERTS_INCLUDED
 
-typedef struct alerts alerts
+typedef struct alerts alerts;
 
     struct alerts {
   char* headline;
