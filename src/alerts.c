@@ -9,8 +9,6 @@
 #include "third_party/cJSON.h"
 #include "zoneinfo_data.h"
 
-extern size_t alerts_count;
-
 bool print_alerts(char station_id[restrict static 1]) {
   struct alert* alerts = init_alerts(station_id);
 

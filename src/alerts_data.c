@@ -9,6 +9,8 @@
 #include "third_party/cJSON.h"
 #include "zoneinfo_data.h"
 
+size_t alerts_count;
+
 struct alert* init_alerts(char station_id[restrict static 1]) {
   struct zoneinfo zinfo = {0};
   if (!init_zoneinfo(station_id, &zinfo)) {

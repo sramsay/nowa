@@ -8,6 +8,8 @@
 #include "points_data.h"
 #include "third_party/cJSON.h"
 
+size_t station_count;
+
 struct station* init_station_list(char lat_long[restrict static 1]) {
   struct points_info points = {0};
   if (!init_points(lat_long, &points)) {

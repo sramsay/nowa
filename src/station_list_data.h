@@ -12,6 +12,6 @@ struct station {
 
 struct station* init_station_list(char lat_long[restrict static 1]);
 
-size_t station_count;
+extern size_t station_count;
 
 #endif

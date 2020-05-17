@@ -14,6 +14,6 @@ struct alert {
 
 struct alert* init_alerts(char zone_id[restrict static 1]);
 
-size_t alerts_count;
+extern size_t alerts_count;
 
 #endif
