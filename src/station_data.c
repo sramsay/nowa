@@ -17,6 +17,13 @@ bool init_station(char station_id[restrict static 1],
   sprintf(station_url, "%s%s", "https://api.weather.gov/stations/", station_id);
   cJSON* station_json = json_init(station_url);
 
+	cJSON* status = cJSON_GetObjectItemCaseSensitive(station_json, "status");
+	if (status != NULL && status->valueint == 404) {
+		cJSON* detail = cJSON_GetObjectItemCaseSensitive(station_json, "detail");
+		fprintf(stderr, "%s.\n", detail->valuestring);
+		return false;
+	}
+
   cJSON* geometry_json =
       cJSON_GetObjectItemCaseSensitive(station_json, "geometry");
   cJSON* coordinates_json =
