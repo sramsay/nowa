@@ -61,7 +61,7 @@ bool init_conditions(char station_id[restrict static 1],
       cJSON_GetObjectItemCaseSensitive(properties_json, "temperature");
   cJSON* temperature_value_json =
       cJSON_GetObjectItemCaseSensitive(temperature_json, "value");
-  current->temperature = temperature_value_json->valuedouble;
+   current->temperature = temperature_value_json->valuedouble;
 
 	// Dewpoint
   cJSON* dewpoint_json =
