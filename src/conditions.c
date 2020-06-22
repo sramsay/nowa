@@ -46,9 +46,9 @@ bool print_conditions(char station_id[restrict static 1]) {
 		printf("   Heat Index: %.1f\u00B0F\n", ftemp(current->heat_index));
 	}
 	if (current->wind_speed > 0.0) {
-		printf("   Wind: From the %s (%d\u00B0) at %.1f mph", bearing_to_compass_dir(current->wind_direction), current->wind_direction, mps_to_mph(current->wind_speed));
+		printf("   Wind: From the %s (%d\u00B0) at %.1f mph", bearing_to_compass_dir(current->wind_direction), current->wind_direction, kph_to_mph(current->wind_speed));
 		if (current->wind_gust > 0.0) {
-			printf(", gusting to %.1f mph\n", mps_to_mph(current->wind_gust));
+			printf(", gusting to %.1f mph\n", kph_to_mph(current->wind_gust));
 		} else {
 			printf("\n");
 		}
