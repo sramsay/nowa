@@ -54,6 +54,12 @@ double mps_to_mph(double mps) {
 }
 
 
+double kph_to_mph(double kph) {
+	double mph = kph / 1.609344;
+	return mph;
+}
+
+
 char lat_dir(double latitude) {
   if (latitude >= 0.0) {
     return 'N';
