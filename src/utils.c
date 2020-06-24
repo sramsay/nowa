@@ -179,7 +179,7 @@ double pa_to_mb(int pascals) {
 
 
 char* latlong_string(double latitude, double longitude) {
-	char* lat_long = malloc(17 * sizeof(char));
+	char* lat_long = malloc(25 * sizeof(char));
 	if (!lat_long) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
 		exit(1);
