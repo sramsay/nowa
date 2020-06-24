@@ -6,6 +6,7 @@
 typedef struct points_info points_info;
 
 struct points_info {
+	char cwa[4];
   char* forecast_url;
   char* forecast_hourly_url;
   char* forecast_grid_data_url;

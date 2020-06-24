@@ -26,6 +26,9 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   cJSON* properties_json =
       cJSON_GetObjectItemCaseSensitive(points_json, "properties");
 
+	cJSON* cwa_json = cJSON_GetObjectItemCaseSensitive(properties_json, "cwa");
+	strcpy(points->cwa, cwa_json->valuestring);
+
   cJSON* forecast_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "forecast");
   size_t forecast_size = strlen(forecast_url_json->valuestring);
@@ -164,8 +167,8 @@ bool construct_points_url(char lat_long[restrict static 1],
   pcre2_substring_get_bynumber(match_data, 2, &(longitude_match),
                                &longitude_length);
   char* end = {0};
-  assert(latitude_length <= 10);
-  assert(longitude_length <= 10);
+  assert(latitude_length <= 11);
+  assert(longitude_length <= 11);
   // Converting these strings to actual doubles so we can set precision and
   // truncate zeros
   double latitude = strtod((const char*)latitude_match, &end);
