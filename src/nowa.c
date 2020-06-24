@@ -6,6 +6,7 @@
 #include "alerts.h"
 #include "conditions.h"
 #include "forecast.h"
+#include "air_quality.h"
 #include "license.h"
 #include "station_list.h"
 
@@ -24,7 +25,8 @@ int main(int argc, char *argv[]) {
       {"list-stations", required_argument, 0, 'l'},
       {"conditions", required_argument, 0, 'c'},
       {"forecast", required_argument, 0, 'f'},
-      {"alerts", required_argument, 0, 'a'},
+			{"air-quality", required_argument, 0, 'a'},
+      {"alerts", required_argument, 0, 'x'},
       {"json", no_argument, 0, 'j'},
       {0, 0, 0, 0}};
 
@@ -34,13 +36,14 @@ int main(int argc, char *argv[]) {
 	bool list_stations = false;
 	bool conditions = false;
 	bool forecast = false;
+	bool air_quality = false;
 	bool alerts = false;
 	char* station = {0};
 	char* lat_long = {0};
 
   for (;;) {
     int opt =
-        getopt_long(argc, argv, "hVjc:l:f:a:", long_options, &option_index);
+        getopt_long(argc, argv, "hVjc:l:f:a:x:", long_options, &option_index);
 
     if (opt == -1) {
       break;
@@ -70,7 +73,11 @@ int main(int argc, char *argv[]) {
 				forecast = true;
 				station = optarg;
         break;
-      case 'a':
+			case 'a':
+				air_quality = true;
+				station = optarg;
+				break;
+      case 'x':
 				alerts = true;
 				station = optarg;
         break;
@@ -108,6 +115,10 @@ int main(int argc, char *argv[]) {
 			}
 		} else if (forecast) {
 			if (!print_forecast(station)) {
+				return EXIT_FAILURE;
+			}
+		} else if (air_quality) {
+			if (!print_air_quality(station)) {
 				return EXIT_FAILURE;
 			}
 		} else if (alerts) {
