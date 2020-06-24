@@ -16,5 +16,6 @@ int convert_iso8601(const char date_string[restrict static 1],
 const char* bearing_to_compass_dir(int bearing);
 char* comfort_scale(double dewpoint);
 double pa_to_mb(int pascals);
+char* latlong_string(double latitude, double longitude);
 
 #endif

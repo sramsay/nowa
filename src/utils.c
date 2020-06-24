@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #define C1 32.0
 #define C2 5.0
@@ -175,4 +176,18 @@ double pa_to_mb(int pascals) {
 
 	return pressure;
 }
+
+
+char* latlong_string(double latitude, double longitude) {
+	char* lat_long = malloc(17 * sizeof(char));
+	if (!lat_long) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+		exit(1);
+	}
+
+	sprintf(lat_long, "%.4f,%.4f", latitude, longitude);
+
+	return lat_long;
+}
+
 
