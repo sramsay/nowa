@@ -6,7 +6,7 @@
 #include "alerts.h"
 #include "conditions.h"
 #include "forecast.h"
-#include "air_quality.h"
+#include "product.h"
 #include "license.h"
 #include "station_list.h"
 
@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
       {"list-stations", required_argument, 0, 'l'},
       {"conditions", required_argument, 0, 'c'},
       {"forecast", required_argument, 0, 'f'},
+			{"discussion", required_argument, 0, 'd'},
 			{"air-quality", required_argument, 0, 'a'},
       {"alerts", required_argument, 0, 'x'},
       {"json", no_argument, 0, 'j'},
@@ -36,6 +37,7 @@ int main(int argc, char *argv[]) {
 	bool list_stations = false;
 	bool conditions = false;
 	bool forecast = false;
+	bool discussion = false;
 	bool air_quality = false;
 	bool alerts = false;
 	char* station = {0};
@@ -43,7 +45,7 @@ int main(int argc, char *argv[]) {
 
   for (;;) {
     int opt =
-        getopt_long(argc, argv, "hVjc:l:f:a:x:", long_options, &option_index);
+        getopt_long(argc, argv, "hVjc:l:f:d:a:x:", long_options, &option_index);
 
     if (opt == -1) {
       break;
@@ -71,6 +73,10 @@ int main(int argc, char *argv[]) {
         break;
       case 'f':
 				forecast = true;
+				station = optarg;
+        break;
+      case 'd':
+				discussion = true;
 				station = optarg;
         break;
 			case 'a':
@@ -117,8 +123,12 @@ int main(int argc, char *argv[]) {
 			if (!print_forecast(station)) {
 				return EXIT_FAILURE;
 			}
+		} else if (discussion) {
+			if (!print_product(station, "AFD")) {
+				return EXIT_FAILURE;
+			}
 		} else if (air_quality) {
-			if (!print_air_quality(station)) {
+			if (!print_product(station, "AQI")) {
 				return EXIT_FAILURE;
 			}
 		} else if (alerts) {
@@ -142,7 +152,8 @@ static void print_usage(void) {
 	puts("  -l  --list-stations [lat,long]   Retrieve list of area stations");
 	puts("  -c  --conditions [stationid]     Current conditions");
 	puts("  -f  --forecast [stationid]       7-day forecast");
-	puts("  -a  --alerts [stationid]         Active alerts (if any)");
+	puts("  -d  --discussion [stationid]     Scientific forecast discussion");
+	puts("  -x  --alerts [stationid]         Active alerts (if any)");
 	puts("");
 	puts("  -j  --json                       Raw JSON output from NWS");
 }
