@@ -79,7 +79,7 @@ bool print_conditions_json(char station_id[restrict static 1]) {
 		return false;
 	}
   if (!construct_conditions_url(station_id, &conditions_url)) {
-    fprintf(stderr, "Error: %s\n", "Unable to construction conditions URL.");
+    fprintf(stderr, "Error: %s\n", "Unable to construct conditions URL.");
     return false;
   }
   cJSON* conditions_json = json_init(conditions_url);

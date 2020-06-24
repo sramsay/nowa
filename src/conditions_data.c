@@ -15,8 +15,7 @@ bool init_conditions(char station_id[restrict static 1],
 		fprintf(stderr, "Fatal Error: No available memory\n");
 		return false;
 	}
-  sprintf(conditions_url, "%s%s%s", "https://api.weather.gov/stations/",
-          station_id, "/observations/latest");
+	construct_conditions_url(station_id, &conditions_url);
 
   cJSON* conditions_json = json_init(conditions_url);
 
@@ -162,7 +161,7 @@ bool init_conditions(char station_id[restrict static 1],
   size_t summary_size = strlen(text_description_json->valuestring);
   current->summary = malloc(summary_size + 1);
 	if (!current->summary) {
-		fprintf(stderr, "Fatal Error: No available memory\n");
+		fprintf(stderr, "Fatal Error: No available memory.\n");
 		return false;
 	}
   strcpy(current->summary, text_description_json->valuestring);
@@ -185,4 +184,3 @@ void cleanup_conditions(struct current_conditions* current) {
 	free(current->metar);
   free(current->summary);
 }
-
