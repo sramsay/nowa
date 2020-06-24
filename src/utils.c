@@ -188,5 +188,3 @@ char* latlong_string(double latitude, double longitude) {
 
 	return lat_long;
 }
-
-
