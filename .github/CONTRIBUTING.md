@@ -4,7 +4,7 @@ Forthcoming . . .
 
 ## Bugs, Feature Requests, and Other Issues
 
-First, check to make sure that your issue isn't [already addressed](https://github.com/sramsay/temper/issues/) somewhere.  If you're reasonably confident that it isn't, [create an issue](https://github.com/sramsay/temper/issues/new/choose).  Please note that you need a [GitHub account](https://github.com/signup/free) in order to do this.
+First, check to make sure that your issue isn't [already addressed](https://github.com/sramsay/nowa/issues/) somewhere.  If you're reasonably confident that it isn't, [create an issue](https://github.com/sramsay/nowa/issues/new/choose).  Please note that you need a [GitHub account](https://github.com/signup/free) in order to do this.
 
 ## Describe your issue
 
