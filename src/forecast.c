@@ -37,14 +37,14 @@ bool print_forecast(char station_id[restrict static 1]) {
   char lngdir = lng_dir(sinfo.longitude);
   printf("%s %c, %s %c\n", dms_latitude, latdir, dms_longitude, lngdir);
 
-  char* update_string = malloc(55 * sizeof(char));
+  char* update_string = malloc(61 * sizeof(char));
 	if (!update_string) {
 		fprintf(stderr, "Fatal Error: Not enough memory\n");
 		return false;
 	}
   long ts = mktime(&last_updated) - timezone;
   localtime_r(&ts, &last_updated);
-  strftime(update_string, 55, "Last Updated: %A, %d %B %Y, %I:%M:%S %p %Z",
+  strftime(update_string, 61, "Last Updated: %A, %d %B %Y, %I:%M:%S %p %Z",
            &last_updated);
 
 	printf("%s\n\n", update_string);

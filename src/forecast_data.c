@@ -37,7 +37,10 @@ bool init_forecast(char station_id[restrict static 1], struct tm* last_updated,
   cJSON* updated_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "updated");
 
-  char* timestamp = updated_json->valuestring;
+	size_t timestamp_size = strlen(updated_json->valuestring);
+	char* timestamp = malloc(timestamp_size + 1);
+	strcpy(timestamp, updated_json->valuestring);
+
   convert_iso8601(timestamp, last_updated);
 
   cJSON* periods_json =
@@ -67,6 +70,7 @@ bool init_forecast(char station_id[restrict static 1], struct tm* last_updated,
     count++;
   }
 
+	free(timestamp);
 	cleanup_station_info(&sinfo);
 	cleanup_points(&points);
   cJSON_Delete(forecast_json);
