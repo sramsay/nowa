@@ -33,6 +33,7 @@ bool init_product(char station_id[restrict static 1],
 	pd->product_name = malloc(product_name_size + 1);
 	if (!pd->product_name) {
 		fprintf(stderr, "Fata Error: No available memory.");
+		free(product_list_url);
 		return false;
 	}
 	strcpy(pd->product_name, product_name_json->valuestring);
@@ -41,6 +42,7 @@ bool init_product(char station_id[restrict static 1],
 	pd->product_text = malloc(product_text_size + 1);
 	if (!pd->product_text) {
 		fprintf(stderr, "Fata Error: No available memory.");
+		free(product_list_url);
 		return false;
 	}
 	strcpy(pd->product_text, product_text_json->valuestring);
