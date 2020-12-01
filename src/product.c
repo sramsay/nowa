@@ -15,11 +15,13 @@ bool print_product(char station_id[restrict static 1], char* product_code) {
 	struct product* pd = malloc(sizeof(struct product));
 	if (!pd) {
 		fprintf(stderr, "Fatal Error: No available memory.\n");
+		free(pd);
 		return false;
 	}
 
   if (!init_product(station_id, pd, product_code)) {
     fprintf(stderr, "Error: %s", "Unable to retrieve air quality index.\n");
+		free(pd);
     return false;
   }
 
