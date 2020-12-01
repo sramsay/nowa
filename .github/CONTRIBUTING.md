@@ -16,7 +16,6 @@ Try to describe your issue as clearly as possible.
 
     - If you found a compilation error, please tell us which **compiler** (version and operating system) you used and paste the (relevant part of) the error messages to the ticket.
 
-
 <!--
 If you add or change a feature, please also add an appropriate test.  The testing framework uses [Catch2](https://github.com/catchorg/Catch2) for unit testing, and [Bats](https://github.com/sstephenson/bats) for testing command-line inputs.  You can compile and run the existing tests with:
 
