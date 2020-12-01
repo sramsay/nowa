@@ -40,6 +40,8 @@ bool print_forecast(char station_id[restrict static 1]) {
   char* update_string = malloc(55 * sizeof(char));
 	if (!update_string) {
 		fprintf(stderr, "Fatal Error: Not enough memory\n");
+		free(dms_latitude);
+		free(dms_longitude);
 		return false;
 	}
   long ts = mktime(&last_updated) - timezone;
