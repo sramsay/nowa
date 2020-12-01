@@ -1,0 +1,22 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/buildpack-deps:eoan
+    steps:
+      - checkout
+      - run:
+          name: "Update"
+          command: sudo apt-get update
+      - run: 
+          name: "Create build files"
+          command: |
+            ./bootstrap.sh
+      - run:
+          name: "Configure"
+          command: |
+            ./configure
+      - run:
+          name: "Build"
+          command: |
+            make
