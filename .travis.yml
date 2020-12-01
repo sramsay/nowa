@@ -6,7 +6,7 @@ os: linux
 language: c
 
 before_install:
-	- sudo apt-get -y install libpcre2-dev
+  - sudo apt-get -y install libpcre2-dev
 
 matrix:
   include:
