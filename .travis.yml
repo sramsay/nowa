@@ -1,0 +1,17 @@
+dist: bionic
+group: travis_latest
+version: ~> 1.0
+
+os: linux
+language: c
+
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+    - os: linux
+      compiler: clang
+
+script:
+  - ./bootstrap.sh
+  - ./configure && make
