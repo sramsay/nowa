@@ -21,6 +21,7 @@ bool print_product(char station_id[restrict static 1], char* product_code) {
 
   if (!init_product(station_id, pd, product_code)) {
     fprintf(stderr, "Error: %s", "Unable to retrieve air quality index.\n");
+		free(pd);
     return false;
   }
 
