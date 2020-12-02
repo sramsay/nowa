@@ -47,11 +47,7 @@ bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo* info) {
 		return false;
 	}
   //strcpy(info->state, state_json->valuestring);
-  size_t length = strlcpy(info->state, state_json->valuestring, sizeof(info->state));
-	if (length < sizeof(info->state)) {
-		fprintf(stderr, "Fatal Error: Unable to copy string\n");
-		return false;
-	}
+  strcpy(info->state, state_json->valuestring);
 
 	cleanup_station_info(&sinfo);
   cJSON_Delete(zone_json);
