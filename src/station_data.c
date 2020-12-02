@@ -22,10 +22,12 @@ bool init_station(char station_id[restrict static 1],
 	if (status != NULL && status->valueint == 404) {
 		cJSON* detail = cJSON_GetObjectItemCaseSensitive(station_json, "detail");
 		fprintf(stderr, "%s.\n", detail->valuestring);
+		free(station_url);
 		return false;
 	} else if (status != NULL && status->valueint == 500) {
 		cJSON* detail = cJSON_GetObjectItemCaseSensitive(station_json, "detail");
 		fprintf(stderr, "%s\n", detail->valuestring);
+		free(station_url);
 		return false;
 	}
 
@@ -53,6 +55,7 @@ bool init_station(char station_id[restrict static 1],
   info->name = malloc(name_size + 1);
 	if (!info->name) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(station_url);
 		return false;
 	}
   strcpy(info->name, name_json->valuestring);
@@ -63,6 +66,7 @@ bool init_station(char station_id[restrict static 1],
   info->timezone = malloc(timezone_size + 1);
 	if (!info->timezone) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(station_url);
 		return false;
 	}
   strcpy(info->timezone, timezone_json->valuestring);
@@ -73,6 +77,7 @@ bool init_station(char station_id[restrict static 1],
   info->forecast_url = malloc(forecast_size + 1);
 	if (!info->forecast_url) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(station_url);
 		return false;
 	}
   strcpy(info->forecast_url, forecast_json->valuestring);
@@ -89,6 +94,7 @@ bool init_station(char station_id[restrict static 1],
   info->fire_weather_zone_url = malloc(fireweather_size + 1);
 	if (!info->fire_weather_zone_url) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(station_url);
 		return false;
 	}
   strcpy(info->fire_weather_zone_url, fire_weather_zone_json->valuestring);

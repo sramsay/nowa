@@ -46,6 +46,7 @@ bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo* info) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
 		return false;
 	}
+  //strcpy(info->state, state_json->valuestring);
   strcpy(info->state, state_json->valuestring);
 
 	cleanup_station_info(&sinfo);

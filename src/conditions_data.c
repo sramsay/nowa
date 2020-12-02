@@ -13,6 +13,7 @@ bool init_conditions(char station_id[restrict static 1],
   char* conditions_url = malloc(60);
 	if (!conditions_url) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(conditions_url);
 		return false;
 	}
 	construct_conditions_url(station_id, &conditions_url);
@@ -145,6 +146,7 @@ bool init_conditions(char station_id[restrict static 1],
 	current->timestamp = malloc(timestamp_size + 1);
 	if (!current->timestamp) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(conditions_url);
 		return false;
 	}
   strcpy(current->timestamp, timestamp_json->valuestring);
@@ -162,6 +164,7 @@ bool init_conditions(char station_id[restrict static 1],
   current->summary = malloc(summary_size + 1);
 	if (!current->summary) {
 		fprintf(stderr, "Fatal Error: No available memory.\n");
+		free(conditions_url);
 		return false;
 	}
   strcpy(current->summary, text_description_json->valuestring);

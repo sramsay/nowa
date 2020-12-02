@@ -48,27 +48,35 @@ bool init_forecast(char station_id[restrict static 1], struct tm* last_updated,
 
   cJSON* period_json = {0};
   int count = 0;
-  cJSON_ArrayForEach(period_json, periods_json) {
-    cJSON* name_json = cJSON_GetObjectItemCaseSensitive(period_json, "name");
-    size_t name_size = strlen(name_json->valuestring);
-    forecasts[count].name = malloc(name_size + 1);
-		if (!forecasts[count].name) {
-			fprintf(stderr, "Fatal Error: No available memory\n");
-			return false;
+	if (periods_json) {
+		cJSON_ArrayForEach(period_json, periods_json) {
+			cJSON* name_json = cJSON_GetObjectItemCaseSensitive(period_json, "name");
+			size_t name_size = strlen(name_json->valuestring);
+			forecasts[count].name = malloc(name_size + 1);
+			if (!forecasts[count].name) {
+				fprintf(stderr, "Fatal Error: No available memory\n");
+				free(timestamp);
+				return false;
+			}
+			strcpy(forecasts[count].name, name_json->valuestring);
+			cJSON* detailed_forecast_json =
+					cJSON_GetObjectItemCaseSensitive(period_json, "detailedForecast");
+			size_t detailed_forecast_size = strlen(detailed_forecast_json->valuestring);
+			forecasts[count].detailed_forecast = malloc(detailed_forecast_size + 1);
+			if (!forecasts[count].detailed_forecast) {
+				fprintf(stderr, "Fatal Error: No available memory\n");
+				free(timestamp);
+				return false;
+			}
+			strcpy(forecasts[count].detailed_forecast,
+						 detailed_forecast_json->valuestring);
+			count++;
 		}
-    strcpy(forecasts[count].name, name_json->valuestring);
-    cJSON* detailed_forecast_json =
-        cJSON_GetObjectItemCaseSensitive(period_json, "detailedForecast");
-    size_t detailed_forecast_size = strlen(detailed_forecast_json->valuestring);
-    forecasts[count].detailed_forecast = malloc(detailed_forecast_size + 1);
-		if (!forecasts[count].detailed_forecast) {
-			fprintf(stderr, "Fatal Error: No available memory\n");
-			return false;
-		}
-    strcpy(forecasts[count].detailed_forecast,
-           detailed_forecast_json->valuestring);
-    count++;
-  }
+	} else {
+		fprintf(stderr, "Fatal Error: Error in forecast data\n");
+		free(timestamp);
+		return false;
+	}
 
 	free(timestamp);
 	cleanup_station_info(&sinfo);

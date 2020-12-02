@@ -35,6 +35,7 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   points->forecast_url = malloc(forecast_size + 1);
 	if(!points->forecast_url) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(points_url);
 		return false;
 	}
   strcpy(points->forecast_url, forecast_url_json->valuestring);
@@ -45,6 +46,7 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   points->forecast_hourly_url = malloc(forecast_hourly_size + 1);
 	if(!points->forecast_hourly_url) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(points_url);
 		return false;
 	}
   strcpy(points->forecast_hourly_url, forecast_hourly_url_json->valuestring);
@@ -55,6 +57,7 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   points->forecast_grid_data_url = malloc(forecast_grid_size + 1);
 	if(!points->forecast_grid_data_url) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(points_url);
 		return false;
 	}
   strcpy(points->forecast_grid_data_url,
@@ -66,6 +69,7 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   points->observation_stations_url = malloc(observation_size + 1);
 	if(!points->observation_stations_url) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(points_url);
 		return false;
 	}
   strcpy(points->observation_stations_url,
@@ -77,6 +81,7 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   points->forecast_zone_url = malloc(zone_size + 1);
 	if(!points->forecast_zone_url) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(points_url);
 		return false;
 	}
   strcpy(points->forecast_zone_url, forecast_zone_url_json->valuestring);
@@ -87,6 +92,7 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   points->county_url = malloc(county_size + 1);
 	if(!points->county_url) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(points_url);
 		return false;
 	}
   strcpy(points->county_url, county_url_json->valuestring);
@@ -97,6 +103,7 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   points->fire_weather_zone_url = malloc(fire_size + 1);
 	if(!points->fire_weather_zone_url) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(points_url);
 		return false;
 	}
   strcpy(points->fire_weather_zone_url,
@@ -108,6 +115,7 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   points->radar_station = malloc(radar_size + 1);
 	if(!points->radar_station) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
+		free(points_url);
 		return false;
 	}
   strcpy(points->radar_station, radar_station_json->valuestring);
