@@ -10,8 +10,8 @@ static size_t write_memory_callback(void* contents, size_t size, size_t nmemb,
 cJSON* json_init(char const url[restrict static 1]) {
   cJSON* json = {0};
 
-  memory_struct chunk;
-  chunk.memory = malloc(sizeof(memory_struct));
+  struct memory_struct chunk;
+  chunk.memory = malloc(1);
 	if (!chunk.memory) {
 		fprintf(stderr, "Fatal Error: No available memory\n");
 		exit(1);
