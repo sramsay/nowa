@@ -184,7 +184,7 @@ char* latlong_string(double latitude, double longitude) {
 		exit(1);
 	}
 
-	sprintf(lat_long, "%.4f,%.4f", latitude, longitude);
+	snprintf(lat_long, sizeof(lat_long), "%.4f,%.4f", latitude, longitude);
 
 	return lat_long;
 }

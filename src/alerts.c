@@ -40,7 +40,7 @@ bool print_alerts_json(char station_id[restrict static 1]) {
 
   char* alerts_url = malloc(50 * sizeof(char));
 	if (alerts_url) {
-		sprintf(alerts_url, "%s%s", "https://api.weather.gov/alerts/active/zone/",
+		snprintf(alerts_url, sizeof(alerts_url), "%s%s", "https://api.weather.gov/alerts/active/zone/",
           zinfo.id);
 	} else {
 		fprintf(stderr, "Fatal Error: No available memory\n");
