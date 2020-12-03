@@ -3,14 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <string.h>
 
 #define C1 32.0
 #define C2 5.0
 #define C3 9.0
 
 #define TOTAL_MINUTES 60;
-
 
 double ftemp(const double raw_temp) {
   double f_temp = raw_temp * C3 / C2 + C1;

@@ -6,7 +6,6 @@
 #include <time.h>
 
 #include "forecast_data.h"
-#include "station_data.h"
 #include "json.h"
 #include "points_data.h"
 #include "station_data.h"
