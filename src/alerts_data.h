@@ -1,7 +1,6 @@
 #ifndef ALERTS_DATA_INCLUDED
 #define ALERTS_DATA_INCLUDED
 
-#include <stdbool.h>
 #include <stdlib.h>
 
 typedef struct alert alert;
