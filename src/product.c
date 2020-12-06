@@ -18,13 +18,8 @@ bool print_product(char station_id[restrict static 1], char* product_code) {
   }
 
   if (!init_product(station_id, pd, product_code)) {
-<<<<<<< HEAD
-    fprintf(stderr, "Error: %s", "Unable to retrieve requested weather product.\n");
-		free(pd);
-=======
     fprintf(stderr, "Error: %s", "Unable to retrieve requested product.\n");
     free(pd);
->>>>>>> develop
     return false;
   }
 
