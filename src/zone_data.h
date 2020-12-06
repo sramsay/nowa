@@ -3,7 +3,7 @@
 
 typedef struct alerts alerts;
 
-    struct alerts {
+struct alerts {
   char* headline;
   char* description;
   char* instruction;
