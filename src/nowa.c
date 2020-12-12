@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
       case '?':
         break;
       case 'h':
-        print_usage();
+        usage = true;
         break;
       case 'V':
         print_version();
