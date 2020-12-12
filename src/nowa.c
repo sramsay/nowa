@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
       {"air-quality", no_argument, 0, 'a'},
       {"totals", no_argument, 0, 't'},
       {"alerts", no_argument, 0, 'x'},
-      {"hazards", no_argument, 0, 'x'},
+      {"hazards", no_argument, 0, 'z'},
       {"json", no_argument, 0, 'j'},
       {0, 0, 0, 0}};
 
@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
 
   for (;;) {
     int opt =
-        getopt_long(argc, argv, "hVl:cfdazxtj", long_options, &option_index);
+        getopt_long(argc, argv, "hVl:cfdatxzj", long_options, &option_index);
 
     if (opt == -1) {
       break;
