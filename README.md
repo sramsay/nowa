@@ -1,5 +1,5 @@
 <!-- [![GitHub version](https://badge.fury.io/gh/sramsay%2Fnowa.svg)](https://badge.fury.io/gh/sramsay%2Fnowa) -->
-![C/C++ CI](https://github.com/sramsay/nowa/workflows/C/C++%20CI/badge.svg)
+[![C/C++ CI](https://github.com/sramsay/nowa/workflows/C/C++%20CI/badge.svg)]
 [![Build Status](https://travis-ci.org/sramsay/nowa.svg?branch=master)](https://travis-ci.org/sramsay/nowa)
 [![Build Status](https://circleci.com/gh/sramsay/nowa.svg?style=svg)](https://app.circleci.com/github/sramsay/nowa/pipelines?branch=master)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/20428/badge.svg)](https://scan.coverity.com/projects/sramsay-nowa)
