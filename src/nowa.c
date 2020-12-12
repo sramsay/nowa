@@ -19,10 +19,6 @@ int main(int argc, char* argv[]) {
     return EXIT_SUCCESS;
   }
 
-  // TODO: In this formulation, every individual weather switch "takes and
-  // argument" but shouldn't it just return whatever information requested for
-  // a required string argument (the station)?
-
   static struct option long_options[] = {
       {"help", no_argument, 0, 'h'},
       {"version", no_argument, 0, 'V'},
