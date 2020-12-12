@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Update packages
+      run: sudo apt-get update
     - name: Install dependencies
       run: sudo apt-get install libcurl4-openssl-dev
     - name: autoconf
