@@ -27,9 +27,10 @@ int main(int argc, char* argv[]) {
       {"forecast", no_argument, 0, 'f'},
       {"discussion", no_argument, 0, 'd'},
       {"air-quality", no_argument, 0, 'a'},
-      {"totals", no_argument, 0, 't'},
       {"alerts", no_argument, 0, 'x'},
       {"hazards", no_argument, 0, 'z'},
+      {"totals", no_argument, 0, 't'},
+      {"storm-report", no_argument, 0, 'r'},
       {"json", no_argument, 0, 'j'},
       {0, 0, 0, 0}};
 
@@ -42,16 +43,17 @@ int main(int argc, char* argv[]) {
   bool forecast = false;
   bool discussion = false;
   bool air_quality = false;
-  bool totals = false;
   bool alerts = false;
   bool hazards = false;
+  bool totals = false;
+  bool storm_report = false;
   bool usage = false;
   char station[5];
   char* lat_long = {0};
 
   for (;;) {
     int opt =
-        getopt_long(argc, argv, "hVl:cfdatxzj", long_options, &option_index);
+        getopt_long(argc, argv, "hVl:cfdaxztrj", long_options, &option_index);
 
     if (opt == -1) {
       break;
@@ -85,14 +87,17 @@ int main(int argc, char* argv[]) {
       case 'a':
         air_quality = true;
         break;
-      case 't':
-        totals = true;
-        break;
       case 'x':
         alerts = true;
         break;
       case 'z':
         hazards = true;
+        break;
+      case 't':
+        totals = true;
+        break;
+      case 'r':
+        storm_report = true;
         break;
       default:
         print_usage();
@@ -132,13 +137,23 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
       }
     }
+    if (alerts) {
+      if (!print_alerts_json(station)) {
+        return EXIT_FAILURE;
+      }
+    }
+    if (hazards) {
+      if (!print_product_json(station, "HWO")) {
+        return EXIT_FAILURE;
+      }
+    }
     if (totals) {
       if (!print_product_json(station, "CLI")) {
         return EXIT_FAILURE;
       }
     }
-    if (alerts) {
-      if (!print_alerts_json(station)) {
+    if (storm_report) {
+      if (!print_product_json(station, "LSR")) {
         return EXIT_FAILURE;
       }
     }
@@ -169,11 +184,6 @@ int main(int argc, char* argv[]) {
       return EXIT_FAILURE;
     }
   }
-  if (totals) {
-    if (!print_product(station, "CLI")) {
-      return EXIT_FAILURE;
-    }
-  }
   if (alerts) {
     if (!print_alerts(station)) {
       return EXIT_FAILURE;
@@ -181,6 +191,16 @@ int main(int argc, char* argv[]) {
   }
   if (hazards) {
     if (!print_product(station, "HWO")) {
+      return EXIT_FAILURE;
+    }
+  }
+  if (totals) {
+    if (!print_product(station, "CLI")) {
+      return EXIT_FAILURE;
+    }
+  }
+  if (storm_report) {
+    if (!print_product(station, "LSR")) {
       return EXIT_FAILURE;
     }
   }
@@ -204,9 +224,10 @@ static void print_usage(void) {
   puts("  -f  --forecast       7-day forecast");
   puts("  -a  --air-quality    Air quality data");
   puts("  -d  --discussion     Scientific forecast discussion");
-  puts("  -t  --totasl				 Yesterday's totals");
   puts("  -x  --alerts         Active alerts (if any)");
   puts("  -z  --hazards        Hazardous weather outlook");
+  puts("  -t  --totals				 Yesterday's totals");
+  puts("  -r  --storm-report   Local storm report");
   putchar('\n');
   puts("  -l  --list-stations [lat,long]   Retrieve list of area stations");
   putchar('\n');
