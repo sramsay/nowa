@@ -19,9 +19,9 @@ int main(int argc, char* argv[]) {
     return EXIT_SUCCESS;
   }
 
-	// TODO: In this formulation, every individual weather switch "takes and
-	// argument" but shouldn't it just return whatever information requested for
-	// a required string argument (the station)?
+  // TODO: In this formulation, every individual weather switch "takes and
+  // argument" but shouldn't it just return whatever information requested for
+  // a required string argument (the station)?
 
   static struct option long_options[] = {
       {"help", no_argument, 0, 'h'},
@@ -31,7 +31,9 @@ int main(int argc, char* argv[]) {
       {"forecast", no_argument, 0, 'f'},
       {"discussion", no_argument, 0, 'd'},
       {"air-quality", no_argument, 0, 'a'},
+      {"totals", no_argument, 0, 't'},
       {"alerts", no_argument, 0, 'x'},
+      {"hazards", no_argument, 0, 'x'},
       {"json", no_argument, 0, 'j'},
       {0, 0, 0, 0}};
 
@@ -44,14 +46,16 @@ int main(int argc, char* argv[]) {
   bool forecast = false;
   bool discussion = false;
   bool air_quality = false;
+  bool totals = false;
   bool alerts = false;
+  bool hazards = false;
   bool usage = false;
   char station[5];
   char* lat_long = {0};
 
   for (;;) {
     int opt =
-        getopt_long(argc, argv, "hVl:cfdaxj", long_options, &option_index);
+        getopt_long(argc, argv, "hVl:cfdazxtj", long_options, &option_index);
 
     if (opt == -1) {
       break;
@@ -85,8 +89,14 @@ int main(int argc, char* argv[]) {
       case 'a':
         air_quality = true;
         break;
+      case 't':
+        totals = true;
+        break;
       case 'x':
         alerts = true;
+        break;
+      case 'z':
+        hazards = true;
         break;
       default:
         print_usage();
@@ -126,6 +136,11 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
       }
     }
+    if (totals) {
+      if (!print_product_json(station, "CLI")) {
+        return EXIT_FAILURE;
+      }
+    }
     if (alerts) {
       if (!print_alerts_json(station)) {
         return EXIT_FAILURE;
@@ -158,8 +173,18 @@ int main(int argc, char* argv[]) {
       return EXIT_FAILURE;
     }
   }
+  if (totals) {
+    if (!print_product(station, "CLI")) {
+      return EXIT_FAILURE;
+    }
+  }
   if (alerts) {
     if (!print_alerts(station)) {
+      return EXIT_FAILURE;
+    }
+  }
+  if (hazards) {
+    if (!print_product(station, "HWO")) {
       return EXIT_FAILURE;
     }
   }
@@ -183,7 +208,9 @@ static void print_usage(void) {
   puts("  -f  --forecast       7-day forecast");
   puts("  -a  --air-quality    Air quality data");
   puts("  -d  --discussion     Scientific forecast discussion");
+  puts("  -t  --totasl				 Yesterday's totals");
   puts("  -x  --alerts         Active alerts (if any)");
+  puts("  -z  --hazards        Hazardous weather outlook");
   putchar('\n');
   puts("  -l  --list-stations [lat,long]   Retrieve list of area stations");
   putchar('\n');
