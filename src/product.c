@@ -6,7 +6,6 @@
 
 #include "json.h"
 #include "product_data.h"
-#include "station_data.h"
 #include "third_party/cJSON.h"
 
 bool print_product(char station_id[restrict static 1], char* product_code) {
@@ -23,7 +22,7 @@ bool print_product(char station_id[restrict static 1], char* product_code) {
     return false;
   }
 
-  printf("%s", pd->product_name);
+  printf("%s", pd->product_code);
   printf("%s", pd->product_text);
 
   cleanup_product(pd);  // if only . . .

@@ -3,10 +3,8 @@
 
 #include <stdbool.h>
 
-typedef struct product product;
-
 struct product {
-  char* product_name;
+  char* product_code;
   char* product_text;
 };
 

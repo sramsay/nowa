@@ -29,16 +29,16 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
   cJSON* graph_url = cJSON_GetObjectItemCaseSensitive(graph_item_json, "@id");
   cJSON* product_json = json_init(graph_url->valuestring);
 
-  cJSON* product_name_json =
+  cJSON* product_code_json =
       cJSON_GetObjectItemCaseSensitive(product_json, "productName");
-  size_t product_name_size = strlen(product_name_json->valuestring);
-  pd->product_name = malloc(product_name_size + 1);
-  if (!pd->product_name) {
+  size_t product_code_size = strlen(product_code_json->valuestring);
+  pd->product_code = malloc(product_code_size + 1);
+  if (!pd->product_code) {
     fprintf(stderr, "Fata Error: No available memory.");
     free(product_list_url);
     return false;
   }
-  strcpy(pd->product_name, product_name_json->valuestring);
+  strcpy(pd->product_code, product_code_json->valuestring);
   cJSON* product_text_json =
       cJSON_GetObjectItemCaseSensitive(product_json, "productText");
   size_t product_text_size = strlen(product_text_json->valuestring);
@@ -86,6 +86,6 @@ bool construct_product_list_url(char station_id[restrict static 1],
 }
 
 void cleanup_product(struct product* pd) {
-  free(pd->product_name);
+  free(pd->product_code);
   free(pd->product_text);
 }

@@ -56,7 +56,6 @@ struct station* init_station_list(char lat_long[restrict static 1]) {
       fprintf(stderr, "Fatal Error: No available memory\n");
       exit(1);
     }
-
     strcpy(station_list[count].name, name_json->valuestring);
 
     count++;
