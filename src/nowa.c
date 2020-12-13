@@ -119,13 +119,14 @@ int main(int argc, char* argv[]) {
     }
   }
 
-	// This whole block super kludgy.  And annoying.  Must figure out a better way.
+  // This whole block super kludgy.  And annoying.  Must figure out a better
+  // way.
 
   if (!list_stations && !version && !usage) {
     if (optind < argc) {
-			// if (sizeof(station) > sizeof(argv[optind])) {
-				strcpy(station, argv[optind]);
-			// }
+      // if (sizeof(station) > sizeof(argv[optind])) {
+      strcpy(station, argv[optind]);
+      // }
     } else {
       print_usage();
       return EXIT_SUCCESS;
@@ -250,7 +251,7 @@ int main(int argc, char* argv[]) {
     }
   }
   if (list_products) {
-		puts(station);
+    puts(station);
     if (!print_available_products(station)) {
       return EXIT_FAILURE;
     }
