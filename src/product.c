@@ -38,12 +38,14 @@ bool print_product_json(char station_id[restrict static 1],
 
   if (!product_list_url) {
     fprintf(stderr, "Fatal Error: No available memory\n");
+		free(product_list_url);
     return false;
   }
 
   if (!construct_product_list_url(station_id, &product_list_url,
                                   product_code)) {
     fprintf(stderr, "Error: %s\n", "Unable to construct product URL.");
+		free(product_list_url);
     return false;
   }
   cJSON* product_json = json_init(product_list_url);

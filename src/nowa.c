@@ -121,6 +121,7 @@ int main(int argc, char* argv[]) {
 
   if (!list_stations && !version && !usage) {
     if (optind < argc) {
+			if (sizeof(station) >= sizeof(argv[optind]))
       strcpy(station, argv[optind]);
     } else {
       print_usage();
