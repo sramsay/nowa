@@ -44,4 +44,6 @@ bool construct_available_product_list_url(char station_id[restrict static 1], ch
   cleanup_points(&points);
 
   return true;
+	://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
+		/ Continue using product_data.c as a model
 }
