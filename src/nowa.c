@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "alerts.h"
+#include "available_products_list.h"
 #include "conditions.h"
 #include "forecast.h"
 #include "license.h"
@@ -31,14 +32,16 @@ int main(int argc, char* argv[]) {
       {"hazards", no_argument, 0, 'z'},
       {"totals", no_argument, 0, 't'},
       {"storm-report", no_argument, 0, 'r'},
-      {"products", no_argument, 0, 'p'},
+      {"product", required_argument, 0, 'p'},
+      {"list-products", no_argument, 0, 'i'},
       {"json", no_argument, 0, 'j'},
       {0, 0, 0, 0}};
 
   int option_index = 0;
 
   extern char* optarg;
-  bool json = false;
+  bool usage = false;
+  bool version = false;
   bool list_stations = false;
   bool conditions = false;
   bool forecast = false;
@@ -48,14 +51,17 @@ int main(int argc, char* argv[]) {
   bool hazards = false;
   bool totals = false;
   bool storm_report = false;
-  bool usage = false;
-	bool version = false;
+  bool product = false;
+  bool codes = false;
+  bool json = false;
+
   char station[5];
   char* lat_long = {0};
+  char* code = {0};
 
   for (;;) {
-    int opt =
-        getopt_long(argc, argv, "hVl:cfdaxztrj", long_options, &option_index);
+    int opt = getopt_long(argc, argv, "hVl:cfdaxztrp:ij", long_options,
+                          &option_index);
 
     if (opt == -1) {
       break;
@@ -69,9 +75,6 @@ int main(int argc, char* argv[]) {
         break;
       case 'V':
         version = true;
-        break;
-      case 'j':
-        json = true;
         break;
       case 'l':
         list_stations = true;
@@ -101,19 +104,29 @@ int main(int argc, char* argv[]) {
       case 'r':
         storm_report = true;
         break;
+      case 'p':
+        product = true;
+        code = optarg;
+        break;
+      case 'i':
+        codes = true;
+        break;
+      case 'j':
+        json = true;
+        break;
       default:
         print_usage();
     }
   }
 
-	if (!list_stations && !version && !usage) {
-		if (optind < argc) {
-			strcpy(station, argv[optind]);
-		} else {
-			print_usage();
-			return EXIT_SUCCESS;
-		}
-	}
+  if (!list_stations && !version && !usage) {
+    if (optind < argc) {
+      strcpy(station, argv[optind]);
+    } else {
+      print_usage();
+      return EXIT_SUCCESS;
+    }
+  }
 
   if (json) {
     if (list_stations) {
@@ -161,16 +174,16 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
       }
     }
-		return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
   }
 
-	if (version) {
-		print_version();
-		return EXIT_SUCCESS;
-	}
+  if (version) {
+    print_version();
+    return EXIT_SUCCESS;
+  }
   if (usage) {
     print_usage();
-		return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
   }
   if (list_stations) {
     if (!print_stations(lat_long)) {
@@ -217,6 +230,16 @@ int main(int argc, char* argv[]) {
       return EXIT_FAILURE;
     }
   }
+  if (product) {
+    if (!print_product(station, code)) {
+      return EXIT_FAILURE;
+    }
+  }
+  if (codes) {
+    if (!print_available_products(station)) {
+      return EXIT_FAILURE;
+    }
+  }
   return EXIT_SUCCESS;
 }
 
@@ -237,6 +260,8 @@ static void print_usage(void) {
   puts("  -z  --hazards        Hazardous weather outlook");
   puts("  -t  --totals				 Yesterday's totals");
   puts("  -r  --storm-report   Local storm report");
+  puts("  -p  --product        Request NWS product (if available)");
+  puts("  -c  --codes          List available NWS product");
   putchar('\n');
   puts("  -l  --list-stations [lat,long]   Retrieve list of area stations");
   putchar('\n');
