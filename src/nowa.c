@@ -49,6 +49,7 @@ int main(int argc, char* argv[]) {
   bool totals = false;
   bool storm_report = false;
   bool usage = false;
+	bool version = false;
   char station[5];
   char* lat_long = {0};
 
@@ -67,7 +68,7 @@ int main(int argc, char* argv[]) {
         usage = true;
         break;
       case 'V':
-        print_version();
+        version = true;
         break;
       case 'j':
         json = true;
@@ -105,7 +106,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
-	if (!list_stations) {
+	if (!list_stations && !version && !usage) {
 		if (optind < argc) {
 			strcpy(station, argv[optind]);
 		} else {
@@ -163,6 +164,14 @@ int main(int argc, char* argv[]) {
 		return EXIT_SUCCESS;
   }
 
+	if (version) {
+		print_version();
+		return EXIT_SUCCESS;
+	}
+  if (usage) {
+    print_usage();
+		return EXIT_SUCCESS;
+  }
   if (list_stations) {
     if (!print_stations(lat_long)) {
       return EXIT_FAILURE;
@@ -208,10 +217,6 @@ int main(int argc, char* argv[]) {
       return EXIT_FAILURE;
     }
   }
-  if (usage) {
-    print_usage();
-  }
-
   return EXIT_SUCCESS;
 }
 
