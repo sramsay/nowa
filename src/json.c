@@ -30,6 +30,9 @@ cJSON* json_init(char const url[restrict static 1]) {
     CURLcode res = curl_easy_perform(curl_handle);
     if (res != CURLE_OK) {
       fprintf(stderr, "Network Error: %s\n", curl_easy_strerror(res));
+      curl_easy_cleanup(curl_handle);
+      free(chunk.memory);
+      curl_global_cleanup();
       exit(1);
     } else {
       json = cJSON_Parse(chunk.memory);
