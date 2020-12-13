@@ -20,7 +20,7 @@ struct product* init_available_products(char station_id[restrict static 1]) {
     return false;
   }
 
-  construct_available_products_list_url(station_id,
+  construct_available_product_list_url(station_id,
                                         &available_product_list_url);
 
   cJSON* available_product_list_json = json_init(available_product_list_url);
@@ -77,7 +77,7 @@ struct product* init_available_products(char station_id[restrict static 1]) {
   return product_list;
 }
 
-bool construct_available_products_list_url(char station_id[restrict static 1],
+bool construct_available_product_list_url(char station_id[restrict static 1],
                                            char* available_product_list_url[]) {
   struct station_info sinfo = {0};
   if (!init_station(station_id, &sinfo)) {

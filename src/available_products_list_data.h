@@ -13,7 +13,7 @@ struct product {
 
 struct product* init_available_products(char station_id[restrict static 1]);
 
-bool construct_available_products_list_url(char station_id[restrict static 1],
+bool construct_available_product_list_url(char station_id[restrict static 1],
                                            char* available_product_list_url[]);
 
 extern size_t product_count;

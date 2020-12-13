@@ -25,8 +25,21 @@ bool print_available_products(char station_id[restrict static 1]) {
   return true;
 }
 
-/*
-TODO: bool print_forecast_json(char station_id[restrict static 1]) {
+bool print_available_products_json(char station_id[restrict static 1]) {
+	char* available_product_list_url = malloc(60);
+	if(!available_product_list_url) {
+		fprintf(stderr, "Fatal Error: No available memory\n");
+    return false;
+	}
 
+	construct_available_product_list_url(station_id, &available_product_list_url);
+
+	cJSON* available_product_list_json = json_init(available_product_list_url);
+	char* output = cJSON_Print(available_product_list_json);
+	puts(output);
+
+	free(available_product_list_url);
+	cJSON_Delete(available_product_list_json);
+
+	return true;
 }
-*/

@@ -174,6 +174,16 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
       }
     }
+    if (product) {
+      if (!print_product_json(station, code)) {
+        return EXIT_FAILURE;
+      }
+    }
+    if (codes) {
+      if (!print_available_products(station)) {
+        return EXIT_FAILURE;
+      }
+    }
     return EXIT_SUCCESS;
   }
 
