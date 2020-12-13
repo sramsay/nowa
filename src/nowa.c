@@ -251,7 +251,6 @@ int main(int argc, char* argv[]) {
     }
   }
   if (list_products) {
-    puts(station);
     if (!print_available_products(station)) {
       return EXIT_FAILURE;
     }
