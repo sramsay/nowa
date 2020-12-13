@@ -71,7 +71,6 @@ struct product* init_available_products(char station_id[restrict static 1]) {
   }
 
   cJSON_Delete(available_product_list_json);
-  cJSON_Delete(graph_json);
   free(available_product_list_url);
 
   return product_list;

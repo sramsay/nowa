@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
   bool totals = false;
   bool storm_report = false;
   bool product = false;
-  bool codes = false;
+  bool list_products = false;
   bool json = false;
 
   char station[5];
@@ -109,7 +109,7 @@ int main(int argc, char* argv[]) {
         code = optarg;
         break;
       case 'i':
-        codes = true;
+        list_products = true;
         break;
       case 'j':
         json = true;
@@ -119,10 +119,13 @@ int main(int argc, char* argv[]) {
     }
   }
 
+	// This whole block super kludgy.  And annoying.  Must figure out a better way.
+
   if (!list_stations && !version && !usage) {
     if (optind < argc) {
-			if (sizeof(station) >= sizeof(argv[optind]))
-      strcpy(station, argv[optind]);
+			// if (sizeof(station) > sizeof(argv[optind])) {
+				strcpy(station, argv[optind]);
+			// }
     } else {
       print_usage();
       return EXIT_SUCCESS;
@@ -180,8 +183,8 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
       }
     }
-    if (codes) {
-      if (!print_available_products(station)) {
+    if (list_products) {
+      if (!print_available_products_json(station)) {
         return EXIT_FAILURE;
       }
     }
@@ -246,7 +249,8 @@ int main(int argc, char* argv[]) {
       return EXIT_FAILURE;
     }
   }
-  if (codes) {
+  if (list_products) {
+		puts(station);
     if (!print_available_products(station)) {
       return EXIT_FAILURE;
     }
@@ -271,10 +275,10 @@ static void print_usage(void) {
   puts("  -z  --hazards        Hazardous weather outlook");
   puts("  -t  --totals				 Yesterday's totals");
   puts("  -r  --storm-report   Local storm report");
-  puts("  -p  --product        Request NWS product (if available)");
-  puts("  -c  --codes          List available NWS product");
+  puts("  -i  --list-products  List available NWS product");
   putchar('\n');
   puts("  -l  --list-stations [lat,long]   Retrieve list of area stations");
+  puts("  -p  --product [product code]     Request NWS product (if available)");
   putchar('\n');
   puts("  -j  --json                       Raw JSON output from NWS");
 }

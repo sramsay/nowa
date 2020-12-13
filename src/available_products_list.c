@@ -14,7 +14,7 @@ bool print_available_products(char station_id[restrict static 1]) {
   puts("Code  Description");
   puts("----  -----------");
   for (size_t i = 0; i < product_count; i++) {
-    printf("%s  %s\n", product_list[i].product_code,
+    printf("%s   %s\n", product_list[i].product_code,
            product_list[i].product_name);
     free(product_list[i].product_code);
     free(product_list[i].product_name);
