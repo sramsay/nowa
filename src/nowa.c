@@ -31,11 +31,12 @@ int main(int argc, char* argv[]) {
       {"hazards", no_argument, 0, 'z'},
       {"totals", no_argument, 0, 't'},
       {"storm-report", no_argument, 0, 'r'},
+      {"products", no_argument, 0, 'p'},
       {"json", no_argument, 0, 'j'},
       {0, 0, 0, 0}};
 
   int option_index = 0;
-  ;
+
   extern char* optarg;
   bool json = false;
   bool list_stations = false;
@@ -104,12 +105,14 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  if (optind < argc) {
-    strcpy(station, argv[optind]);
-  } else {
-    print_usage();
-    return EXIT_SUCCESS;
-  }
+	if (!list_stations) {
+		if (optind < argc) {
+			strcpy(station, argv[optind]);
+		} else {
+			print_usage();
+			return EXIT_SUCCESS;
+		}
+	}
 
   if (json) {
     if (list_stations) {
@@ -157,6 +160,7 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
       }
     }
+		return EXIT_SUCCESS;
   }
 
   if (list_stations) {
