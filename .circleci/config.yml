@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/buildpack-deps:eoan
+      - image: circleci/buildpack-deps:focal
     steps:
       - checkout
       - run:

@@ -12,10 +12,10 @@ cJSON* json_init(char const url[restrict static 1]) {
 
   struct memory_struct chunk;
   chunk.memory = malloc(1);
-	if (!chunk.memory) {
-		fprintf(stderr, "Fatal Error: No available memory\n");
-		exit(1);
-	}
+  if (!chunk.memory) {
+    fprintf(stderr, "Fatal Error: No available memory\n");
+    exit(1);
+  }
   chunk.size = 0;
 
   curl_global_init(CURL_GLOBAL_ALL);
@@ -29,9 +29,8 @@ cJSON* json_init(char const url[restrict static 1]) {
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)&chunk);
     CURLcode res = curl_easy_perform(curl_handle);
     if (res != CURLE_OK) {
-      fprintf(stderr, "Network Error: %s\n",
-              curl_easy_strerror(res));
-			exit(1);
+      fprintf(stderr, "Network Error: %s\n", curl_easy_strerror(res));
+      exit(1);
     } else {
       json = cJSON_Parse(chunk.memory);
     }

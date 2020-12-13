@@ -2,50 +2,60 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "alerts.h"
 #include "conditions.h"
 #include "forecast.h"
-#include "product.h"
 #include "license.h"
+#include "product.h"
 #include "station_list.h"
 
 static void print_usage(void);
 
-int main(int argc, char *argv[]) {
-
-	if (argc == 1) {
-		print_usage();
-		return EXIT_SUCCESS;
-	}
+int main(int argc, char* argv[]) {
+  if (argc == 1) {
+    print_usage();
+    return EXIT_SUCCESS;
+  }
 
   static struct option long_options[] = {
       {"help", no_argument, 0, 'h'},
       {"version", no_argument, 0, 'V'},
       {"list-stations", required_argument, 0, 'l'},
-      {"conditions", required_argument, 0, 'c'},
-      {"forecast", required_argument, 0, 'f'},
-			{"discussion", required_argument, 0, 'd'},
-			{"air-quality", required_argument, 0, 'a'},
-      {"alerts", required_argument, 0, 'x'},
+      {"conditions", no_argument, 0, 'c'},
+      {"forecast", no_argument, 0, 'f'},
+      {"discussion", no_argument, 0, 'd'},
+      {"air-quality", no_argument, 0, 'a'},
+      {"alerts", no_argument, 0, 'x'},
+      {"hazards", no_argument, 0, 'z'},
+      {"totals", no_argument, 0, 't'},
+      {"storm-report", no_argument, 0, 'r'},
+      {"products", no_argument, 0, 'p'},
       {"json", no_argument, 0, 'j'},
       {0, 0, 0, 0}};
 
-	int option_index = 0;;
-	extern char* optarg;
+  int option_index = 0;
+
+  extern char* optarg;
   bool json = false;
-	bool list_stations = false;
-	bool conditions = false;
-	bool forecast = false;
-	bool discussion = false;
-	bool air_quality = false;
-	bool alerts = false;
-	char* station = {0};
-	char* lat_long = {0};
+  bool list_stations = false;
+  bool conditions = false;
+  bool forecast = false;
+  bool discussion = false;
+  bool air_quality = false;
+  bool alerts = false;
+  bool hazards = false;
+  bool totals = false;
+  bool storm_report = false;
+  bool usage = false;
+	bool version = false;
+  char station[5];
+  char* lat_long = {0};
 
   for (;;) {
     int opt =
-        getopt_long(argc, argv, "hVjc:l:f:d:a:x:", long_options, &option_index);
+        getopt_long(argc, argv, "hVl:cfdaxztrj", long_options, &option_index);
 
     if (opt == -1) {
       break;
@@ -55,105 +65,180 @@ int main(int argc, char *argv[]) {
       case '?':
         break;
       case 'h':
-        print_usage();
+        usage = true;
         break;
       case 'V':
-        print_version();
+        version = true;
         break;
       case 'j':
         json = true;
         break;
       case 'l':
-				list_stations = true;
-				lat_long = optarg;
+        list_stations = true;
+        lat_long = optarg;
         break;
       case 'c':
-				conditions = true;
-				station = optarg;
+        conditions = true;
         break;
       case 'f':
-				forecast = true;
-				station = optarg;
+        forecast = true;
         break;
       case 'd':
-				discussion = true;
-				station = optarg;
+        discussion = true;
         break;
-			case 'a':
-				air_quality = true;
-				station = optarg;
-				break;
+      case 'a':
+        air_quality = true;
+        break;
       case 'x':
-				alerts = true;
-				station = optarg;
+        alerts = true;
+        break;
+      case 'z':
+        hazards = true;
+        break;
+      case 't':
+        totals = true;
+        break;
+      case 'r':
+        storm_report = true;
         break;
       default:
         print_usage();
     }
   }
 
-	if (json) {
-		if (list_stations) {
-			if (!print_stations_json(lat_long)) {
-			return EXIT_FAILURE;
-			}
-		} else if (conditions) {
-			if (!print_conditions_json(station)) {
-				return EXIT_FAILURE;
-			}
-		} else if (forecast) {
-			if (!print_forecast_json(station)) {
-				return EXIT_FAILURE;
-			}
-		} else if (alerts) {
-			if (!print_alerts_json(station)) {
-				return EXIT_FAILURE;
-			}
-		}
-	} else {
-		if (list_stations) {
-			if (!print_stations(lat_long)) {
-			return EXIT_FAILURE;
-			}
-		} else if (conditions) {
-			if (!print_conditions(station)) {
-				return EXIT_FAILURE;
-			}
-		} else if (forecast) {
-			if (!print_forecast(station)) {
-				return EXIT_FAILURE;
-			}
-		} else if (discussion) {
-			if (!print_product(station, "AFD")) {
-				return EXIT_FAILURE;
-			}
-		} else if (air_quality) {
-			if (!print_product(station, "AQI")) {
-				return EXIT_FAILURE;
-			}
-		} else if (alerts) {
-			if (!print_alerts(station)) {
-				return EXIT_FAILURE;
-			}
+	if (!list_stations && !version && !usage) {
+		if (optind < argc) {
+			strcpy(station, argv[optind]);
+		} else {
+			print_usage();
+			return EXIT_SUCCESS;
 		}
 	}
 
+  if (json) {
+    if (list_stations) {
+      if (!print_stations_json(lat_long)) {
+        return EXIT_FAILURE;
+      }
+    }
+    if (conditions) {
+      if (!print_conditions_json(station)) {
+        return EXIT_FAILURE;
+      }
+    }
+    if (forecast) {
+      if (!print_forecast_json(station)) {
+        return EXIT_FAILURE;
+      }
+    }
+    if (discussion) {
+      if (!print_product_json(station, "AFD")) {
+        return EXIT_FAILURE;
+      }
+    }
+    if (air_quality) {
+      if (!print_product_json(station, "AQI")) {
+        return EXIT_FAILURE;
+      }
+    }
+    if (alerts) {
+      if (!print_alerts_json(station)) {
+        return EXIT_FAILURE;
+      }
+    }
+    if (hazards) {
+      if (!print_product_json(station, "HWO")) {
+        return EXIT_FAILURE;
+      }
+    }
+    if (totals) {
+      if (!print_product_json(station, "CLI")) {
+        return EXIT_FAILURE;
+      }
+    }
+    if (storm_report) {
+      if (!print_product_json(station, "LSR")) {
+        return EXIT_FAILURE;
+      }
+    }
+		return EXIT_SUCCESS;
+  }
+
+	if (version) {
+		print_version();
+		return EXIT_SUCCESS;
+	}
+  if (usage) {
+    print_usage();
+		return EXIT_SUCCESS;
+  }
+  if (list_stations) {
+    if (!print_stations(lat_long)) {
+      return EXIT_FAILURE;
+    }
+  }
+  if (conditions) {
+    if (!print_conditions(station)) {
+      return EXIT_FAILURE;
+    }
+  }
+  if (forecast) {
+    if (!print_forecast(station)) {
+      return EXIT_FAILURE;
+    }
+  }
+  if (discussion) {
+    if (!print_product(station, "AFD")) {
+      return EXIT_FAILURE;
+    }
+  }
+  if (air_quality) {
+    if (!print_product(station, "AQI")) {
+      return EXIT_FAILURE;
+    }
+  }
+  if (alerts) {
+    if (!print_alerts(station)) {
+      return EXIT_FAILURE;
+    }
+  }
+  if (hazards) {
+    if (!print_product(station, "HWO")) {
+      return EXIT_FAILURE;
+    }
+  }
+  if (totals) {
+    if (!print_product(station, "CLI")) {
+      return EXIT_FAILURE;
+    }
+  }
+  if (storm_report) {
+    if (!print_product(station, "LSR")) {
+      return EXIT_FAILURE;
+    }
+  }
   return EXIT_SUCCESS;
 }
 
 static void print_usage(void) {
   puts("Usage:");
+  puts("  nowa --conditions \"KLNK\"");
   puts("  nowa --list-stations \"39.809734,-98.555620\"");
-  puts("");
+  putchar('\n');
   puts("Options:");
   puts("  -h  --help     Print this message");
   puts("  -V  --version  Print version number and license info");
-	puts("");
-	puts("  -l  --list-stations [lat,long]   Retrieve list of area stations");
-	puts("  -c  --conditions [stationid]     Current conditions");
-	puts("  -f  --forecast [stationid]       7-day forecast");
-	puts("  -d  --discussion [stationid]     Scientific forecast discussion");
-	puts("  -x  --alerts [stationid]         Active alerts (if any)");
-	puts("");
-	puts("  -j  --json                       Raw JSON output from NWS");
+  puts("");
+  puts("  -c  --conditions     Current conditions");
+  puts("  -f  --forecast       7-day forecast");
+  puts("  -a  --air-quality    Air quality data");
+  puts("  -d  --discussion     Scientific forecast discussion");
+  puts("  -x  --alerts         Active alerts (if any)");
+  puts("  -z  --hazards        Hazardous weather outlook");
+  puts("  -t  --totals				 Yesterday's totals");
+  puts("  -r  --storm-report   Local storm report");
+  putchar('\n');
+  puts("  -l  --list-stations [lat,long]   Retrieve list of area stations");
+  putchar('\n');
+  puts("  -j  --json                       Raw JSON output from NWS");
 }

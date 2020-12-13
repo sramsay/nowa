@@ -1,4 +1,4 @@
-dist: bionic
+dist: focal
 group: travis_latest
 version: ~> 1.0
 

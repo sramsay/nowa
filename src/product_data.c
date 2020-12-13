@@ -6,46 +6,49 @@
 #include <string.h>
 
 #include "json.h"
-#include "utils.h"
-#include "station_data.h"
 #include "points_data.h"
+#include "station_data.h"
 #include "third_party/cJSON.h"
+#include "utils.h"
 
-bool init_product(char station_id[restrict static 1],
-                     struct product* pd, char* product_code) {
+bool init_product(char station_id[restrict static 1], struct product* pd,
+                  char* product_code) {
   char* product_list_url = malloc(60);
-	if (!product_list_url) {
-		fprintf(stderr, "Fatal Error: No available memory\n");
-		return false;
-	}
-	construct_product_list_url(station_id, &product_list_url, product_code);
+  if (!product_list_url) {
+    fprintf(stderr, "Fatal Error: No available memory\n");
+    return false;
+  }
+  construct_product_list_url(station_id, &product_list_url, product_code);
 
   cJSON* product_list_json = json_init(product_list_url);
 
-  cJSON* graph_json = cJSON_GetObjectItemCaseSensitive(product_list_json, "@graph");
+  cJSON* graph_json =
+      cJSON_GetObjectItemCaseSensitive(product_list_json, "@graph");
 
-	cJSON* graph_item_json = cJSON_GetArrayItem(graph_json, 0);
-	cJSON* graph_url = cJSON_GetObjectItemCaseSensitive(graph_item_json, "@id");
-	cJSON* product_json = json_init(graph_url->valuestring);
+  cJSON* graph_item_json = cJSON_GetArrayItem(graph_json, 0);
+  cJSON* graph_url = cJSON_GetObjectItemCaseSensitive(graph_item_json, "@id");
+  cJSON* product_json = json_init(graph_url->valuestring);
 
-	cJSON* product_name_json = cJSON_GetObjectItemCaseSensitive(product_json, "productName");
-	size_t product_name_size = strlen(product_name_json->valuestring);
-	pd->product_name = malloc(product_name_size + 1);
-	if (!pd->product_name) {
-		fprintf(stderr, "Fata Error: No available memory.");
-		free(product_list_url);
-		return false;
-	}
-	strcpy(pd->product_name, product_name_json->valuestring);
-	cJSON* product_text_json = cJSON_GetObjectItemCaseSensitive(product_json, "productText");
-	size_t product_text_size = strlen(product_text_json->valuestring);
-	pd->product_text = malloc(product_text_size + 1);
-	if (!pd->product_text) {
-		fprintf(stderr, "Fata Error: No available memory.");
-		free(product_list_url);
-		return false;
-	}
-	strcpy(pd->product_text, product_text_json->valuestring);
+  cJSON* product_name_json =
+      cJSON_GetObjectItemCaseSensitive(product_json, "productName");
+  size_t product_name_size = strlen(product_name_json->valuestring);
+  pd->product_name = malloc(product_name_size + 1);
+  if (!pd->product_name) {
+    fprintf(stderr, "Fata Error: No available memory.");
+    free(product_list_url);
+    return false;
+  }
+  strcpy(pd->product_name, product_name_json->valuestring);
+  cJSON* product_text_json =
+      cJSON_GetObjectItemCaseSensitive(product_json, "productText");
+  size_t product_text_size = strlen(product_text_json->valuestring);
+  pd->product_text = malloc(product_text_size + 1);
+  if (!pd->product_text) {
+    fprintf(stderr, "Fata Error: No available memory.");
+    free(product_list_url);
+    return false;
+  }
+  strcpy(pd->product_text, product_text_json->valuestring);
 
   free(product_list_url);
   cJSON_Delete(product_list_json);
@@ -55,32 +58,34 @@ bool init_product(char station_id[restrict static 1],
 }
 
 bool construct_product_list_url(char station_id[restrict static 1],
-                              char* product_list_url[], char* product_code) {
-	struct station_info sinfo = {0};
-	if (!init_station(station_id, &sinfo)) {
-		fprintf(stderr, "Error: %s", "Unable to retrieve station info.\n");
-		return false;
-	}
-
-	char* lat_long = latlong_string(sinfo.latitude, sinfo.longitude);
-
-	struct points_info points = {0};
-	if (!init_points(lat_long, &points)) {
-		fprintf(stderr, "Error: %s", "Unable to retrieve points data\n");
+                                char* product_list_url[], char* product_code) {
+  struct station_info sinfo = {0};
+  if (!init_station(station_id, &sinfo)) {
+    fprintf(stderr, "Error: %s", "Unable to retrieve station info.\n");
     return false;
   }
 
-  sprintf(*product_list_url, "%s%s%s%s", "https://api.weather.gov/products/types/", product_code, "/locations/", points.cwa);
+  char* lat_long = latlong_string(sinfo.latitude, sinfo.longitude);
 
-	cleanup_station_info(&sinfo);
-	cleanup_points(&points);
+  struct points_info points = {0};
+  if (!init_points(lat_long, &points)) {
+    fprintf(stderr, "Error: %s", "Unable to retrieve points data\n");
+    return false;
+  }
 
-	free(lat_long);
+  sprintf(*product_list_url, "%s%s%s%s",
+          "https://api.weather.gov/products/types/", product_code,
+          "/locations/", points.cwa);
+
+  cleanup_station_info(&sinfo);
+  cleanup_points(&points);
+
+  free(lat_long);
 
   return true;
 }
 
 void cleanup_product(struct product* pd) {
-	free(pd->product_name);
-	free(pd->product_text);
+  free(pd->product_name);
+  free(pd->product_text);
 }
