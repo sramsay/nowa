@@ -6,7 +6,7 @@
 typedef struct points_info points_info;
 
 struct points_info {
-  char cwa[4];
+  char cwa[4]; // The forecast office
   char* forecast_url;
   char* forecast_hourly_url;
   char* forecast_grid_data_url;
@@ -16,7 +16,7 @@ struct points_info {
   char* fire_weather_zone_url;
   char* radar_station;
 };
-// This JSON also includes bearing and distance (from what, exactly?) and
+// This JSON also includes bearing and distance (from what, exactly? the forecast office?) and
 // timezone.
 
 bool init_points(char lat_long[restrict static 1], struct points_info* points);
