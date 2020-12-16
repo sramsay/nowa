@@ -266,16 +266,15 @@ int main(int argc, char* argv[]) {
     return EXIT_SUCCESS;
   }
 
-  if (station) {
-    if (list_stations) {
-      if (!print_stations(lat_long)) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (conditions) {
+	if (list_stations) {
+		if (!print_stations(lat_long)) {
+			free(station_id);
+			free(lat_long);
+			free(code);
+			return EXIT_FAILURE;
+		}
+	} else if (station) {
+		if (conditions) {
       if (!print_conditions(station_id)) {
         free(station_id);
         free(lat_long);
@@ -377,21 +376,23 @@ static void print_usage(void) {
   puts("  nowa --product HWO --station-id \"KLNK\"");
   putchar('\n');
   puts("Options:");
-  puts("  -h  --help     Print this message");
-  puts("  -V  --version  Print version number and license info");
-  puts("");
   puts("  -c  --conditions     Current conditions");
   puts("  -f  --forecast       7-day forecast");
-  puts("  -a  --air-quality    Air quality data");
+  puts("  -a  --air-quality    Air quality forecast");
   puts("  -d  --discussion     Scientific forecast discussion");
   puts("  -x  --alerts         Active alerts (if any)");
   puts("  -z  --hazards        Hazardous weather outlook");
-  puts("  -t  --totals				 Yesterday's totals");
+  puts("  -t  --totals         Yesterday's totals");
   puts("  -r  --storm-report   Local storm report");
   puts("  -l  --list-products  List available NWS product");
   putchar('\n');
   puts("  -s  --list-stations [lat,long]   Retrieve list of area stations");
   puts("  -p  --product [product code]     Request NWS product (if available)");
-  putchar('\n');
+	puts("  -i  --station-id [ID]            Station id");
+  puts("");
   puts("  -j  --json                       Raw JSON output from NWS");
+  puts("");
+  puts("  -h  --help     Print this message");
+  puts("  -V  --version  Print version number and license info");
+  putchar('\n');
 }
