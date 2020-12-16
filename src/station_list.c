@@ -8,10 +8,14 @@
 #include "points_data.h"
 #include "station_list_data.h"
 #include "third_party/cJSON.h"
+#include "utils.h"
 
 bool print_stations(char lat_long[static 1]) {
   struct station* station_list = init_station_list(lat_long);
-
+ 
+	printf("%s%s\n", "Available Weather Stations for ", lat_long);
+  puts("ID    Location");
+  puts("----  --------");
   for (size_t i = 0; i < station_count; i++) {
     printf("%s: %s\n", station_list[i].station_id, station_list[i].name);
     free(station_list[i].station_id);
