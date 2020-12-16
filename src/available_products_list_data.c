@@ -2,7 +2,7 @@
 
 #include <stdbool.h>
 #include <stdio.h>
-#include <strings.h>
+#include <string.h>
 
 #include "json.h"
 #include "points_data.h"
