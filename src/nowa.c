@@ -23,7 +23,8 @@ int main(int argc, char* argv[]) {
   static struct option long_options[] = {
       {"help", no_argument, 0, 'h'},
       {"version", no_argument, 0, 'V'},
-      {"list-stations", required_argument, 0, 'l'},
+      {"station-id", required_argument, 0, 'i'},
+      {"list-stations", no_argument, 0, 's'},
       {"conditions", no_argument, 0, 'c'},
       {"forecast", no_argument, 0, 'f'},
       {"discussion", no_argument, 0, 'd'},
@@ -33,15 +34,17 @@ int main(int argc, char* argv[]) {
       {"totals", no_argument, 0, 't'},
       {"storm-report", no_argument, 0, 'r'},
       {"product", required_argument, 0, 'p'},
-      {"list-products", no_argument, 0, 'i'},
+      {"list-products", no_argument, 0, 'l'},
       {"json", no_argument, 0, 'j'},
       {0, 0, 0, 0}};
 
   int option_index = 0;
 
   extern char* optarg;
+  bool station = false;
   bool usage = false;
   bool version = false;
+  bool json = false;
   bool list_stations = false;
   bool conditions = false;
   bool forecast = false;
@@ -53,14 +56,13 @@ int main(int argc, char* argv[]) {
   bool storm_report = false;
   bool product = false;
   bool list_products = false;
-  bool json = false;
 
-  char station[5];
-  char* lat_long = {0};
-  char* code = {0};
+  char* station_id = malloc(5);
+  char* lat_long = malloc(25);
+  char* code = malloc(4);
 
   for (;;) {
-    int opt = getopt_long(argc, argv, "hVl:cfdaxztrp:ij", long_options,
+    int opt = getopt_long(argc, argv, "hVji:s:cfdaxztrp:l", long_options,
                           &option_index);
 
     if (opt == -1) {
@@ -76,9 +78,35 @@ int main(int argc, char* argv[]) {
       case 'V':
         version = true;
         break;
-      case 'l':
+      case 'j':
+        json = true;
+        break;
+      case 'i':
+        if (strlen(optarg) > 5) {
+          fprintf(stderr, "Station ids are comprised of four letters\n");
+          free(station_id);
+          free(lat_long);
+          free(code);
+          return EXIT_SUCCESS;
+        } else {
+          strcpy(station_id, optarg);
+        }
+        station = true;
+        break;
+      case 's':
+        if (strlen(optarg) > 25) {
+          fprintf(
+              stderr,
+              "Lat/long precision is limited to seven decimal places (which is "
+              "close to\nthe accuracy limits of GPS-based systems)\n");
+          free(station_id);
+          free(lat_long);
+          free(code);
+          return EXIT_SUCCESS;
+        } else {
+          strcpy(lat_long, optarg);
+        }
         list_stations = true;
-        lat_long = optarg;
         break;
       case 'c':
         conditions = true;
@@ -106,162 +134,239 @@ int main(int argc, char* argv[]) {
         break;
       case 'p':
         product = true;
-        code = optarg;
+        if (strlen(optarg) > 4) {
+          fprintf(stderr, "Product codes are comprised of three letters\n");
+          free(station_id);
+          free(lat_long);
+          free(code);
+          return EXIT_SUCCESS;
+        } else {
+          strcpy(code, optarg);
+        }
         break;
-      case 'i':
+      case 'l':
         list_products = true;
-        break;
-      case 'j':
-        json = true;
         break;
       default:
         print_usage();
     }
   }
 
-  // This whole block super kludgy.  And annoying.  Must figure out a better
-  // way.
-
-  if (!list_stations && !version && !usage) {
-    if (optind < argc) {
-      // if (sizeof(station) > sizeof(argv[optind])) {
-      strcpy(station, argv[optind]);
-      // }
-    } else {
-      print_usage();
-      return EXIT_SUCCESS;
-    }
-  }
-
   if (json) {
     if (list_stations) {
       if (!print_stations_json(lat_long)) {
+        free(station_id);
+        free(lat_long);
+        free(code);
         return EXIT_FAILURE;
       }
     }
     if (conditions) {
-      if (!print_conditions_json(station)) {
+      if (!print_conditions_json(station_id)) {
+        free(station_id);
+        free(lat_long);
+        free(code);
         return EXIT_FAILURE;
       }
     }
     if (forecast) {
-      if (!print_forecast_json(station)) {
+      if (!print_forecast_json(station_id)) {
+        free(station_id);
+        free(lat_long);
+        free(code);
         return EXIT_FAILURE;
       }
     }
     if (discussion) {
-      if (!print_product_json(station, "AFD")) {
+      if (!print_product_json(station_id, "AFD")) {
+        free(station_id);
+        free(lat_long);
+        free(code);
         return EXIT_FAILURE;
       }
     }
     if (air_quality) {
-      if (!print_product_json(station, "AQI")) {
+      if (!print_product_json(station_id, "AQI")) {
+        free(station_id);
+        free(lat_long);
+        free(code);
         return EXIT_FAILURE;
       }
     }
     if (alerts) {
-      if (!print_alerts_json(station)) {
+      if (!print_alerts_json(station_id)) {
+        free(station_id);
+        free(lat_long);
+        free(code);
         return EXIT_FAILURE;
       }
     }
     if (hazards) {
-      if (!print_product_json(station, "HWO")) {
+      if (!print_product_json(station_id, "HWO")) {
+        free(station_id);
+        free(lat_long);
+        free(code);
         return EXIT_FAILURE;
       }
     }
     if (totals) {
-      if (!print_product_json(station, "CLI")) {
+      if (!print_product_json(station_id, "CLI")) {
+        free(station_id);
+        free(lat_long);
+        free(code);
         return EXIT_FAILURE;
       }
     }
     if (storm_report) {
-      if (!print_product_json(station, "LSR")) {
+      if (!print_product_json(station_id, "LSR")) {
+        free(station_id);
+        free(lat_long);
+        free(code);
         return EXIT_FAILURE;
       }
     }
     if (product) {
-      if (!print_product_json(station, code)) {
+      if (!print_product_json(station_id, code)) {
+        free(station_id);
+        free(lat_long);
+        free(code);
         return EXIT_FAILURE;
       }
     }
     if (list_products) {
-      if (!print_available_products_json(station)) {
+      if (!print_available_products_json(station_id)) {
+        free(station_id);
+        free(lat_long);
+        free(code);
         return EXIT_FAILURE;
       }
     }
-    return EXIT_SUCCESS;
   }
 
   if (version) {
     print_version();
+    free(station_id);
+    free(lat_long);
+    free(code);
     return EXIT_SUCCESS;
   }
   if (usage) {
     print_usage();
+    free(station_id);
+    free(lat_long);
+    free(code);
     return EXIT_SUCCESS;
   }
-  if (list_stations) {
-    if (!print_stations(lat_long)) {
-      return EXIT_FAILURE;
+
+  if (station) {
+    if (list_stations) {
+      if (!print_stations(lat_long)) {
+        free(station_id);
+        free(lat_long);
+        free(code);
+        return EXIT_FAILURE;
+      }
     }
-  }
-  if (conditions) {
-    if (!print_conditions(station)) {
-      return EXIT_FAILURE;
+    if (conditions) {
+      if (!print_conditions(station_id)) {
+        free(station_id);
+        free(lat_long);
+        free(code);
+        return EXIT_FAILURE;
+      }
     }
-  }
-  if (forecast) {
-    if (!print_forecast(station)) {
-      return EXIT_FAILURE;
+    if (forecast) {
+      if (!print_forecast(station_id)) {
+        free(station_id);
+        free(lat_long);
+        free(code);
+        return EXIT_FAILURE;
+      }
     }
-  }
-  if (discussion) {
-    if (!print_product(station, "AFD")) {
-      return EXIT_FAILURE;
+    if (discussion) {
+      if (!print_product(station_id, "AFD")) {
+        free(station_id);
+        free(lat_long);
+        free(code);
+        return EXIT_FAILURE;
+      }
     }
-  }
-  if (air_quality) {
-    if (!print_product(station, "AQI")) {
-      return EXIT_FAILURE;
+    if (air_quality) {
+      if (!print_product(station_id, "AQI")) {
+        free(station_id);
+        free(lat_long);
+        free(code);
+        return EXIT_FAILURE;
+      }
     }
-  }
-  if (alerts) {
-    if (!print_alerts(station)) {
-      return EXIT_FAILURE;
+    if (alerts) {
+      if (!print_alerts(station_id)) {
+        free(station_id);
+        free(lat_long);
+        free(code);
+        return EXIT_FAILURE;
+      }
     }
-  }
-  if (hazards) {
-    if (!print_product(station, "HWO")) {
-      return EXIT_FAILURE;
+    if (hazards) {
+      if (!print_product(station_id, "HWO")) {
+        free(station_id);
+        free(lat_long);
+        free(code);
+        return EXIT_FAILURE;
+      }
     }
-  }
-  if (totals) {
-    if (!print_product(station, "CLI")) {
-      return EXIT_FAILURE;
+    if (totals) {
+      if (!print_product(station_id, "CLI")) {
+        free(station_id);
+        free(lat_long);
+        free(code);
+        return EXIT_FAILURE;
+      }
     }
-  }
-  if (storm_report) {
-    if (!print_product(station, "LSR")) {
-      return EXIT_FAILURE;
+    if (storm_report) {
+      if (!print_product(station_id, "LSR")) {
+        free(station_id);
+        free(lat_long);
+        free(code);
+        return EXIT_FAILURE;
+      }
     }
-  }
-  if (product) {
-    if (!print_product(station, code)) {
-      return EXIT_FAILURE;
+    if (product) {
+      if (!print_product(station_id, code)) {
+        free(station_id);
+        free(lat_long);
+        free(code);
+        return EXIT_FAILURE;
+      }
     }
-  }
-  if (list_products) {
-    if (!print_available_products(station)) {
-      return EXIT_FAILURE;
+    if (list_products) {
+      if (!print_available_products(station_id)) {
+        free(station_id);
+        free(lat_long);
+        free(code);
+        return EXIT_FAILURE;
+      }
     }
+  } else {
+    puts("Requires a station id (e.g. -i KLNK)");
+    free(station_id);
+    free(lat_long);
+    free(code);
+    return EXIT_SUCCESS;
   }
+
+  free(station_id);
+  free(lat_long);
+  free(code);
+
   return EXIT_SUCCESS;
 }
 
 static void print_usage(void) {
   puts("Usage:");
-  puts("  nowa --conditions \"KLNK\"");
+  puts("  nowa --conditions --station-id \"KLNK\"");
   puts("  nowa --list-stations \"39.809734,-98.555620\"");
+  puts("  nowa --product HWO --station-id \"KLNK\"");
   putchar('\n');
   puts("Options:");
   puts("  -h  --help     Print this message");
@@ -275,9 +380,9 @@ static void print_usage(void) {
   puts("  -z  --hazards        Hazardous weather outlook");
   puts("  -t  --totals				 Yesterday's totals");
   puts("  -r  --storm-report   Local storm report");
-  puts("  -i  --list-products  List available NWS product");
+  puts("  -l  --list-products  List available NWS product");
   putchar('\n');
-  puts("  -l  --list-stations [lat,long]   Retrieve list of area stations");
+  puts("  -s  --list-stations [lat,long]   Retrieve list of area stations");
   puts("  -p  --product [product code]     Request NWS product (if available)");
   putchar('\n');
   puts("  -j  --json                       Raw JSON output from NWS");
