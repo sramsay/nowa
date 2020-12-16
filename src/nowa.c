@@ -161,86 +161,94 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
       }
     }
-    if (conditions) {
-      if (!print_conditions_json(station_id)) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (forecast) {
-      if (!print_forecast_json(station_id)) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (discussion) {
-      if (!print_product_json(station_id, "AFD")) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (air_quality) {
-      if (!print_product_json(station_id, "AQI")) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (alerts) {
-      if (!print_alerts_json(station_id)) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (hazards) {
-      if (!print_product_json(station_id, "HWO")) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (totals) {
-      if (!print_product_json(station_id, "CLI")) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (storm_report) {
-      if (!print_product_json(station_id, "LSR")) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (product) {
-      if (!print_product_json(station_id, code)) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (list_products) {
-      if (!print_available_products_json(station_id)) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
+		if (station) {
+			if (conditions) {
+				if (!print_conditions_json(station_id)) {
+					free(station_id);
+					free(lat_long);
+					free(code);
+					return EXIT_FAILURE;
+				}
+			}
+			if (forecast) {
+				if (!print_forecast_json(station_id)) {
+					free(station_id);
+					free(lat_long);
+					free(code);
+					return EXIT_FAILURE;
+				}
+			}
+			if (discussion) {
+				if (!print_product_json(station_id, "AFD")) {
+					free(station_id);
+					free(lat_long);
+					free(code);
+					return EXIT_FAILURE;
+				}
+			}
+			if (air_quality) {
+				if (!print_product_json(station_id, "AQI")) {
+					free(station_id);
+					free(lat_long);
+					free(code);
+					return EXIT_FAILURE;
+				}
+			}
+			if (alerts) {
+				if (!print_alerts_json(station_id)) {
+					free(station_id);
+					free(lat_long);
+					free(code);
+					return EXIT_FAILURE;
+				}
+			}
+			if (hazards) {
+				if (!print_product_json(station_id, "HWO")) {
+					free(station_id);
+					free(lat_long);
+					free(code);
+					return EXIT_FAILURE;
+				}
+			}
+			if (totals) {
+				if (!print_product_json(station_id, "CLI")) {
+					free(station_id);
+					free(lat_long);
+					free(code);
+					return EXIT_FAILURE;
+				}
+			}
+			if (storm_report) {
+				if (!print_product_json(station_id, "LSR")) {
+					free(station_id);
+					free(lat_long);
+					free(code);
+					return EXIT_FAILURE;
+				}
+			}
+			if (product) {
+				if (!print_product_json(station_id, code)) {
+					free(station_id);
+					free(lat_long);
+					free(code);
+					return EXIT_FAILURE;
+				}
+			}
+			if (list_products) {
+				if (!print_available_products_json(station_id)) {
+					free(station_id);
+					free(lat_long);
+					free(code);
+					return EXIT_FAILURE;
+				}
+			}
+		} else {
+			puts("Requires a station id in addition to data request (e.g. --conditions -i KLNK)");
+			free(station_id);
+			free(lat_long);
+			free(code);
+			return EXIT_SUCCESS;
+		}
   }
 
   if (version) {
