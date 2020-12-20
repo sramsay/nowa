@@ -34,7 +34,7 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
     cJSON* details_json =
         cJSON_GetObjectItemCaseSensitive(alerts_json, "detail");
     printf("%s\n", details_json->valuestring);
-    return false;
+    exit(1);
   }
 
   cJSON* features_json =
