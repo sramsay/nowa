@@ -17,17 +17,12 @@ bool init_station(char station_id[restrict static 1],
   sprintf(station_url, "%s%s", "https://api.weather.gov/stations/", station_id);
   cJSON* station_json = json_init(station_url);
 
-  // Parse various error codes coming from the API
-  cJSON* status = cJSON_GetObjectItemCaseSensitive(station_json, "status");
-  if (status != NULL && status->valueint == 404) {
-    cJSON* detail = cJSON_GetObjectItemCaseSensitive(station_json, "detail");
-    fprintf(stderr, "%s.\n", detail->valuestring);
-    free(station_url);
-    return false;
-  } else if (status != NULL && status->valueint == 500) {
-    cJSON* detail = cJSON_GetObjectItemCaseSensitive(station_json, "detail");
-    fprintf(stderr, "%s\n", detail->valuestring);
-    free(station_url);
+  // Error code
+  cJSON* status_json = cJSON_GetObjectItemCaseSensitive(station_json, "status");
+  if (status_json) {
+    cJSON* details_json =
+        cJSON_GetObjectItemCaseSensitive(station_json, "detail");
+    printf("%s\n", details_json->valuestring);
     return false;
   }
 

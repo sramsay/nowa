@@ -23,6 +23,15 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
 
   cJSON* points_json = json_init(points_url);
 
+  // Error code
+  cJSON* status_json = cJSON_GetObjectItemCaseSensitive(points_json, "status");
+  if (status_json) {
+    cJSON* details_json =
+        cJSON_GetObjectItemCaseSensitive(points_json, "detail");
+    printf("%s\n", details_json->valuestring);
+    return false;
+  }
+
   cJSON* properties_json =
       cJSON_GetObjectItemCaseSensitive(points_json, "properties");
 

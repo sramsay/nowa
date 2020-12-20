@@ -25,6 +25,16 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
   cJSON* graph_json =
       cJSON_GetObjectItemCaseSensitive(product_list_json, "@graph");
 
+  // Error code
+  cJSON* status_json = cJSON_GetObjectItemCaseSensitive(graph_json, "status");
+  if (status_json) {
+    cJSON* details_json =
+        cJSON_GetObjectItemCaseSensitive(graph_json, "detail");
+    printf("%s\n", details_json->valuestring);
+    free(product_list_url);
+    return false;
+  }
+
   cJSON* graph_item_json = cJSON_GetArrayItem(graph_json, 0);
   cJSON* graph_url = cJSON_GetObjectItemCaseSensitive(graph_item_json, "@id");
   cJSON* product_json = json_init(graph_url->valuestring);
