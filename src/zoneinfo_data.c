@@ -21,6 +21,14 @@ bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo* info) {
                                       // and the resulting object is not real
                                       // forecast object
 
+  // Error code
+  cJSON* status_json = cJSON_GetObjectItemCaseSensitive(zone_json, "status");
+  if (status_json) {
+    cJSON* details_json = cJSON_GetObjectItemCaseSensitive(zone_json, "detail");
+    printf("%s\n", details_json->valuestring);
+    return false;
+  }
+
   cJSON* properties_json =
       cJSON_GetObjectItemCaseSensitive(zone_json, "properties");
 

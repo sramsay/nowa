@@ -32,6 +32,16 @@ bool init_forecast(char station_id[restrict static 1], struct tm* last_updated,
 
   cJSON* forecast_json = json_init(forecast_url);
 
+  // Error code
+  cJSON* status_json =
+      cJSON_GetObjectItemCaseSensitive(forecast_json, "status");
+  if (status_json) {
+    cJSON* details_json =
+        cJSON_GetObjectItemCaseSensitive(forecast_json, "detail");
+    printf("%s\n", details_json->valuestring);
+    return false;
+  }
+
   cJSON* properties_json =
       cJSON_GetObjectItemCaseSensitive(forecast_json, "properties");
   cJSON* updated_json =

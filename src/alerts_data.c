@@ -28,6 +28,15 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
           zinfo.id);
   cJSON* alerts_json = json_init(alerts_url);
 
+  // Error code
+  cJSON* status_json = cJSON_GetObjectItemCaseSensitive(alerts_json, "status");
+  if (status_json) {
+    cJSON* details_json =
+        cJSON_GetObjectItemCaseSensitive(alerts_json, "detail");
+    printf("%s\n", details_json->valuestring);
+    return false;
+  }
+
   cJSON* features_json =
       cJSON_GetObjectItemCaseSensitive(alerts_json, "features");
 

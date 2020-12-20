@@ -20,6 +20,16 @@ bool init_conditions(char station_id[restrict static 1],
 
   cJSON* conditions_json = json_init(conditions_url);
 
+  // Error code
+  cJSON* status_json =
+      cJSON_GetObjectItemCaseSensitive(conditions_json, "status");
+  if (status_json) {
+    cJSON* details_json =
+        cJSON_GetObjectItemCaseSensitive(conditions_json, "detail");
+    printf("%s\n", details_json->valuestring);
+    return false;
+  }
+
   cJSON* properties_json =
       cJSON_GetObjectItemCaseSensitive(conditions_json, "properties");
 

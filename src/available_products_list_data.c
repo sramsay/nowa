@@ -27,6 +27,16 @@ struct product* init_available_products(char station_id[restrict static 1]) {
   cJSON* graph_json =
       cJSON_GetObjectItemCaseSensitive(available_product_list_json, "@graph");
 
+  // Error code
+  cJSON* status_json = cJSON_GetObjectItemCaseSensitive(graph_json, "status");
+  if (status_json) {
+    cJSON* details_json =
+        cJSON_GetObjectItemCaseSensitive(graph_json, "detail");
+    printf("%s\n", details_json->valuestring);
+    free(available_product_list_url);
+    return false;
+  }
+
   product_count = cJSON_GetArraySize(graph_json);
   struct product* product_list = malloc(sizeof(struct product) * product_count);
   if (!product_list) {
