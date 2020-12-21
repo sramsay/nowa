@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
       {"help", no_argument, 0, 'h'},
       {"version", no_argument, 0, 'V'},
       {"station-id", required_argument, 0, 'i'},
-      {"list-stations", no_argument, 0, 's'},
+      {"list-stations", required_argument, 0, 's'},
       {"conditions", no_argument, 0, 'c'},
       {"forecast", no_argument, 0, 'f'},
       {"discussion", no_argument, 0, 'd'},
@@ -123,7 +123,7 @@ int main(int argc, char* argv[]) {
         station = true;
         break;
       case 's':
-        if (strlen(optarg) > 25) {
+        if (strlen(optarg) > 30) {
           fprintf(
               stderr,
               "Lat/long precision is limited to seven decimal places (which is "
