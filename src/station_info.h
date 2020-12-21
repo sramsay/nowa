@@ -1,12 +1,12 @@
 /*
- * forecast.h
+ * station_info.h
  *
- * This file is part of nowa. It exposes the print_forecast() and
- * print_forecast_json() functions.
+ * This file is part of nowa. It exposes the station_info struct and
+ * associated functions.
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 12:21:51 CST 2020
+ * Last Modified: Mon Dec 21 12:22:22 CST 2020
  *
  * Copyright © 2020 Stephen Ramsay
  *
@@ -25,14 +25,27 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FORECAST_INCLUDED
-#define FORECAST_INCLUDED
+#ifndef STATION_DATA_INCLUDED
+#define STATION_DATA_INCLUDED
 
 #include <stdbool.h>
 
-#define _XOPEN_SOURCE 600
+typedef struct station_info station_info;
 
-bool print_forecast(char lat_long[restrict static 1]);
-bool print_forecast_json(char station_id[restrict static 1]);
+struct station_info {
+  double latitude;
+  double longitude;
+  double elevation;  // meters
+  char* name;
+  char* timezone;
+  char* forecast_url;
+  char* county_url;
+  char* fire_weather_zone_url;
+};
+
+bool init_station(char station_id[restrict static 1],
+                  struct station_info* info);
+
+void cleanup_station_info(struct station_info* sinfo);
 
 #endif

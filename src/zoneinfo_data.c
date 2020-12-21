@@ -6,7 +6,7 @@
 #include <string.h>
 
 #include "json.h"
-#include "station_data.h"
+#include "station_info.h"
 #include "third_party/cJSON.h"
 
 bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo* info) {

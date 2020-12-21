@@ -6,13 +6,13 @@
 
 #include "json.h"
 #include "points_data.h"
-#include "station_data.h"
+#include "station_info.h"
 #include "third_party/cJSON.h"
 #include "utils.h"
 
 size_t product_count;
 
-struct product* init_available_products(char station_id[restrict static 1]) {
+struct product_id* init_available_products(char station_id[restrict static 1]) {
   char* available_product_list_url = malloc(60);
   if (!available_product_list_url) {
     fprintf(stderr, "Fatal Error: No available memory\n");
@@ -38,7 +38,8 @@ struct product* init_available_products(char station_id[restrict static 1]) {
   }
 
   product_count = cJSON_GetArraySize(graph_json);
-  struct product* product_list = malloc(sizeof(struct product) * product_count);
+  struct product_id* product_list =
+      malloc(sizeof(struct product_id) * product_count);
   if (!product_list) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     cJSON_Delete(available_product_list_json);

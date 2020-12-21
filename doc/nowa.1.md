@@ -79,8 +79,3 @@ Note that the -i [STATION ID] option is frequently required for other options to
 
 **-V**, **--version**
 : Output the version number of nowa and exit.
-
-
-
-
-
