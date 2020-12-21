@@ -39,7 +39,7 @@ struct station_info {
   char* name;
   char* timezone;
   char* forecast_url;
-  char* county_url;
+//  char* county_url; TODO
   char* fire_weather_zone_url;
 };
 

@@ -39,8 +39,8 @@ struct points_info {
   char* forecast_grid_data_url;
   char* observation_stations_url;
   char* forecast_zone_url;
-  char* county_url;
-  char* fire_weather_zone_url;
+//  char* county_url; TODO
+//  char* fire_weather_zone_url;
   char* radar_station;
 };
 // This JSON also includes bearing and distance (from what, exactly? the

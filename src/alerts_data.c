@@ -55,6 +55,8 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
           zinfo.id);
   cJSON* alerts_json = json_init(alerts_url);
 
+	puts(alerts_url);
+
   // Error code
   cJSON* status_json = cJSON_GetObjectItemCaseSensitive(alerts_json, "status");
   if (status_json) {
@@ -103,20 +105,24 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
 
     cJSON* instruction_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "instruction");
-    size_t instruction_size = strlen(instruction_json->valuestring);
-    alerts_list[count].instruction = malloc(instruction_size + 1);
-    if (!alerts_list[count].instruction) {
-      fprintf(stderr, "Fatal Error: No available memory\n");
-      exit(1);
-    }
-    strcpy(alerts_list[count].instruction, instruction_json->valuestring);
+		if (instruction_json == NULL) {
+			size_t instruction_size = strlen(instruction_json->valuestring);
+			alerts_list[count].instruction = malloc(instruction_size + 1);
+			if (!alerts_list[count].instruction) {
+				fprintf(stderr, "Fatal Error: No available memory\n");
+				exit(1);
+			}
+			strcpy(alerts_list[count].instruction, instruction_json->valuestring);
+		} else {
+			alerts_list[count].instruction = NULL;
+		}
 
     count++;
   }
 
   free(zinfo.id);
   free(zinfo.name);
-  free(zinfo.state);
+  // free(zinfo.state); TODO
   free(alerts_url);
   cJSON_Delete(alerts_json);
 

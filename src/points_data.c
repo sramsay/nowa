@@ -95,6 +95,7 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   }
   strcpy(points->forecast_zone_url, forecast_zone_url_json->valuestring);
 
+	/* TODO
   cJSON* county_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "county");
   size_t county_size = strlen(county_url_json->valuestring);
@@ -117,6 +118,7 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
   }
   strcpy(points->fire_weather_zone_url,
          fire_weather_zone_url_json->valuestring);
+				 */
 
   cJSON* radar_station_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "radarStation");
@@ -209,7 +211,7 @@ void cleanup_points(struct points_info* points) {
   free(points->forecast_grid_data_url);
   free(points->observation_stations_url);
   free(points->forecast_zone_url);
-  free(points->county_url);
-  free(points->fire_weather_zone_url);
+  // free(points->county_url); TODO
+  // free(points->fire_weather_zone_url);
   free(points->radar_station);
 }

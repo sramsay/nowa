@@ -77,6 +77,7 @@ bool init_station(char station_id[restrict static 1],
   }
   strcpy(info->forecast_url, forecast_json->valuestring);
 
+	/* TODO
   cJSON* county_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "county");
   size_t county_size = strlen(county_json->valuestring);
@@ -93,6 +94,7 @@ bool init_station(char station_id[restrict static 1],
     return false;
   }
   strcpy(info->fire_weather_zone_url, fire_weather_zone_json->valuestring);
+	*/
 
   free(station_url);
   cJSON_Delete(station_json);
@@ -104,6 +106,6 @@ void cleanup_station_info(struct station_info* sinfo) {
   free(sinfo->name);
   free(sinfo->timezone);
   free(sinfo->forecast_url);
-  free(sinfo->county_url);
-  free(sinfo->fire_weather_zone_url);
+  //free(sinfo->county_url); TODO
+  //free(sinfo->fire_weather_zone_url);
 }

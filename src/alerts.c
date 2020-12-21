@@ -45,7 +45,9 @@ bool print_alerts(char station_id[restrict static 1]) {
     for (size_t i = 0; i < alerts_count; i++) {
       printf("### %s\n\n", alerts[i].headline);
       printf("%s\n\n", alerts[i].description);
-      printf("%s\n\n", alerts[i].instruction);
+			if (alerts[i].instruction != NULL) {
+				printf("%s\n\n", alerts[i].instruction);
+			}
 
       free(alerts[i].headline);
       free(alerts[i].description);
@@ -79,7 +81,7 @@ bool print_alerts_json(char station_id[restrict static 1]) {
   puts(output);
   free(zinfo.id);
   free(zinfo.name);
-  free(zinfo.state);
+  // free(zinfo.state); TODO
   free(alerts_url);
   cJSON_Delete(alerts_json);
   free(output);
