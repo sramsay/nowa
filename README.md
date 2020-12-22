@@ -66,7 +66,7 @@ Once you know what products are available at a station, it's easy to set up alia
 Building and Installing `nowa`
 ------------------------------
 
-`nowa` is written in C, and so requires a C compiler (it takes advantage of some C99 features, and so probably won't get along well with very old compilers).  Its only external dependencies are [libcurl](https://curl.se/libcurl/) and [pcre2](https://www.pcre.org/).  These are very common libraries on UNIX-like systems, and are easily installed through systems like [Homebrew](https://brew.sh/) (for MacOS) and the package managers of the various Linux distructions.  In fact, chances are good that they are already be installed in your environment.  Assuming you have downloaded the latest release, you should be able to run:
+`nowa` is written in C, and so requires a C compiler (it takes advantage of some C99 features, and so probably won't get along well with very old compilers).  Its only external dependencies are [libcurl](https://curl.se/libcurl/) and [pcre2](https://www.pcre.org/).  These are very common libraries on UNIX-like systems, and are easily installed through systems like [Homebrew](https://brew.sh/) (for MacOS) and the package managers of the various Linux distructions.  In fact, chances are good that they are already installed in your environment.  Assuming you have downloaded the latest release, you should be able to run:
 
 	$ ./configure
 	$ make
