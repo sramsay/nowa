@@ -15,26 +15,26 @@ nowa
 
 Version 0.18.0
 
-_nowa_ is a small, fast command-line application that retrieves weather data from the United States [National Weather Service](https://www.weather.gov/).
+`nowa` is a small, fast command-line application that retrieves weather data from the United States [National Weather Service](https://www.weather.gov/).
 
 **PLEASE NOTE: This is pre-release software.  It may contains bugs, errors, and other misprisions.  Use at your own risk.  [Reports of misbehavior](https://github.com/sramsay/nowa/issues) warmly welcomed.**
 
 Quickstart
 ----------
 
-[See notes on building and installing _nowa_ below]
+[See notes on building and installing `nowa` below]
 
-First, figure out the coordinates of the place for which you'd like to see weather information (there are lots of tools on the web for doing this).  Once you have this, you can ask _nowa_ to list nearby weather stations:
+First, figure out the coordinates of the place for which you'd like to see weather information (there are lots of tools on the web for doing this).  Once you have this, you can ask `nowa` to list nearby weather stations:
 
 	$ nowa --list-stations 65.846004,-150.725719
 
 Now, that's the middle of the [Yukon-Koyukuk Census Area](https://en.wikipedia.org/wiki/Yukon%E2%80%93Koyukuk_Census_Area%2C_Alaska) in Alaska&mdash;one of the least populated places in the country.  Nonetheless, there are over a hundred stations in the area.
 
-Let's use *PAEL*: the  Elfin Cove Seaplane Base.  We can use that id to ask what products the NWS API offers:
+Let's use `PAEL`: the  Elfin Cove Seaplane Base.  We can use that id to ask what products the NWS API offers:
 
 	$ nowa --list-products -i PAEL
 
-(Note the -i/--station_id  switch.  That's required for a lot of operations with _nowa_)
+(Note the -i/--station_id  switch.  That's required for a lot of operations with `nowa`)
 
 That station has lots of data products, including a Local Storm Report (LSR), so let's grab that:
 
@@ -43,9 +43,9 @@ That station has lots of data products, including a Local Storm Report (LSR), so
 Usage
 -----
 
-Technically, _nowa_ is capable of displaying any data product made available through the NWS API.  If you know the id of a station in a particular area, know the data product you are interested in displaying, and that data product is available at that station, _nowa_ can display it.  And all of this information (save the lat/long of the location you're interested in) can be determined using _nowa_ itself.
+Technically, `nowa` is capable of displaying any data product made available through the NWS API.  If you know the id of a station in a particular area, know the data product you are interested in displaying, and that data product is available at that station, `nowa` can display it.  And all of this information (save the lat/long of the location you're interested in) can be determined using `nowa` itself.
 
-But _nowa_ also provides a number of convenience options for commonly requested (and mostly universal) information, including current conditions, 7-day forecast, active alerts, and scientific forecast discussion.  So if you'd simply like to see the current conditions in my hometown (Lincoln, NE):
+But `nowa` also provides a number of convenience options for commonly requested (and mostly universal) information, including current conditions, 7-day forecast, active alerts, and scientific forecast discussion.  So if you'd simply like to see the current conditions in my hometown (Lincoln, NE):
 
 	$ nowa -c -i KLNK
 
@@ -63,10 +63,10 @@ And to completely geek out:
 
 Once you know what products are available at a station, it's easy to set up aliases for particular products like the hazardous weather outlook (HWO), air quality report (AQI), yesterday's precipitation totals (CLI), and so forth.
 
-Building and Installing _nowa_
+Building and Installing `nowa`
 ------------------------------
 
-_nowa_ is written in C, and takes advantage of some features of C99.  Its only external dependencies are [libcurl](https://curl.se/libcurl/) and [pcre2](https://www.pcre.org/).  These are very common libraries on UNIX-like systems, and are easily installed through systems like [Homebrew](https://brew.sh/) (for MacOS) and the package managers of the various Linux distructions.  In fact, chances are good that they are already be installed in your environment.  Assuming you have downloaded the latest release, you should be able to run:
+`nowa` is written in C, and takes advantage of some features of C99.  Its only external dependencies are [libcurl](https://curl.se/libcurl/) and [pcre2](https://www.pcre.org/).  These are very common libraries on UNIX-like systems, and are easily installed through systems like [Homebrew](https://brew.sh/) (for MacOS) and the package managers of the various Linux distructions.  In fact, chances are good that they are already be installed in your environment.  Assuming you have downloaded the latest release, you should be able to run:
 
 	$ ./configure
 	$ make
@@ -75,7 +75,7 @@ _nowa_ is written in C, and takes advantage of some features of C99.  Its only e
 License(s)
 ----------
 
-_nowa_ is written and maintained by (sramsay{at}protonmail{dot}com).
+`nowa` is written and maintained by (sramsay{at}protonmail{dot}com).
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -83,8 +83,8 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU General Public License along with this program.  If not, see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses/).
 
-_nowa_ is distributed with Dave Gamble's (amazing) [cJSON library](https://github.com/DaveGamble/cJSON), and usage of _nowa_ implies acceptance of its [MIT License](https://opensource.org/licenses/MIT), a copy of which is in the src/third_party directory of the _nowa_ distribution.
+`nowa` is distributed with Dave Gamble's (amazing) [cJSON library](https://github.com/DaveGamble/cJSON), and usage of `nowa` implies acceptance of its [MIT License](https://opensource.org/licenses/MIT), a copy of which is in the src/third_party directory of the `nowa` distribution.
 
 NOAA/NWS data is in the public domain.  However users of NOAA/NWS data should be familiar with the terms conditions set out in their [disclaimer](https://www.weather.gov/disclaimer).
 
-_nowa_ is neither endorsed by, nor in any way affiliated with, either the US National Oceanic and Atmosheric Administration or the US National Weather Service.
+`nowa` is neither endorsed by, nor in any way affiliated with, either the US National Oceanic and Atmosheric Administration or the US National Weather Service.
