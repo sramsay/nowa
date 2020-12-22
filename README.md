@@ -75,7 +75,7 @@ Building and Installing `nowa`
 License(s)
 ----------
 
-`nowa` is written and maintained by (sramsay{at}protonmail{dot}com).
+`nowa` is written and maintained by Stephen Ramsay (sramsay{at}protonmail{dot}com).
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -85,6 +85,6 @@ You should have received a copy of the GNU General Public License along with thi
 
 `nowa` is distributed with Dave Gamble's (amazing) [cJSON library](https://github.com/DaveGamble/cJSON), and usage of `nowa` implies acceptance of its [MIT License](https://opensource.org/licenses/MIT), a copy of which is in the src/third_party directory of the `nowa` distribution.
 
-NOAA/NWS data is in the public domain.  However users of NOAA/NWS data should be familiar with the terms conditions set out in their [disclaimer](https://www.weather.gov/disclaimer).
+NOAA/NWS data is in the public domain.  However users of NOAA/NWS data should be familiar with the terms and conditions set out in their [disclaimer](https://www.weather.gov/disclaimer).
 
-`nowa` is neither endorsed by, nor in any way affiliated with, either the US National Oceanic and Atmosheric Administration or the US National Weather Service.
+`nowa` is neither endorsed by, nor in any way affiliated with, either the [National Oceanic and Atmosheric Administration](https://www.noaa.gov/) or the [National Weather Service](https://www.weather.gov/).
