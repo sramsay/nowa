@@ -97,34 +97,34 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
 
   cJSON* county_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "county");
-	if (county_url_json != NULL) {
-		size_t county_size = strlen(county_url_json->valuestring);
-		points->county_url = malloc(county_size + 1);
-		if (!points->county_url) {
-			fprintf(stderr, "Fatal Error: No available memory\n");
-			free(points_url);
-			return false;
-		}
-		strcpy(points->county_url, county_url_json->valuestring);
-	} else {
-		points->county_url = NULL;
-	}
+  if (county_url_json != NULL) {
+    size_t county_size = strlen(county_url_json->valuestring);
+    points->county_url = malloc(county_size + 1);
+    if (!points->county_url) {
+      fprintf(stderr, "Fatal Error: No available memory\n");
+      free(points_url);
+      return false;
+    }
+    strcpy(points->county_url, county_url_json->valuestring);
+  } else {
+    points->county_url = NULL;
+  }
 
   cJSON* fire_weather_zone_url_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "fireWeatherZone");
-	if (fire_weather_zone_url_json != NULL) {
-		size_t fire_size = strlen(fire_weather_zone_url_json->valuestring);
-		points->fire_weather_zone_url = malloc(fire_size + 1);
-		if (!points->fire_weather_zone_url) {
-			fprintf(stderr, "Fatal Error: No available memory\n");
-			free(points_url);
-			return false;
-		}
-		strcpy(points->fire_weather_zone_url,
-					 fire_weather_zone_url_json->valuestring);
-	} else {
-		points->fire_weather_zone_url = NULL;
-	}
+  if (fire_weather_zone_url_json != NULL) {
+    size_t fire_size = strlen(fire_weather_zone_url_json->valuestring);
+    points->fire_weather_zone_url = malloc(fire_size + 1);
+    if (!points->fire_weather_zone_url) {
+      fprintf(stderr, "Fatal Error: No available memory\n");
+      free(points_url);
+      return false;
+    }
+    strcpy(points->fire_weather_zone_url,
+           fire_weather_zone_url_json->valuestring);
+  } else {
+    points->fire_weather_zone_url = NULL;
+  }
 
   cJSON* radar_station_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "radarStation");

@@ -103,17 +103,17 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
 
     cJSON* instruction_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "instruction");
-		if (instruction_json->valuestring != NULL) {
-			size_t instruction_size = strlen(instruction_json->valuestring);
-			alerts_list[count].instruction = malloc(instruction_size + 1);
-			if (!alerts_list[count].instruction) {
-				fprintf(stderr, "Fatal Error: No available memory\n");
-				exit(1);
-			}
-			strcpy(alerts_list[count].instruction, instruction_json->valuestring);
-		} else {
-			alerts_list[count].instruction = NULL;
-		}
+    if (instruction_json->valuestring != NULL) {
+      size_t instruction_size = strlen(instruction_json->valuestring);
+      alerts_list[count].instruction = malloc(instruction_size + 1);
+      if (!alerts_list[count].instruction) {
+        fprintf(stderr, "Fatal Error: No available memory\n");
+        exit(1);
+      }
+      strcpy(alerts_list[count].instruction, instruction_json->valuestring);
+    } else {
+      alerts_list[count].instruction = NULL;
+    }
 
     count++;
   }

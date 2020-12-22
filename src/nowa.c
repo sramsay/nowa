@@ -83,8 +83,8 @@ int main(int argc, char* argv[]) {
   char* code = malloc(4);
 
   for (;;) {
-    int opt = getopt_long(argc, argv, "hVi:s:cfdap:lj", long_options,
-                          &option_index);
+    int opt =
+        getopt_long(argc, argv, "hVi:s:cfdap:lj", long_options, &option_index);
 
     if (opt == -1) {
       break;
