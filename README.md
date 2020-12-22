@@ -30,7 +30,7 @@ First, figure out the coordinates of the place for which you'd like to see weath
 
 Now, that's the middle of the [Yukon-Koyukuk Census Area](https://en.wikipedia.org/wiki/Yukon%E2%80%93Koyukuk_Census_Area%2C_Alaska) in Alaska&mdash;one of the least populated places in the country.  Nonetheless, there are over a hundred stations in the area.
 
-Let's use _PAEL_: the  Elfin Cove Seaplane Base.  We can use that id to ask what products the NWS API offers:
+Let's use *PAEL*: the  Elfin Cove Seaplane Base.  We can use that id to ask what products the NWS API offers:
 
 	$ nowa --list-products -i PAEL
 
