@@ -35,7 +35,7 @@ typedef struct zoneinfo zoneinfo;
 struct zoneinfo {
   char* id;
   char* name;
-  // char* state; TODO
+  char* state;
 };
 
 bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo* zone);

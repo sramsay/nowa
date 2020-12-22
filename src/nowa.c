@@ -57,11 +57,7 @@ int main(int argc, char* argv[]) {
       {"conditions", no_argument, 0, 'c'},
       {"forecast", no_argument, 0, 'f'},
       {"discussion", no_argument, 0, 'd'},
-      {"air-quality", no_argument, 0, 'a'},
-      {"alerts", no_argument, 0, 'x'},
-      {"hazards", no_argument, 0, 'z'},
-      {"totals", no_argument, 0, 't'},
-      {"storm-report", no_argument, 0, 'r'},
+      {"alerts", no_argument, 0, 'a'},
       {"product", required_argument, 0, 'p'},
       {"list-products", no_argument, 0, 'l'},
       {"json", no_argument, 0, 'j'},
@@ -78,11 +74,7 @@ int main(int argc, char* argv[]) {
   bool conditions = false;
   bool forecast = false;
   bool discussion = false;
-  bool air_quality = false;
   bool alerts = false;
-  bool hazards = false;
-  bool totals = false;
-  bool storm_report = false;
   bool product = false;
   bool list_products = false;
 
@@ -91,7 +83,7 @@ int main(int argc, char* argv[]) {
   char* code = malloc(4);
 
   for (;;) {
-    int opt = getopt_long(argc, argv, "hVji:s:cfdaxztrp:l", long_options,
+    int opt = getopt_long(argc, argv, "hVi:s:cfdap:lj", long_options,
                           &option_index);
 
     if (opt == -1) {
@@ -106,9 +98,6 @@ int main(int argc, char* argv[]) {
         break;
       case 'V':
         version = true;
-        break;
-      case 'j':
-        json = true;
         break;
       case 'i':
         if (strlen(optarg) > 5) {
@@ -147,19 +136,7 @@ int main(int argc, char* argv[]) {
         discussion = true;
         break;
       case 'a':
-        air_quality = true;
-        break;
-      case 'x':
         alerts = true;
-        break;
-      case 'z':
-        hazards = true;
-        break;
-      case 't':
-        totals = true;
-        break;
-      case 'r':
-        storm_report = true;
         break;
       case 'p':
         product = true;
@@ -175,6 +152,9 @@ int main(int argc, char* argv[]) {
         break;
       case 'l':
         list_products = true;
+        break;
+      case 'j':
+        json = true;
         break;
       default:
         print_usage();
@@ -215,40 +195,8 @@ int main(int argc, char* argv[]) {
           return EXIT_FAILURE;
         }
       }
-      if (air_quality) {
-        if (!print_product_json(station_id, "AQI")) {
-          free(station_id);
-          free(lat_long);
-          free(code);
-          return EXIT_FAILURE;
-        }
-      }
       if (alerts) {
         if (!print_alerts_json(station_id)) {
-          free(station_id);
-          free(lat_long);
-          free(code);
-          return EXIT_FAILURE;
-        }
-      }
-      if (hazards) {
-        if (!print_product_json(station_id, "HWO")) {
-          free(station_id);
-          free(lat_long);
-          free(code);
-          return EXIT_FAILURE;
-        }
-      }
-      if (totals) {
-        if (!print_product_json(station_id, "CLI")) {
-          free(station_id);
-          free(lat_long);
-          free(code);
-          return EXIT_FAILURE;
-        }
-      }
-      if (storm_report) {
-        if (!print_product_json(station_id, "LSR")) {
           free(station_id);
           free(lat_long);
           free(code);
@@ -329,40 +277,8 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
       }
     }
-    if (air_quality) {
-      if (!print_product(station_id, "AQI")) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
     if (alerts) {
       if (!print_alerts(station_id)) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (hazards) {
-      if (!print_product(station_id, "HWO")) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (totals) {
-      if (!print_product(station_id, "CLI")) {
-        free(station_id);
-        free(lat_long);
-        free(code);
-        return EXIT_FAILURE;
-      }
-    }
-    if (storm_report) {
-      if (!print_product(station_id, "LSR")) {
         free(station_id);
         free(lat_long);
         free(code);
@@ -409,12 +325,8 @@ static void print_usage(void) {
   puts("Options:");
   puts("  -c  --conditions     Current conditions");
   puts("  -f  --forecast       7-day forecast");
-  puts("  -a  --air-quality    Air quality forecast");
   puts("  -d  --discussion     Scientific forecast discussion");
-  puts("  -x  --alerts         Active alerts (if any)");
-  puts("  -z  --hazards        Hazardous weather outlook");
-  puts("  -t  --totals         Yesterday's totals");
-  puts("  -r  --storm-report   Local storm report");
+  puts("  -a  --alerts         Active alerts (if any)");
   puts("  -l  --list-products  List available NWS product");
   putchar('\n');
   puts("  -s  --list-stations [lat,long]   Retrieve list of area stations");

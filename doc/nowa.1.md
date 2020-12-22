@@ -10,7 +10,7 @@ nowa -j [OPTION...] -i [STATION_ID]
 # DESCRIPTION
 nowa is a command-line client that displays data from  U.S. National Weather Service's web API.
 
-Technically, nowa is capable of displaying any data product made available through the NWS API.  If you know the id of the station in a particular area, know the data product you are interested in displaying, and that data product is available at that station, nowa can display it.  What's more, all of this information is discoverable through nowa itself.  For example,
+Technically, nowa is capable of displaying any data product made available through the NWS API.  If you know the id of a station in a particular area, know the data product you are interested in displaying, and that data product is available at that station, nowa can display it.  What's more, all of this information is discoverable through nowa itself.  For example,
 
 	nowa --list-stations "39.833333,-98.583333"
 
@@ -24,7 +24,7 @@ will list all the forecast products available for the station located Blosser Mu
 
 will display the Daily River forecasts for that station.
 
-nowa also provides a number of convenience options for commonly requested (and mostly universal) information, including current conditions, 7-day forecast, active alerts, and so forth.  So if you'd simply like to see the current conditions:
+nowa also provides a number of convenience options for commonly requested (and mostly universal) information, including current conditions, 7-day forecast, active alerts, and scientific forecast discussions.  So if you'd simply like to see the current conditions:
 
 	nowa -c -i KLNK
 

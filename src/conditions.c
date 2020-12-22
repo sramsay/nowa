@@ -69,7 +69,7 @@ bool print_conditions(char station_id[restrict static 1]) {
   printf("   Relative Humidity: %.1f%%\n", current->relative_humidity);
   double dewpoint = ftemp(current->dewpoint);
   printf("   Dewpoint: %.1f\u00B0F (%s)\n", dewpoint,
-         comfort_scale(dewpoint));    // TODO: Move
+         comfort_scale(dewpoint));
   if (current->heat_index >= 26.7) {  // 80°F
     printf("   Heat Index: %.1f\u00B0F\n", ftemp(current->heat_index));
   }

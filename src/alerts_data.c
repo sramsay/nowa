@@ -55,8 +55,6 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
           zinfo.id);
   cJSON* alerts_json = json_init(alerts_url);
 
-	puts(alerts_url);
-
   // Error code
   cJSON* status_json = cJSON_GetObjectItemCaseSensitive(alerts_json, "status");
   if (status_json) {
@@ -105,7 +103,7 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
 
     cJSON* instruction_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "instruction");
-		if (instruction_json == NULL) {
+		if (instruction_json->valuestring != NULL) {
 			size_t instruction_size = strlen(instruction_json->valuestring);
 			alerts_list[count].instruction = malloc(instruction_size + 1);
 			if (!alerts_list[count].instruction) {
@@ -122,7 +120,7 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
 
   free(zinfo.id);
   free(zinfo.name);
-  // free(zinfo.state); TODO
+  free(zinfo.state);
   free(alerts_url);
   cJSON_Delete(alerts_json);
 

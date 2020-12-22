@@ -77,24 +77,26 @@ bool init_station(char station_id[restrict static 1],
   }
   strcpy(info->forecast_url, forecast_json->valuestring);
 
-	/* TODO
   cJSON* county_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "county");
-  size_t county_size = strlen(county_json->valuestring);
-  info->county_url = malloc(county_size + 1);
-  strcpy(info->county_url, county_json->valuestring);
+	if (county_json != NULL) {
+		size_t county_size = strlen(county_json->valuestring);
+		info->county_url = malloc(county_size + 1);
+		strcpy(info->county_url, county_json->valuestring);
 
-  cJSON* fire_weather_zone_json =
-      cJSON_GetObjectItemCaseSensitive(properties_json, "fireWeatherZone");
-  size_t fireweather_size = strlen(fire_weather_zone_json->valuestring);
-  info->fire_weather_zone_url = malloc(fireweather_size + 1);
-  if (!info->fire_weather_zone_url) {
-    fprintf(stderr, "Fatal Error: No available memory\n");
-    free(station_url);
-    return false;
-  }
-  strcpy(info->fire_weather_zone_url, fire_weather_zone_json->valuestring);
-	*/
+		cJSON* fire_weather_zone_json =
+				cJSON_GetObjectItemCaseSensitive(properties_json, "fireWeatherZone");
+		size_t fireweather_size = strlen(fire_weather_zone_json->valuestring);
+		info->fire_weather_zone_url = malloc(fireweather_size + 1);
+		if (!info->fire_weather_zone_url) {
+			fprintf(stderr, "Fatal Error: No available memory\n");
+			free(station_url);
+			return false;
+		}
+		strcpy(info->fire_weather_zone_url, fire_weather_zone_json->valuestring);
+	} else {
+		info->fire_weather_zone_url = NULL;
+	}
 
   free(station_url);
   cJSON_Delete(station_json);
@@ -106,6 +108,6 @@ void cleanup_station_info(struct station_info* sinfo) {
   free(sinfo->name);
   free(sinfo->timezone);
   free(sinfo->forecast_url);
-  //free(sinfo->county_url); TODO
-  //free(sinfo->fire_weather_zone_url);
+  free(sinfo->county_url);
+  free(sinfo->fire_weather_zone_url);
 }
