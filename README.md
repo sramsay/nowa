@@ -22,13 +22,13 @@ _nowa_ is a small, fast command-line application that retrieves weather data fro
 Quickstart
 ----------
 
-[See notes on building and install _nowa_ below]
+[See notes on building and installing _nowa_ below]
 
 First, figure out the coordinates of the place for which you'd like to see weather information (there are lots of tools on the web for doing this).  Once you have this, you can ask _nowa_ to list nearby weather stations:
 
 	$ nowa --list-stations 65.846004,-150.725719
 
-Now, that's the middle of the [Yukon-Koyukuk Census Area](https://en.wikipedia.org/wiki/Yukon%E2%80%93Koyukuk_Census_Area%2C_Alaska) in Alaska&emdash;one of the least populated places in the country.  Nonetheless, there are over a hundred stations in the area.
+Now, that's the middle of the [Yukon-Koyukuk Census Area](https://en.wikipedia.org/wiki/Yukon%E2%80%93Koyukuk_Census_Area%2C_Alaska) in Alaska&mdash;one of the least populated places in the country.  Nonetheless, there are over a hundred stations in the area.
 
 Let's use _PAEL_: the  Elfin Cove Seaplane Base.  We can use that id to ask what products the NWS API offers:
 
