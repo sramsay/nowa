@@ -43,9 +43,9 @@ That station has lots of data products, including a Local Storm Report (LSR), so
 Usage
 -----
 
-Technically, `nowa` is capable of displaying any data product made available through the NWS API.  If you know the id of a station in a particular area, know the data product you are interested in displaying, and that data product is available at that station, `nowa` can display it.  And all of this information (save the lat/long of the location you're interested in) can be determined using `nowa` itself.
+`nowa` is capable of displaying any data product made available through the [NWS API](https://www.weather.gov/documentation/services-web-api).  If you know the id of a station in a particular area, know the data product you are interested in displaying, and that data product is available at that station, `nowa` can display it.  And all of this information (save the lat/long of the location you're interested in) can be determined using `nowa` itself.
 
-But `nowa` also provides a number of convenience options for commonly requested (and mostly universal) information, including current conditions, 7-day forecast, active alerts, and scientific forecast discussion.  So if you'd simply like to see the current conditions in my hometown (Lincoln, NE):
+But `nowa` also provides a number of convenience options for commonly requested (and mostly universal) information, including current conditions, 7-day forecast, active alerts, and scientific forecast discussions.  So if you'd simply like to see the current conditions in my hometown (Lincoln, NE):
 
 	$ nowa -c -i KLNK
 
@@ -87,6 +87,6 @@ You should have received a copy of the GNU General Public License along with thi
 
 NOAA/NWS data is in the public domain.  However users of NOAA/NWS data should be familiar with the terms and conditions set forth in their [disclaimer](https://www.weather.gov/disclaimer).
 
-`nowa` is neither endorsed by, nor in any way affiliated with, either the [National Oceanic and Atmosheric Administration](https://www.noaa.gov/) or the [National Weather Service](https://www.weather.gov/).
+`nowa` is neither endorsed by, nor in any way affiliated with, either the [National Oceanic and Atmospheric Administration](https://www.noaa.gov/) or the [National Weather Service](https://www.weather.gov/).
 
 Last Modified: Thu Dec 24 10:28:38 CST 2020
