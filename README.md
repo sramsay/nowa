@@ -28,9 +28,9 @@ First, figure out the coordinates of the place for which you'd like to see weath
 
 	$ nowa --list-stations 65.846004,-150.725719
 
-Now, that's the middle of the [Yukon-Koyukuk Census Area](https://en.wikipedia.org/wiki/Yukon%E2%80%93Koyukuk_Census_Area%2C_Alaska) in Alaska&mdash;one of the least populated places in the country.  Nonetheless, there are over a hundred stations in the area.
+Now, that's the middle of the [Yukon-Koyukuk Census Area](https://en.wikipedia.org/wiki/Yukon%E2%80%93Koyukuk_Census_Area%2C_Alaska) in Alaska&mdash;one of the least populated places in the country.  Nonetheless, there are over a hundred stations in the region.
 
-Let's use `PAEL`: the  Elfin Cove Seaplane Base.  We can use that id to ask what products the NWS API offers:
+Let's look at the [Elfin Cove Seaplane Base](https://www.flyalaskaseaplanes.com/destinations/Elfin-Cove/).  We can use its station id (`PAEL`) to ask what products the NWS API offers:
 
 	$ nowa --list-products -i PAEL
 
@@ -88,3 +88,5 @@ You should have received a copy of the GNU General Public License along with thi
 NOAA/NWS data is in the public domain.  However users of NOAA/NWS data should be familiar with the terms and conditions set forth in their [disclaimer](https://www.weather.gov/disclaimer).
 
 `nowa` is neither endorsed by, nor in any way affiliated with, either the [National Oceanic and Atmosheric Administration](https://www.noaa.gov/) or the [National Weather Service](https://www.weather.gov/).
+
+Last Modified: Thu Dec 24 10:28:38 CST 2020
