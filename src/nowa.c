@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
   bool list_products = false;
 
   char* station_id = malloc(5);
-  char* lat_long = malloc(25);
+  char* lat_long = malloc(42);
   char* code = malloc(4);
 
   for (;;) {
@@ -112,11 +112,10 @@ int main(int argc, char* argv[]) {
         station = true;
         break;
       case 's':
-        if (strlen(optarg) > 30) {
+        if (strlen(optarg) > 42) {
           fprintf(
               stderr,
-              "Lat/long precision is limited to seven decimal places (which is "
-              "close to\nthe accuracy limits of GPS-based systems)\n");
+              "Lat/long precision is limited to fifteen decimal places (which already exceeds the accuracy limits of GPS-based systems)\n");
           free(station_id);
           free(lat_long);
           free(code);

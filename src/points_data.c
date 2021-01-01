@@ -192,8 +192,8 @@ bool construct_points_url(char lat_long[restrict static 1],
   pcre2_substring_get_bynumber(match_data, 2, &(longitude_match),
                                &longitude_length);
   char* end = {0};
-  assert(latitude_length <= 11);
-  assert(longitude_length <= 11);
+  assert(latitude_length <= 21);
+  assert(longitude_length <= 21);
   // Converting these strings to actual doubles so we can set precision and
   // truncate zeros
   double latitude = strtod((const char*)latitude_match, &end);
