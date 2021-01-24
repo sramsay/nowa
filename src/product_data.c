@@ -59,7 +59,7 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
     size_t product_code_size = strlen(product_code_json->valuestring);
     pd->product_code = malloc(product_code_size + 1);
     if (!pd->product_code) {
-      fprintf(stderr, "Fata Error: No available memory.");
+      fprintf(stderr, "Fatal Error: No available memory.");
       free(product_list_url);
       return false;
     }
@@ -106,6 +106,8 @@ bool construct_product_list_url(char station_id[restrict static 1],
   sprintf(*product_list_url, "%s%s%s%s",
           "https://api.weather.gov/products/types/", product_code,
           "/locations/", points.cwa);
+
+	puts(*product_list_url); // REMOVE
 
   cleanup_station_info(&sinfo);
   cleanup_points(&points);

@@ -52,7 +52,7 @@ bool print_product(char station_id[restrict static 1], char* product_code) {
   printf("%s", pd->product_code);
   printf("%s", pd->product_text);
 
-  cleanup_product(pd);  // if only . . .
+  cleanup_product(pd);
 
   free(pd);
 

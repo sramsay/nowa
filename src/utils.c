@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 12:17:49 CST 2020
+ * Last Modified: Sun Jan 24 12:25:02 CST 2021
  *
  * Copyright © 2020 Stephen Ramsay
  *
@@ -198,6 +198,7 @@ char* latlong_string(double latitude, double longitude) {
   }
 
   sprintf(lat_long, "%.4f,%.4f", latitude, longitude);
+	puts(lat_long);
 
   return lat_long;
 }

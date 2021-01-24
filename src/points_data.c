@@ -146,7 +146,7 @@ bool init_points(char lat_long[restrict static 1], struct points_info* points) {
 bool construct_points_url(char lat_long[restrict static 1],
                           char* points_url[static 1]) {
   // Matches lat/longs of the general form 39.809734,-98.555620
-  PCRE2_SPTR pattern = (PCRE2_SPTR) "(-?[0-9]*\\.[0-9]+),(-?[0-9]*\\.[0-9]+)";
+  PCRE2_SPTR pattern = (PCRE2_SPTR) "(-?[0-9]+\\.[0-9]+),(-?[0-9]+\\.[0-9]+)";
   PCRE2_SPTR subject = (PCRE2_SPTR)lat_long;
 
   int error_num_pcre2 = 0;
@@ -199,8 +199,8 @@ bool construct_points_url(char lat_long[restrict static 1],
   double latitude = strtod((const char*)latitude_match, &end);
   double longitude = strtod((const char*)longitude_match, &end);
 
-  *points_url = malloc(50);
-  sprintf(*points_url, "%s%.4g,%.4g", "https://api.weather.gov/points/",
+  *points_url = malloc(60);
+  sprintf(*points_url, "%s%.4lf,%.4lf", "https://api.weather.gov/points/",
           latitude, longitude);
 
   pcre2_match_data_free(match_data);
