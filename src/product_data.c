@@ -107,8 +107,6 @@ bool construct_product_list_url(char station_id[restrict static 1],
           "https://api.weather.gov/products/types/", product_code,
           "/locations/", points.cwa);
 
-	puts(*product_list_url); // REMOVE
-
   cleanup_station_info(&sinfo);
   cleanup_points(&points);
 
