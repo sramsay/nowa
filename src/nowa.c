@@ -227,6 +227,7 @@ int main(int argc, char* argv[]) {
       free(code);
       return EXIT_SUCCESS;
     }
+		return EXIT_SUCCESS;
   }
 
   if (version) {
