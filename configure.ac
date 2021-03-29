@@ -1,6 +1,6 @@
 
-AC_PREREQ([2.69])
-AC_INIT([nowa], [0.18.6], [https://github.com/sramsay/nowa/issues])
+AC_PREREQ([2.71])
+AC_INIT([nowa],[0.18.6],[https://github.com/sramsay/nowa/issues])
 AC_DEFINE([COPYRIGHT_DATES], ["2020-2021"], [current copyright dates])
 AC_CONFIG_SRCDIR([src/nowa.c])
 AC_CONFIG_AUX_DIR([build-aux])
@@ -8,7 +8,6 @@ AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs
 AC_PROG_CC
-AC_PROG_CC_C99
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
@@ -26,16 +25,16 @@ AC_TYPE_SIZE_T
 # Checks for header files.
 AC_CHECK_HEADERS([float.h limits.h locale.h stddef.h stdlib.h string.h])
 
+# Checks for library headers
+AC_CHECK_HEADERS([getopt.h limits.h locale.h stddef.h float.h])
+AC_CHECK_HEADER([check.h])
+
 # Check for libraries
 AC_CHECK_LIB([curl],[curl_easy_setopt])
 AC_CHECK_LIB([pcre2-8],[pcre2_compile_8])
 
 # Checks for library functions
 AC_CHECK_FUNCS([localeconv localtime_r memset modf tzset])
-
-# Checks for library headers
-AC_CHECK_HEADERS([getopt.h limits.h locale.h stddef.h float.h])
-AC_CHECK_HEADER([check.h])
 
 # Checks for header signatures
 AC_CHECK_HEADER_STDBOOL
