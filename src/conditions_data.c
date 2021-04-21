@@ -115,27 +115,27 @@ bool init_conditions(char station_id[restrict static 1],
       properties_json, "precipitationLastHour");
   cJSON* precip_hour_value_json =
       cJSON_GetObjectItemCaseSensitive(precip_hour_json, "value");
-	if (precip_hour_value_json) {
-		current->precip_hour = precip_hour_value_json->valuedouble;
-	}
+  if (precip_hour_value_json) {
+    current->precip_hour = precip_hour_value_json->valuedouble;
+  }
 
   // Precipitation Last 3 Hours
   cJSON* precip_3hour_json = cJSON_GetObjectItemCaseSensitive(
       properties_json, "precipitationLast3Hours");
   cJSON* precip_3hour_value_json =
       cJSON_GetObjectItemCaseSensitive(precip_3hour_json, "value");
-	if (precip_3hour_value_json) {
-		current->precip_3hour = precip_3hour_value_json->valuedouble;
-	}
+  if (precip_3hour_value_json) {
+    current->precip_3hour = precip_3hour_value_json->valuedouble;
+  }
 
   // Precipitation Last 6 Hours
   cJSON* precip_6hour_json = cJSON_GetObjectItemCaseSensitive(
       properties_json, "precipitationLast6Hours");
   cJSON* precip_6hour_value_json =
       cJSON_GetObjectItemCaseSensitive(precip_6hour_json, "value");
-	if (precip_6hour_value_json) {
-		current->precip_6hour = precip_6hour_value_json->valuedouble;
-	}
+  if (precip_6hour_value_json) {
+    current->precip_6hour = precip_6hour_value_json->valuedouble;
+  }
 
   // Relative Humidity
   cJSON* relative_humidity_json =

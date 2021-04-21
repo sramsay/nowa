@@ -29,8 +29,8 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
     char* product_list_url = malloc(60);
     if (!product_list_url) {
       fprintf(stderr, "Fatal Error: No available memory\n");
-			free(product_list_url);
-			free(product_list);
+      free(product_list_url);
+      free(product_list);
       return false;
     }
     construct_product_list_url(station_id, &product_list_url, product_code);

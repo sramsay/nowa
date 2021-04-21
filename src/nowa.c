@@ -115,7 +115,8 @@ int main(int argc, char* argv[]) {
         if (strlen(optarg) > 42) {
           fprintf(
               stderr,
-              "Lat/long precision is limited to fifteen decimal places (which already exceeds the accuracy limits of GPS-based systems)\n");
+              "Lat/long precision is limited to fifteen decimal places (which "
+              "already exceeds the accuracy limits of GPS-based systems)\n");
           free(station_id);
           free(lat_long);
           free(code);
@@ -227,7 +228,7 @@ int main(int argc, char* argv[]) {
       free(code);
       return EXIT_SUCCESS;
     }
-		return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
   }
 
   if (version) {
