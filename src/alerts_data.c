@@ -6,9 +6,9 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 11:17:42 CST 2020
+ * Last Modified: Sat Apr 24 10:13:53 CDT 2021
  *
- * Copyright © 2020 Stephen Ramsay
+ * Copyright © 2020-2021 Stephen Ramsay
  *
  * nowa is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "alerts_data.h"
 #include "json.h"
 #include "third_party/cJSON.h"
 #include "zoneinfo_data.h"

@@ -6,9 +6,9 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 12:09:07 CST 2020
+ * Last Modified: Sat Apr 24 10:14:39 CDT 2021
  *
- * Copyright © 2020 Stephen Ramsay
+ * Copyright © 2020-2021 Stephen Ramsay
  *
  * nowa is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,6 @@
 #include "points_data.h"
 #include "station_list_data.h"
 #include "third_party/cJSON.h"
-#include "utils.h"
 
 bool print_stations(char lat_long[static 1]) {
   struct station* station_list = init_station_list(lat_long);

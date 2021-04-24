@@ -6,9 +6,9 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 12:32:57 CST 2020
+ * Last Modified: Sat Apr 24 10:16:06 CDT 2021
  *
- * Copyright © 2020 Stephen Ramsay
+ * Copyright © 2020-2021 Stephen Ramsay
  *
  * nowa is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
