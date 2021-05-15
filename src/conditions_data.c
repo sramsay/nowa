@@ -196,7 +196,7 @@ bool init_conditions(char station_id[restrict static 1],
 }
 
 bool construct_conditions_url(char station_id[restrict static 1],
-                              char* conditions_url[]) {
+                              char* conditions_url[static 1]) {
   sprintf(*conditions_url, "%s%s%s", "https://api.weather.gov/stations/",
           station_id, "/observations/latest");
   return true;
