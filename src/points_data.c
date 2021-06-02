@@ -201,8 +201,7 @@ bool construct_points_url(char lat_long[restrict static 1],
 
   *points_url = malloc(60);
   sprintf(*points_url, "%s%.4g,%.4g", "https://api.weather.gov/points/",
-         latitude, longitude);
-
+          latitude, longitude);
 
   pcre2_match_data_free(match_data);
   pcre2_code_free(regex_pcre2);

@@ -105,7 +105,7 @@ bool construct_available_product_list_url(char station_id[restrict static 1],
   sprintf(*available_product_list_url, "%s%s%s",
           "https://api.weather.gov/products/locations/", points.cwa, "/types");
 
-	free(lat_long);
+  free(lat_long);
   cleanup_station_info(&sinfo);
   cleanup_points(&points);
 
