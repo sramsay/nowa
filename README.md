@@ -47,11 +47,45 @@ Let's look at the [Elfin Cove Seaplane Base](https://www.flyalaskaseaplanes.com/
 
 	$ nowa --list-products -i PAEL
 
+	Forecast Office Products Available for PAEL:
+
+	Code  Description
+	----  -----------
+	AFD   Area Forecast Discussion
+	CAP   Common Alerting Protocol
+	CLM   Climatological Report (Monthly)
+	CWF   Coastal Waters Forecast
+	FWF   Routine Fire Wx Fcst (With/Without 6-10 Day Outlook)
+	HML   AHPS XML
+	NOW   Short Term Forecast
+	OFF   Offshore Forecast
+	PFM   Point Forecast Matrices
+	RER   Record Report
+	RR3   Hydro-Met Data Report Part 3
+	RRS   HADS Data
+	[...]
+
 (Note the -i/--station_id  switch.  That's required for a lot of operations with `nowa`)
 
-That station has lots of data products, including a Local Storm Report (LSR), so let's grab that:
+That station has lots of data products, including an Offshore Waters Forecast (OFF).  So let's grab that:
 
-	$ nowa --product LSR -i PAEL
+	$ nowa --product OFF -i PAEL
+
+	Offshore Forecast
+	000
+	FZAK67 PAJK 021145
+	OFFAJK
+
+	Offshore Waters Forecast
+	National Weather Service Juneau AK
+	345 AM AKDT Wed Jun 2 2021
+
+	Offshore waters forecast for Gulf of Alaska east of 144W
+
+	Wind forecasts reflect the predominant speed and direction
+	expected. Sea forecasts represent the average of the highest
+	one-third of the combined windwave and swell height.
+	[...]
 
 Usage
 -----

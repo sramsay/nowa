@@ -39,7 +39,7 @@
 bool print_stations(char lat_long[static 1]) {
   struct station* station_list = init_station_list(lat_long);
 
-  printf("%s%s\n", "Available Weather Stations for ", lat_long);
+  printf("%s%s\n\n", "Available Weather Stations for ", lat_long);
   puts("ID    Location");
   puts("----  --------");
   for (size_t i = 0; i < station_count; i++) {
