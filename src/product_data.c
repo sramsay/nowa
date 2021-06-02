@@ -124,6 +124,7 @@ bool construct_product_list_url(char station_id[restrict static 1],
 void cleanup_product(struct product* pd) {
   free(pd->product_code);
   free(pd->product_text);
+	free(pd);
 }
 
 void cleanup_product_list(product_id* pl) {
