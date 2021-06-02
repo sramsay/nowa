@@ -28,6 +28,19 @@ First, figure out the coordinates of the place for which you'd like to see weath
 
 	$ nowa --list-stations 65.846004,-150.725719
 
+	Available Weather Stations for 65.846,-150.725719
+	ID    Location
+	----  --------
+	PATA: Tanana, Calhoun Memorial Airport
+	PABT: Bettles, Bettles Airport
+	PAIM: Utopia Creek, Indian Mountain LRRS Airport
+	PANN: Nenana Municipal Airport
+	PAFA: Fairbanks, Fairbanks International Airport
+	PAMH: Minchumina, Minchumina Airport
+	PAIN: McKinley Park, McKinley National Park Airport
+	PFYU: Fort Yukon, Fort Yukon Airport
+	[...]
+
 Now, that's the middle of the [Yukon-Koyukuk Census Area](https://en.wikipedia.org/wiki/Yukon%E2%80%93Koyukuk_Census_Area%2C_Alaska) in Alaska&mdash;one of the least populated places in the country.  Nonetheless, there are over a hundred stations in the region.
 
 Let's look at the [Elfin Cove Seaplane Base](https://www.flyalaskaseaplanes.com/destinations/Elfin-Cove/).  We can use its station id (`PAEL`) to ask what products the NWS API offers:
@@ -70,7 +83,7 @@ Building and Installing `nowa`
 
 	$ ./configure
 	$ make
-	$ make install (as root)
+	$ sudo make install
 
 License(s)
 ----------
