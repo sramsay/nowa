@@ -134,4 +134,4 @@ NOAA/NWS data is in the public domain.  However users of NOAA/NWS data should be
 
 `nowa` is neither endorsed by, nor in any way affiliated with, either the [National Oceanic and Atmospheric Administration](https://www.noaa.gov/) or the [National Weather Service](https://www.weather.gov/).
 
-Last Modified: Sun Dec 27 14:08:48 CST 2020
+Last Modified: Wed Jun 02 15:02:55 CDT 2021

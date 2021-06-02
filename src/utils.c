@@ -8,7 +8,7 @@
  *
  * Last Modified: Sun Jan 24 12:25:02 CST 2021
  *
- * Copyright © 2020 Stephen Ramsay
+ * Copyright © 2020-2021 Stephen Ramsay
  *
  * nowa is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
