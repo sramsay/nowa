@@ -12,6 +12,8 @@
 #include "third_party/cJSON.h"
 #include "utils.h"
 
+void cleanup_product_list(product_id* pl);
+
 bool init_product(char station_id[restrict static 1], struct product* pd,
                   char* product_code) {
   // First, check to make sure the requested product exists for the given
@@ -29,8 +31,7 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
     char* product_list_url = malloc(60);
     if (!product_list_url) {
       fprintf(stderr, "Fatal Error: No available memory\n");
-      free(product_list_url);
-      free(product_list);
+      cleanup_product_list(product_list);
       return false;
     }
     construct_product_list_url(station_id, &product_list_url, product_code);
@@ -46,6 +47,7 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
       cJSON* details_json =
           cJSON_GetObjectItemCaseSensitive(graph_json, "detail");
       printf("%s\n", details_json->valuestring);
+			cleanup_product_list(product_list);
       free(product_list_url);
       return false;
     }
@@ -59,8 +61,9 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
     size_t product_code_size = strlen(product_code_json->valuestring);
     pd->product_code = malloc(product_code_size + 1);
     if (!pd->product_code) {
-      fprintf(stderr, "Fatal Error: No available memory.");
+			cleanup_product_list(product_list);
       free(product_list_url);
+      fprintf(stderr, "Fatal Error: No available memory.");
       return false;
     }
     strcpy(pd->product_code, product_code_json->valuestring);
@@ -69,18 +72,21 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
     size_t product_text_size = strlen(product_text_json->valuestring);
     pd->product_text = malloc(product_text_size + 1);
     if (!pd->product_text) {
-      fprintf(stderr, "Fata Error: No available memory.");
+			cleanup_product_list(product_list);
       free(product_list_url);
+      fprintf(stderr, "Fata Error: No available memory.");
       return false;
     }
     strcpy(pd->product_text, product_text_json->valuestring);
 
     free(product_list_url);
+		cleanup_product_list(product_list);
     cJSON_Delete(product_list_json);
     cJSON_Delete(product_json);
 
     return true;
   } else {
+		cleanup_product_list(product_list);
     printf("Product %s is not available for requested station %s\n",
            product_code, station_id);
     exit(0);
@@ -118,4 +124,12 @@ bool construct_product_list_url(char station_id[restrict static 1],
 void cleanup_product(struct product* pd) {
   free(pd->product_code);
   free(pd->product_text);
+}
+
+void cleanup_product_list(product_id* pl) {
+	for (size_t i = 0; i < product_count; i++) {
+		free(pl[i].product_code);
+		free(pl[i].product_name);
+	}
+	free(pl);
 }

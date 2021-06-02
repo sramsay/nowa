@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 12:33:12 CST 2020
+ * Last Modified: Wed Jun 02 10:47:56 CDT 2021
  *
  * Copyright © 2020 Stephen Ramsay
  *
