@@ -56,11 +56,40 @@ cJSON* json_init(char const url[restrict static 1]) {
   CURL* curl_handle = curl_easy_init();
 
   if (curl_handle) {
-    curl_easy_setopt(curl_handle, CURLOPT_URL, url);
-    curl_easy_setopt(curl_handle, CURLOPT_USERAGENT,
+    CURLcode url_code = curl_easy_setopt(curl_handle, CURLOPT_URL, url);
+		if (url_code != CURLE_OK) {
+				fprintf(stderr, "Request Error: %s\n", curl_easy_strerror(url_code));
+				curl_easy_cleanup(curl_handle);
+				free(chunk.memory);
+				curl_global_cleanup();
+				exit(1);
+		}
+    CURLcode ua_code = curl_easy_setopt(curl_handle, CURLOPT_USERAGENT,
                      "nowa, https://github.com/sramsay/nowa/issues");
-    curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, write_memory_callback);
-    curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)&chunk);
+		if (ua_code != CURLE_OK) {
+				fprintf(stderr, "Request Error: %s\n", curl_easy_strerror(ua_code));
+				curl_easy_cleanup(curl_handle);
+				free(chunk.memory);
+				curl_global_cleanup();
+				exit(1);
+		}
+    CURLcode wf_code = curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, write_memory_callback);
+		if (wf_code != CURLE_OK) {
+				fprintf(stderr, "Request Error: %s\n", curl_easy_strerror(ua_code));
+				curl_easy_cleanup(curl_handle);
+				free(chunk.memory);
+				curl_global_cleanup();
+				exit(1);
+		}
+    CURLcode wd_code = curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)&chunk);
+		if (wd_code != CURLE_OK) {
+				fprintf(stderr, "Request Error: %s\n", curl_easy_strerror(ua_code));
+				curl_easy_cleanup(curl_handle);
+				free(chunk.memory);
+				curl_global_cleanup();
+				exit(1);
+		}
+
     CURLcode res = curl_easy_perform(curl_handle);
     if (res != CURLE_OK) {
       fprintf(stderr, "Network Error: %s\n", curl_easy_strerror(res));
