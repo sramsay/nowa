@@ -75,7 +75,7 @@ cJSON* json_init(char const url[restrict static 1]) {
 		}
     CURLcode wf_code = curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, write_memory_callback);
 		if (wf_code != CURLE_OK) {
-				fprintf(stderr, "Request Error: %s\n", curl_easy_strerror(ua_code));
+				fprintf(stderr, "Request Error: %s\n", curl_easy_strerror(wf_code));
 				curl_easy_cleanup(curl_handle);
 				free(chunk.memory);
 				curl_global_cleanup();
@@ -83,7 +83,7 @@ cJSON* json_init(char const url[restrict static 1]) {
 		}
     CURLcode wd_code = curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)&chunk);
 		if (wd_code != CURLE_OK) {
-				fprintf(stderr, "Request Error: %s\n", curl_easy_strerror(ua_code));
+				fprintf(stderr, "Request Error: %s\n", curl_easy_strerror(wd_code));
 				curl_easy_cleanup(curl_handle);
 				free(chunk.memory);
 				curl_global_cleanup();
@@ -107,6 +107,7 @@ cJSON* json_init(char const url[restrict static 1]) {
   curl_global_cleanup();
   return json;
 }
+
 
 static size_t write_memory_callback(void* contents, size_t size, size_t nmemb,
                                     void* userp) {
