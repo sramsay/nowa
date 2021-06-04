@@ -229,9 +229,9 @@ int main(int argc, char* argv[]) {
       return EXIT_SUCCESS;
     }
 
-		free(station_id);
-		free(lat_long);
-		free(code);
+    free(station_id);
+    free(lat_long);
+    free(code);
 
     return EXIT_SUCCESS;
   }
