@@ -13,7 +13,7 @@
 nowa
 =============
 
-Version 0.18.9
+Version 0.18.10
 
 `nowa` is a small, fast command-line application that retrieves weather data from the United States [National Weather Service](https://www.weather.gov/).
 
@@ -134,4 +134,4 @@ NOAA/NWS data is in the public domain.  However users of NOAA/NWS data should be
 
 `nowa` is neither endorsed by, nor in any way affiliated with, either the [National Oceanic and Atmospheric Administration](https://www.noaa.gov/) or the [National Weather Service](https://www.weather.gov/).
 
-Last Modified: Fri Jun 04 08:50:42 CDT 2021
+Last Modified: Fri Jun 04 09:15:23 CDT 2021
