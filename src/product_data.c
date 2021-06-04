@@ -86,10 +86,11 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
 
     return true;
   } else {
-    cleanup_product_list(product_list);
+		cleanup_product_list(product_list);
     printf("Product %s is not currently available for requested station %s\n",
            product_code, station_id);
-    exit(0);
+		free(product_code);
+		exit(0);
   }
 }
 
