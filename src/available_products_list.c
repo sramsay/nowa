@@ -54,7 +54,8 @@ bool print_available_products(char station_id[restrict static 1]) {
 }
 
 bool print_available_products_json(char station_id[restrict static 1]) {
-  char *available_product_list_url = malloc(60 * sizeof *available_product_list_url);
+  char *available_product_list_url =
+      malloc(60 * sizeof *available_product_list_url);
   if (!available_product_list_url) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     return false;

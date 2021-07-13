@@ -84,7 +84,7 @@ cJSON *json_init(char const url[restrict static 1]) {
       exit(1);
     }
     CURLcode wd_code =
-        curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)&chunk);
+        curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
     if (wd_code != CURLE_OK) {
       fprintf(stderr, "Request Error: %s\n", curl_easy_strerror(wd_code));
       curl_easy_cleanup(curl_handle);

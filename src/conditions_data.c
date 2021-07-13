@@ -1,8 +1,8 @@
 /*
  * conditions_data.c
  *
- * This file is part of nowa. It parses the incoming JSON into the current_conditions
- * struct
+ * This file is part of nowa. It parses the incoming JSON into the
+ * current_conditions struct
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *

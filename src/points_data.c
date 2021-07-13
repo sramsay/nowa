@@ -194,7 +194,7 @@ bool construct_points_url(char lat_long[restrict static 1],
       pcre2_match_data_create_from_pattern(regex_pcre2, NULL);
 
   int return_code_pcre2 = pcre2_match(
-      regex_pcre2, subject, strlen((char*)subject), 0, 0, match_data, NULL);
+      regex_pcre2, subject, strlen((char *)subject), 0, 0, match_data, NULL);
 
   if (return_code_pcre2 < 0) {
     switch (return_code_pcre2) {

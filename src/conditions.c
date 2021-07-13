@@ -44,8 +44,7 @@ bool print_conditions(char station_id[restrict static 1]) {
     return false;
   }
 
-  struct current_conditions *current =
-      malloc(sizeof *current);
+  struct current_conditions *current = malloc(sizeof *current);
   if (!current) {
     fprintf(stderr, "Fatal Error: No available memory.\n");
     return false;

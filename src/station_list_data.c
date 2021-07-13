@@ -52,7 +52,7 @@ struct station* init_station_list(char lat_long[restrict static 1]) {
       cJSON_GetObjectItemCaseSensitive(stations_json, "features");
 
   station_count = cJSON_GetArraySize(features_json);
-  struct station *station_list = malloc(station_count * sizeof *station_list);
+  struct station* station_list = malloc(station_count * sizeof *station_list);
   if (!station_list) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     exit(1);

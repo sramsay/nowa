@@ -40,7 +40,8 @@
 size_t product_count;
 
 struct product_id *init_available_products(char station_id[restrict static 1]) {
-  char *available_product_list_url = malloc(60 * sizeof *available_product_list_url);
+  char *available_product_list_url =
+      malloc(60 * sizeof *available_product_list_url);
   if (!available_product_list_url) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     free(available_product_list_url);
