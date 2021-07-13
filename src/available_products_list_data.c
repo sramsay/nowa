@@ -45,7 +45,7 @@ struct product_id *init_available_products(char station_id[restrict static 1]) {
   if (!available_product_list_url) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     free(available_product_list_url);
-    return false;
+    exit(1);
   }
 
   construct_available_product_list_url(station_id, &available_product_list_url);
@@ -62,7 +62,7 @@ struct product_id *init_available_products(char station_id[restrict static 1]) {
         cJSON_GetObjectItemCaseSensitive(graph_json, "detail");
     printf("%s\n", details_json->valuestring);
     free(available_product_list_url);
-    return false;
+    exit(1);
   }
 
   product_count = cJSON_GetArraySize(graph_json);
@@ -81,8 +81,8 @@ struct product_id *init_available_products(char station_id[restrict static 1]) {
   cJSON_ArrayForEach(product_json, graph_json) {
     cJSON *product_code_json =
         cJSON_GetObjectItemCaseSensitive(product_json, "productCode");
-    size_t product_code_size = strlen(product_code_json->valuestring);
-    product_list[count].product_code = malloc(product_code_size + 1);
+    size_t product_code_size = strlen(product_code_json->valuestring) + 1;
+    product_list[count].product_code = malloc(product_code_size);
     if (!product_list[count].product_code) {
       fprintf(stderr, "Fatal Error: No available memory\n");
       cJSON_Delete(available_product_list_json);
@@ -94,8 +94,8 @@ struct product_id *init_available_products(char station_id[restrict static 1]) {
 
     cJSON *product_name_json =
         cJSON_GetObjectItemCaseSensitive(product_json, "productName");
-    size_t product_name_size = strlen(product_name_json->valuestring);
-    product_list[count].product_name = malloc(product_name_size + 1);
+    size_t product_name_size = strlen(product_name_json->valuestring) + 1;
+    product_list[count].product_name = malloc(product_name_size);
     if (!product_list[count].product_name) {
       fprintf(stderr, "Fatal Error: No available memory\n");
       cJSON_Delete(available_product_list_json);
