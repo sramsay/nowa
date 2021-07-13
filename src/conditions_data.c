@@ -188,8 +188,8 @@ bool init_conditions(char station_id[restrict static 1],
   // Timestamp
   cJSON *timestamp_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "timestamp");
-  size_t timestamp_size = strlen(timestamp_json->valuestring);
-  current->timestamp = malloc(timestamp_size + 1);
+  //size_t timestamp_size = strlen(timestamp_json->valuestring);
+  current->timestamp = malloc(sizeof timestamp_json->valuestring);
   if (!current->timestamp) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     free(conditions_url);
@@ -200,15 +200,15 @@ bool init_conditions(char station_id[restrict static 1],
   // METAR
   cJSON *metar_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "rawMessage");
-  size_t metar_size = strlen(metar_json->valuestring);
-  current->metar = malloc(metar_size + 1);
+  //size_t metar_size = strlen(metar_json->valuestring);
+  current->metar = malloc(sizeof metar_json->valuestring);
   strcpy(current->metar, metar_json->valuestring);
 
   // Summary
   cJSON *text_description_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "textDescription");
-  size_t summary_size = strlen(text_description_json->valuestring);
-  current->summary = malloc(summary_size + 1);
+  //size_t summary_size = strlen(text_description_json->valuestring);
+  current->summary = malloc(sizeof text_description_json->valuestring);
   if (!current->summary) {
     fprintf(stderr, "Fatal Error: No available memory.\n");
     free(conditions_url);
