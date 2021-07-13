@@ -81,8 +81,8 @@ struct alert *init_alerts(char station_id[restrict static 1]) {
 
     cJSON *headline_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "headline");
-    size_t headline_size = strlen(headline_json->valuestring);
-    alerts_list[count].headline = malloc(headline_size + 1);
+    size_t headline_size = strlen(headline_json->valuestring) + 1;
+    alerts_list[count].headline = malloc(headline_size);
     if (!alerts_list[count].headline) {
       fprintf(stderr, "Fatal Error: No available memory\n");
       exit(1);
@@ -93,7 +93,7 @@ struct alert *init_alerts(char station_id[restrict static 1]) {
     cJSON *description_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "description");
     size_t description_size = strlen(description_json->valuestring) + 1;
-    alerts_list[count].description = malloc(description_size + 1);
+    alerts_list[count].description = malloc(description_size);
     if (!alerts_list[count].description) {
       fprintf(stderr, "Fatal Error: No available memory\n");
       exit(1);
@@ -103,8 +103,8 @@ struct alert *init_alerts(char station_id[restrict static 1]) {
     cJSON *instruction_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "instruction");
     if (instruction_json->valuestring != NULL) {
-      size_t instruction_size = strlen(instruction_json->valuestring);
-      alerts_list[count].instruction = malloc(instruction_size + 1);
+      size_t instruction_size = strlen(instruction_json->valuestring) + 1;
+      alerts_list[count].instruction = malloc(instruction_size);
       if (!alerts_list[count].instruction) {
         fprintf(stderr, "Fatal Error: No available memory\n");
         exit(1);
