@@ -83,9 +83,9 @@ bool init_forecast(char station_id[restrict static 1], struct tm *last_updated,
   cJSON *periods_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "periods");
 
-  cJSON *period_json = {0};
-  int count = 0;
   if (periods_json) {
+		cJSON *period_json = {0};
+		int count = 0;
     cJSON_ArrayForEach(period_json, periods_json) {
       cJSON *name_json = cJSON_GetObjectItemCaseSensitive(period_json, "name");
       size_t name_size = strlen(name_json->valuestring);
