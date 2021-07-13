@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 12:05:35 CST 2020
+ * Last Modified: Tue Jul 13 11:17:53 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -56,13 +56,13 @@ bool print_forecast(char station_id[restrict static 1]) {
 
   printf("Current forecast for %s (%s)\n", sinfo.name, station_id);
 
-  char* dms_latitude = dd_to_dms(sinfo.latitude);
+  char *dms_latitude = dd_to_dms(sinfo.latitude);
   char latdir = lat_dir(sinfo.latitude);
-  char* dms_longitude = dd_to_dms(sinfo.longitude);
+  char *dms_longitude = dd_to_dms(sinfo.longitude);
   char lngdir = lng_dir(sinfo.longitude);
   printf("%s %c, %s %c\n", dms_latitude, latdir, dms_longitude, lngdir);
 
-  char* update_string = malloc(61 * sizeof(char));
+  char *update_string = malloc(61 * sizeof *update_string);
   if (!update_string) {
     fprintf(stderr, "Fatal Error: Not enough memory\n");
     free(dms_latitude);
@@ -107,9 +107,9 @@ bool print_forecast_json(char station_id[restrict static 1]) {
     return false;
   }
 
-  char* forecast_url = points.forecast_url;
-  cJSON* forecast_json = json_init(forecast_url);
-  char* output = cJSON_Print(forecast_json);
+  char *forecast_url = points.forecast_url;
+  cJSON *forecast_json = json_init(forecast_url);
+  char *output = cJSON_Print(forecast_json);
   puts(output);
   free(points.forecast_url);
   cJSON_Delete(forecast_json);

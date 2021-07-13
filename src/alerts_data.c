@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Sat Apr 24 10:13:53 CDT 2021
+ * Last Modified: Tue Jul 13 10:52:54 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -37,14 +37,14 @@
 
 size_t alerts_count;
 
-struct alert* init_alerts(char station_id[restrict static 1]) {
+struct alert *init_alerts(char station_id[restrict static 1]) {
   struct zoneinfo zinfo = {0};
   if (!init_zoneinfo(station_id, &zinfo)) {
     fprintf(stderr, "Error: %s", "Unable to retrieve zone info\n");
     exit(1);
   }
 
-  char* alerts_url = malloc(50 * sizeof(char));
+  char *alerts_url = malloc(50 * sizeof *alerts_url);
   if (!alerts_url) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     exit(1);
@@ -52,34 +52,34 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
 
   sprintf(alerts_url, "%s%s", "https://api.weather.gov/alerts/active/zone/",
           zinfo.id);
-  cJSON* alerts_json = json_init(alerts_url);
+  cJSON *alerts_json = json_init(alerts_url);
 
   // Error code
-  cJSON* status_json = cJSON_GetObjectItemCaseSensitive(alerts_json, "status");
+  cJSON *status_json = cJSON_GetObjectItemCaseSensitive(alerts_json, "status");
   if (status_json) {
-    cJSON* details_json =
+    cJSON *details_json =
         cJSON_GetObjectItemCaseSensitive(alerts_json, "detail");
     printf("%s\n", details_json->valuestring);
     exit(1);
   }
 
-  cJSON* features_json =
+  cJSON *features_json =
       cJSON_GetObjectItemCaseSensitive(alerts_json, "features");
 
   alerts_count = cJSON_GetArraySize(features_json);
-  struct alert* alerts_list = malloc(sizeof(struct alert) * alerts_count);
+  struct alert *alerts_list = malloc(alerts_count * sizeof *alerts_list);
   if (!alerts_list) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     exit(1);
   }
 
-  cJSON* feature_json = {0};
+  cJSON *feature_json = {0};
   int count = 0;
   cJSON_ArrayForEach(feature_json, features_json) {
-    cJSON* properties_json =
+    cJSON *properties_json =
         cJSON_GetObjectItemCaseSensitive(feature_json, "properties");
 
-    cJSON* headline_json =
+    cJSON *headline_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "headline");
     size_t headline_size = strlen(headline_json->valuestring);
     alerts_list[count].headline = malloc(headline_size + 1);
@@ -90,7 +90,7 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
 
     strcpy(alerts_list[count].headline, headline_json->valuestring);
 
-    cJSON* description_json =
+    cJSON *description_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "description");
     size_t description_size = strlen(description_json->valuestring);
     alerts_list[count].description = malloc(description_size + 1);
@@ -100,7 +100,7 @@ struct alert* init_alerts(char station_id[restrict static 1]) {
     }
     strcpy(alerts_list[count].description, description_json->valuestring);
 
-    cJSON* instruction_json =
+    cJSON *instruction_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "instruction");
     if (instruction_json->valuestring != NULL) {
       size_t instruction_size = strlen(instruction_json->valuestring);

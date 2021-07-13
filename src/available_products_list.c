@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Sat Apr 24 10:13:03 CDT 2021
+ * Last Modified: Tue Jul 13 11:03:34 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -36,7 +36,7 @@
 #include "third_party/cJSON.h"
 
 bool print_available_products(char station_id[restrict static 1]) {
-  struct product_id* product_list = init_available_products(station_id);
+  struct product_id *product_list = init_available_products(station_id);
 
   printf("%s %s:\n\n", "Forecast Office Products Available for", station_id);
   puts("Code  Description");
@@ -54,7 +54,8 @@ bool print_available_products(char station_id[restrict static 1]) {
 }
 
 bool print_available_products_json(char station_id[restrict static 1]) {
-  char* available_product_list_url = malloc(60);
+  char *available_product_list_url =
+      malloc(60 * sizeof *available_product_list_url);
   if (!available_product_list_url) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     return false;
@@ -62,8 +63,8 @@ bool print_available_products_json(char station_id[restrict static 1]) {
 
   construct_available_product_list_url(station_id, &available_product_list_url);
 
-  cJSON* available_product_list_json = json_init(available_product_list_url);
-  char* output = cJSON_Print(available_product_list_json);
+  cJSON *available_product_list_json = json_init(available_product_list_url);
+  char *output = cJSON_Print(available_product_list_json);
   puts(output);
 
   free(available_product_list_url);

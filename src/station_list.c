@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Sat Apr 24 10:14:39 CDT 2021
+ * Last Modified: Tue Jul 13 11:40:55 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -37,7 +37,7 @@
 #include "third_party/cJSON.h"
 
 bool print_stations(char lat_long[static 1]) {
-  struct station* station_list = init_station_list(lat_long);
+  struct station *station_list = init_station_list(lat_long);
 
   printf("%s%s\n\n", "Available Weather Stations for ", lat_long);
   puts("ID    Location");
@@ -60,10 +60,10 @@ bool print_stations_json(char lat_long[static 1]) {
     return false;
   }
 
-  char* stations_url = points.observation_stations_url;
+  char *stations_url = points.observation_stations_url;
 
-  cJSON* stations_json = json_init(stations_url);
-  char* output = cJSON_Print(stations_json);
+  cJSON *stations_json = json_init(stations_url);
+  char *output = cJSON_Print(stations_json);
   puts(output);
 
   free(points.forecast_url);

@@ -5,7 +5,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 12:16:58 CST 2020
+ * Last Modified: Tue Jul 13 11:21:36 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -34,15 +34,15 @@
 typedef struct memory_struct memory_struct;
 
 struct memory_struct {
-  char* memory;
+  char *memory;
   size_t size;
 };
 
-static size_t write_memory_callback(void* contents, size_t size, size_t nmemb,
-                                    void* userp);
+static size_t write_memory_callback(void *contents, size_t size, size_t nmemb,
+                                    void *userp);
 
-cJSON* json_init(char const url[restrict static 1]) {
-  cJSON* json = {0};
+cJSON *json_init(char const url[restrict static 1]) {
+  cJSON *json = {0};
 
   struct memory_struct chunk;
   chunk.memory = malloc(1);
@@ -53,7 +53,7 @@ cJSON* json_init(char const url[restrict static 1]) {
   chunk.size = 0;
 
   curl_global_init(CURL_GLOBAL_ALL);
-  CURL* curl_handle = curl_easy_init();
+  CURL *curl_handle = curl_easy_init();
 
   if (curl_handle) {
     CURLcode url_code = curl_easy_setopt(curl_handle, CURLOPT_URL, url);
@@ -84,7 +84,7 @@ cJSON* json_init(char const url[restrict static 1]) {
       exit(1);
     }
     CURLcode wd_code =
-        curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)&chunk);
+        curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
     if (wd_code != CURLE_OK) {
       fprintf(stderr, "Request Error: %s\n", curl_easy_strerror(wd_code));
       curl_easy_cleanup(curl_handle);
@@ -111,12 +111,12 @@ cJSON* json_init(char const url[restrict static 1]) {
   return json;
 }
 
-static size_t write_memory_callback(void* contents, size_t size, size_t nmemb,
-                                    void* userp) {
+static size_t write_memory_callback(void *contents, size_t size, size_t nmemb,
+                                    void *userp) {
   size_t realsize = size * nmemb;
-  struct memory_struct* mem = (struct memory_struct*)userp;
+  struct memory_struct *mem = (struct memory_struct *)userp;
 
-  char* ptr = realloc(mem->memory, mem->size + realsize + 1);
+  char *ptr = realloc(mem->memory, mem->size + realsize + 1);
   if (ptr == NULL) {
     /* out of memory! */
     printf("not enough memory (realloc returned NULL)\n");

@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 12:04:52 CST 2020
+ * Last Modified: Tue Jul 13 11:11:36 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -44,8 +44,7 @@ bool print_conditions(char station_id[restrict static 1]) {
     return false;
   }
 
-  struct current_conditions* current =
-      malloc(sizeof(struct current_conditions));
+  struct current_conditions *current = malloc(sizeof *current);
   if (!current) {
     fprintf(stderr, "Fatal Error: No available memory.\n");
     return false;
@@ -58,9 +57,9 @@ bool print_conditions(char station_id[restrict static 1]) {
 
   printf("Current conditions at %s (%s)\n", sinfo.name, station_id);
 
-  char* dms_latitude = dd_to_dms(sinfo.latitude);
+  char *dms_latitude = dd_to_dms(sinfo.latitude);
   char latdir = lat_dir(sinfo.latitude);
-  char* dms_longitude = dd_to_dms(sinfo.longitude);
+  char *dms_longitude = dd_to_dms(sinfo.longitude);
   char lngdir = lng_dir(sinfo.longitude);
   printf("%s %c, %s %c\n", dms_latitude, latdir, dms_longitude, lngdir);
 
@@ -101,7 +100,7 @@ bool print_conditions(char station_id[restrict static 1]) {
 }
 
 bool print_conditions_json(char station_id[restrict static 1]) {
-  char* conditions_url = malloc(60);
+  char *conditions_url = malloc(60 * sizeof *conditions_url);
   if (!conditions_url) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     return false;
@@ -110,8 +109,8 @@ bool print_conditions_json(char station_id[restrict static 1]) {
     fprintf(stderr, "Error: %s\n", "Unable to construct conditions URL.");
     return false;
   }
-  cJSON* conditions_json = json_init(conditions_url);
-  char* output = cJSON_Print(conditions_json);
+  cJSON *conditions_json = json_init(conditions_url);
+  char *output = cJSON_Print(conditions_json);
   puts(output);
   cJSON_Delete(conditions_json);
 

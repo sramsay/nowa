@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Sun Jan 24 12:25:02 CST 2021
+ * Last Modified: Tue Jul 13 11:43:50 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -46,8 +46,8 @@ double ctemp(const double raw_temp) {
   return c_temp;
 }
 
-char* dd_to_dms(const double coordinate) {
-  char* dms = malloc(15 * sizeof(char));
+char *dd_to_dms(const double coordinate) {
+  char *dms = malloc(15 * sizeof *dms);
   if (!dms) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     exit(1);
@@ -96,7 +96,7 @@ char lng_dir(double longitude) {
 }
 
 int convert_iso8601(const char date_string[restrict static 1],
-                    struct tm* date_data) {
+                    struct tm *date_data) {
   int year;
   int month;
   int day;
@@ -120,8 +120,8 @@ int convert_iso8601(const char date_string[restrict static 1],
   return 0;
 }
 
-const char* bearing_to_compass_dir(int bearing) {
-  char* direction = {0};
+const char *bearing_to_compass_dir(int bearing) {
+  char *direction = {0};
   if ((bearing >= 349 && bearing <= 360) || (bearing >= 0 && bearing <= 11)) {
     direction = "N";
   } else if (bearing >= 12 && bearing <= 33) {
@@ -161,8 +161,8 @@ const char* bearing_to_compass_dir(int bearing) {
 // Categories from Lin, Tzu Ping.  "Thermal Perception, Adaptation and
 // Attendance in a Public Square in Hot and Humid Regions."  *Building and
 // Environment*  44.10 (2009): 2017-2026
-const char* comfort_scale(double dewpoint) {
-  char* comfort = {0};
+const char *comfort_scale(double dewpoint) {
+  char *comfort = {0};
   if (dewpoint < 50.0) {
     comfort = "dry";
   } else if (dewpoint >= 50.0 && dewpoint < 55.0) {
@@ -190,8 +190,8 @@ double pa_to_mb(int pascals) {
   return pressure;
 }
 
-char* latlong_string(double latitude, double longitude) {
-  char* lat_long = malloc(25 * sizeof(char));
+char *latlong_string(double latitude, double longitude) {
+  char *lat_long = malloc(25 * sizeof *lat_long);
   if (!lat_long) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     exit(1);

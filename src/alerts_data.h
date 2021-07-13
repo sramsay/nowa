@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 11:22:23 CST 2020
+ * Last Modified: Tue Jul 13 10:51:54 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -33,12 +33,12 @@
 typedef struct alert alert;
 
 struct alert {
-  char* headline;
-  char* description;
-  char* instruction;
+  char *headline;
+  char *description;
+  char *instruction;
 };
 
-struct alert* init_alerts(char zone_id[restrict static 1]);
+struct alert *init_alerts(char zone_id[restrict static 1]);
 
 extern size_t alerts_count;
 

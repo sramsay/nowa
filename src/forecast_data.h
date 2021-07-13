@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Sat Apr 24 10:16:06 CDT 2021
+ * Last Modified: Tue Jul 13 11:19:21 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -34,11 +34,11 @@
 typedef struct forecast_day forecast_day;
 
 struct forecast {
-  char* name;
-  char* detailed_forecast;
+  char *name;
+  char *detailed_forecast;
 };
 
-bool init_forecast(char lat_long[restrict static 1], struct tm* last_updated,
+bool init_forecast(char lat_long[restrict static 1], struct tm *last_updated,
                    struct forecast forecasts[static 14]);
 
 #endif

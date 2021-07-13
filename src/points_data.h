@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 12:33:43 CST 2020
+ * Last Modified: Tue Jul 13 11:28:24 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -34,19 +34,19 @@ typedef struct points_info points_info;
 
 struct points_info {
   char cwa[4];  // The forecast office
-  char* forecast_url;
-  char* forecast_hourly_url;
-  char* forecast_grid_data_url;
-  char* observation_stations_url;
-  char* forecast_zone_url;
-  char* county_url;
-  char* fire_weather_zone_url;
-  char* radar_station;
+  char *forecast_url;
+  char *forecast_hourly_url;
+  char *forecast_grid_data_url;
+  char *observation_stations_url;
+  char *forecast_zone_url;
+  char *county_url;
+  char *fire_weather_zone_url;
+  char *radar_station;
 };
 // This JSON also includes bearing and distance (from what, exactly? the
 // forecast office?) and timezone.
 
-bool init_points(char lat_long[restrict static 1], struct points_info* points);
-void cleanup_points(struct points_info* points);
+bool init_points(char lat_long[restrict static 1], struct points_info *points);
+void cleanup_points(struct points_info *points);
 
 #endif

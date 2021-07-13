@@ -8,7 +8,7 @@
  * This file is part of nowa.  It contains the main and usage functions, and
  * processes command-line options.
  *
- * Last Modified: Mon Dec 21 11:14:10 CST 2020
+ * Last Modified: Tue Jul 13 10:41:14 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -43,7 +43,7 @@
 
 static void print_usage(void);
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   if (argc == 1) {
     print_usage();
     return EXIT_SUCCESS;
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
 
   int option_index = 0;
 
-  extern char* optarg;
+  extern char *optarg;
   bool station = false;
   bool usage = false;
   bool version = false;
@@ -78,9 +78,9 @@ int main(int argc, char* argv[]) {
   bool product = false;
   bool list_products = false;
 
-  char* station_id = malloc(5);
-  char* lat_long = malloc(42);
-  char* code = malloc(4);
+  char *station_id = malloc(5);
+  char *lat_long = malloc(42);
+  char *code = malloc(4);
 
   for (;;) {
     int opt =

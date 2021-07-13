@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 12:34:07 CST 2020
+ * Last Modified: Tue Jul 13 11:55:02 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -33,11 +33,11 @@
 typedef struct zoneinfo zoneinfo;
 
 struct zoneinfo {
-  char* id;
-  char* name;
-  char* state;
+  char *id;
+  char *name;
+  char *state;
 };
 
-bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo* zone);
+bool init_zoneinfo(char station_id[restrict static 1], struct zoneinfo *zone);
 
 #endif

@@ -1,3 +1,30 @@
+/*
+ * forecast_data.c
+ *
+ * This file is part of nowa. It parses the incoming JSON into structs for
+ * available NWS products.
+ *
+ * Written and maintained by Stephen Ramsay (sramsay on GitHub)
+ *
+ * Last Modified: Tue Jul 13 11:06:11 CDT 2021
+ *
+ * Copyright © 2020-2021 Stephen Ramsay
+ *
+ * nowa is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3, or (at your option) any
+ * later version.
+ *
+ * nowa is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with nowa; see the file COPYING.  If not see
+ * <http://www.gnu.org/licenses/>.
+ */
+
 #include "forecast_data.h"
 
 #include <stdio.h>
@@ -11,7 +38,7 @@
 #include "third_party/cJSON.h"
 #include "utils.h"
 
-bool init_forecast(char station_id[restrict static 1], struct tm* last_updated,
+bool init_forecast(char station_id[restrict static 1], struct tm *last_updated,
                    struct forecast forecasts[static 14]) {
   struct station_info sinfo = {0};
   if (!init_station(station_id, &sinfo)) {
@@ -28,39 +55,39 @@ bool init_forecast(char station_id[restrict static 1], struct tm* last_updated,
     return false;
   }
 
-  char* forecast_url = points.forecast_url;
+  char *forecast_url = points.forecast_url;
 
-  cJSON* forecast_json = json_init(forecast_url);
+  cJSON *forecast_json = json_init(forecast_url);
 
   // Error code
-  cJSON* status_json =
+  cJSON *status_json =
       cJSON_GetObjectItemCaseSensitive(forecast_json, "status");
   if (status_json) {
-    cJSON* details_json =
+    cJSON *details_json =
         cJSON_GetObjectItemCaseSensitive(forecast_json, "detail");
     printf("%s\n", details_json->valuestring);
     return false;
   }
 
-  cJSON* properties_json =
+  cJSON *properties_json =
       cJSON_GetObjectItemCaseSensitive(forecast_json, "properties");
-  cJSON* updated_json =
+  cJSON *updated_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "updated");
 
   size_t timestamp_size = strlen(updated_json->valuestring);
-  char* timestamp = malloc(timestamp_size + 1);
+  char *timestamp = malloc(timestamp_size + 1);
   strcpy(timestamp, updated_json->valuestring);
 
   convert_iso8601(timestamp, last_updated);
 
-  cJSON* periods_json =
+  cJSON *periods_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "periods");
 
-  cJSON* period_json = {0};
+  cJSON *period_json = {0};
   int count = 0;
   if (periods_json) {
     cJSON_ArrayForEach(period_json, periods_json) {
-      cJSON* name_json = cJSON_GetObjectItemCaseSensitive(period_json, "name");
+      cJSON *name_json = cJSON_GetObjectItemCaseSensitive(period_json, "name");
       size_t name_size = strlen(name_json->valuestring);
       forecasts[count].name = malloc(name_size + 1);
       if (!forecasts[count].name) {
@@ -69,7 +96,7 @@ bool init_forecast(char station_id[restrict static 1], struct tm* last_updated,
         return false;
       }
       strcpy(forecasts[count].name, name_json->valuestring);
-      cJSON* detailed_forecast_json =
+      cJSON *detailed_forecast_json =
           cJSON_GetObjectItemCaseSensitive(period_json, "detailedForecast");
       size_t detailed_forecast_size =
           strlen(detailed_forecast_json->valuestring);
