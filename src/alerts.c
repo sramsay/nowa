@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 11:19:31 CST 2020
+ * Last Modified: Tue Jul 13 10:52:02 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -37,7 +37,7 @@
 #include "zoneinfo_data.h"
 
 bool print_alerts(char station_id[restrict static 1]) {
-  struct alert* alerts = init_alerts(station_id);
+  struct alert *alerts = init_alerts(station_id);
 
   if (alerts_count == 0) {
     puts("No active alerts.");
@@ -67,7 +67,7 @@ bool print_alerts_json(char station_id[restrict static 1]) {
     return false;
   }
 
-  char* alerts_url = malloc(50 * sizeof(char));
+  char *alerts_url = malloc(50 * sizeof *alerts_url);
   if (alerts_url) {
     sprintf(alerts_url, "%s%s", "https://api.weather.gov/alerts/active/zone/",
             zinfo.id);
@@ -76,8 +76,8 @@ bool print_alerts_json(char station_id[restrict static 1]) {
     return false;
   }
 
-  cJSON* alerts_json = json_init(alerts_url);
-  char* output = cJSON_Print(alerts_json);
+  cJSON *alerts_json = json_init(alerts_url);
+  char *output = cJSON_Print(alerts_json);
   puts(output);
   free(zinfo.id);
   free(zinfo.name);

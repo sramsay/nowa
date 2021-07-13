@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 12:22:22 CST 2020
+ * Last Modified: Tue Jul 13 11:38:43 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -36,16 +36,16 @@ struct station_info {
   double latitude;
   double longitude;
   double elevation;  // meters
-  char* name;
-  char* timezone;
-  char* forecast_url;
-  char* county_url;
-  char* fire_weather_zone_url;
+  char *name;
+  char *timezone;
+  char *forecast_url;
+  char *county_url;
+  char *fire_weather_zone_url;
 };
 
 bool init_station(char station_id[restrict static 1],
-                  struct station_info* info);
+                  struct station_info *info);
 
-void cleanup_station_info(struct station_info* sinfo);
+void cleanup_station_info(struct station_info *sinfo);
 
 #endif

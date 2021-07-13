@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Mon Dec 21 12:07:35 CST 2020
+ * Last Modified: Tue Jul 13 11:35:09 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -35,8 +35,8 @@
 #include "product_data.h"
 #include "third_party/cJSON.h"
 
-bool print_product(char station_id[restrict static 1], char* product_code) {
-  struct product* pd = malloc(sizeof(struct product));
+bool print_product(char station_id[restrict static 1], char *product_code) {
+  struct product *pd = malloc(sizeof *pd);
   if (!pd) {
     fprintf(stderr, "Fatal Error: No available memory.\n");
     return false;
@@ -57,8 +57,8 @@ bool print_product(char station_id[restrict static 1], char* product_code) {
 }
 
 bool print_product_json(char station_id[restrict static 1],
-                        char* product_code) {
-  char* product_list_url = malloc(60);
+                        char *product_code) {
+  char *product_list_url = malloc(60 * sizeof *product_list_url);
 
   if (!product_list_url) {
     fprintf(stderr, "Fatal Error: No available memory\n");
@@ -72,8 +72,8 @@ bool print_product_json(char station_id[restrict static 1],
     free(product_list_url);
     return false;
   }
-  cJSON* product_json = json_init(product_list_url);
-  char* output = cJSON_Print(product_json);
+  cJSON *product_json = json_init(product_list_url);
+  char *output = cJSON_Print(product_json);
   puts(output);
   cJSON_Delete(product_json);
 

@@ -50,17 +50,17 @@ struct current_conditions {
   double relative_humidity;
   double wind_chill;
   double heat_index;
-  char* summary;
-  char* timestamp;
-  char* metar;
+  char *summary;
+  char *timestamp;
+  char *metar;
 };
 
 // Also includes cloudLayers, though it's not clear if this is useful.
 
 bool init_conditions(char station_id[restrict static 1],
-                     struct current_conditions* current);
+                     struct current_conditions *current);
 bool construct_conditions_url(char station_id[restrict static 1],
-                              char* conditions_url[static 1]);
-void cleanup_conditions(struct current_conditions* current);
+                              char *conditions_url[static 1]);
+void cleanup_conditions(struct current_conditions *current);
 
 #endif

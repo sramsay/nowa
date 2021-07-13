@@ -1,3 +1,30 @@
+/*
+ * product_data.c
+ *
+ * This file is part of nowa. It parses the incoming JSON into structs for
+ * NWS product data.
+ *
+ * Written and maintained by Stephen Ramsay (sramsay on GitHub)
+ *
+ * Last Modified: Tue Jul 13 11:06:11 CDT 2021
+ *
+ * Copyright © 2020-2021 Stephen Ramsay
+ *
+ * nowa is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3, or (at your option) any
+ * later version.
+ *
+ * nowa is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with nowa; see the file COPYING.  If not see
+ * <http://www.gnu.org/licenses/>.
+ */
+
 #include "product_data.h"
 
 #include <stdbool.h>
@@ -12,13 +39,13 @@
 #include "third_party/cJSON.h"
 #include "utils.h"
 
-void cleanup_product_list(product_id* pl);
+void cleanup_product_list(product_id *pl);
 
-bool init_product(char station_id[restrict static 1], struct product* pd,
-                  char* product_code) {
+bool init_product(char station_id[restrict static 1], struct product *pd,
+                  char *product_code) {
   // First, check to make sure the requested product exists for the given
   // station
-  struct product_id* product_list = init_available_products(station_id);
+  struct product_id *product_list = init_available_products(station_id);
 
   bool contains_code = false;
   for (size_t i = 0; i < product_count; i++) {
@@ -28,7 +55,7 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
   }
 
   if (contains_code) {
-    char* product_list_url = malloc(60);
+    char *product_list_url = malloc(60 * sizeof *product_list_url);
     if (!product_list_url) {
       fprintf(stderr, "Fatal Error: No available memory\n");
       cleanup_product_list(product_list);
@@ -36,15 +63,15 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
     }
     construct_product_list_url(station_id, &product_list_url, product_code);
 
-    cJSON* product_list_json = json_init(product_list_url);
+    cJSON *product_list_json = json_init(product_list_url);
 
-    cJSON* graph_json =
+    cJSON *graph_json =
         cJSON_GetObjectItemCaseSensitive(product_list_json, "@graph");
 
     // Error code
-    cJSON* status_json = cJSON_GetObjectItemCaseSensitive(graph_json, "status");
+    cJSON *status_json = cJSON_GetObjectItemCaseSensitive(graph_json, "status");
     if (status_json) {
-      cJSON* details_json =
+      cJSON *details_json =
           cJSON_GetObjectItemCaseSensitive(graph_json, "detail");
       printf("%s\n", details_json->valuestring);
       cleanup_product_list(product_list);
@@ -52,11 +79,11 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
       return false;
     }
 
-    cJSON* graph_item_json = cJSON_GetArrayItem(graph_json, 0);
-    cJSON* graph_url = cJSON_GetObjectItemCaseSensitive(graph_item_json, "@id");
-    cJSON* product_json = json_init(graph_url->valuestring);
+    cJSON *graph_item_json = cJSON_GetArrayItem(graph_json, 0);
+    cJSON *graph_url = cJSON_GetObjectItemCaseSensitive(graph_item_json, "@id");
+    cJSON *product_json = json_init(graph_url->valuestring);
 
-    cJSON* product_code_json =
+    cJSON *product_code_json =
         cJSON_GetObjectItemCaseSensitive(product_json, "productName");
     size_t product_code_size = strlen(product_code_json->valuestring);
     pd->product_code = malloc(product_code_size + 1);
@@ -67,7 +94,7 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
       return false;
     }
     strcpy(pd->product_code, product_code_json->valuestring);
-    cJSON* product_text_json =
+    cJSON *product_text_json =
         cJSON_GetObjectItemCaseSensitive(product_json, "productText");
     size_t product_text_size = strlen(product_text_json->valuestring);
     pd->product_text = malloc(product_text_size + 1);
@@ -94,14 +121,14 @@ bool init_product(char station_id[restrict static 1], struct product* pd,
 }
 
 bool construct_product_list_url(char station_id[restrict static 1],
-                                char* product_list_url[], char* product_code) {
+                                char *product_list_url[], char *product_code) {
   struct station_info sinfo = {0};
   if (!init_station(station_id, &sinfo)) {
     fprintf(stderr, "Error: %s", "Unable to retrieve station info.\n");
     return false;
   }
 
-  char* lat_long = latlong_string(sinfo.latitude, sinfo.longitude);
+  char *lat_long = latlong_string(sinfo.latitude, sinfo.longitude);
 
   struct points_info points = {0};
   if (!init_points(lat_long, &points)) {
@@ -121,13 +148,13 @@ bool construct_product_list_url(char station_id[restrict static 1],
   return true;
 }
 
-void cleanup_product(struct product* pd) {
+void cleanup_product(struct product *pd) {
   free(pd->product_code);
   free(pd->product_text);
   free(pd);
 }
 
-void cleanup_product_list(product_id* pl) {
+void cleanup_product_list(product_id *pl) {
   for (size_t i = 0; i < product_count; i++) {
     free(pl[i].product_code);
     free(pl[i].product_name);

@@ -5,7 +5,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Wed Jun 02 14:59:44 CDT 2021
+ * Last Modified: Tue Jul 13 11:53:45 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -31,17 +31,17 @@
 
 double ftemp(double raw_temp);
 double ctemp(double raw_temp);
-char* dd_to_dms(const double coordinate);
+char *dd_to_dms(const double coordinate);
 double mps_to_mph(double mps);
 double kph_to_mph(double kph);
 double m_to_mi(double m);
 char lat_dir(double latitude);
 char lng_dir(double longitude);
 int convert_iso8601(const char date_string[restrict static 1],
-                    struct tm* date_data);
-const char* bearing_to_compass_dir(int bearing);
-char* comfort_scale(double dewpoint);
+                    struct tm *date_data);
+const char *bearing_to_compass_dir(int bearing);
+char *comfort_scale(double dewpoint);
 double pa_to_mb(int pascals);
-char* latlong_string(double latitude, double longitude);
+char *latlong_string(double latitude, double longitude);
 
 #endif

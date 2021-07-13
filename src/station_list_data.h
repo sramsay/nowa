@@ -6,7 +6,7 @@
  *
  * Written and maintained by Stephen Ramsay (sramsay on GitHub)
  *
- * Last Modified: Wed Jun 02 14:59:31 CDT 2021
+ * Last Modified: Tue Jul 13 11:42:55 CDT 2021
  *
  * Copyright © 2020-2021 Stephen Ramsay
  *
@@ -33,11 +33,11 @@
 typedef struct station station;
 
 struct station {
-  char* station_id;
-  char* name;
+  char *station_id;
+  char *name;
 };
 
-struct station* init_station_list(char lat_long[restrict static 1]);
+struct station *init_station_list(char lat_long[restrict static 1]);
 
 extern size_t station_count;
 

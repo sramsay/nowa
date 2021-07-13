@@ -1,3 +1,30 @@
+/*
+ * station_list_data.c
+ *
+ * This file is part of nowa. It parses the incoming JSON into structs for
+ * station lists
+ *
+ * Written and maintained by Stephen Ramsay (sramsay on GitHub)
+ *
+ * Last Modified: Tue Jul 13 11:42:27 CDT 2021
+ *
+ * Copyright © 2020-2021 Stephen Ramsay
+ *
+ * nowa is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3, or (at your option) any
+ * later version.
+ *
+ * nowa is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with nowa; see the file COPYING.  If not see
+ * <http://www.gnu.org/licenses/>.
+ */
+
 #include "station_list_data.h"
 
 #include <stdio.h>
@@ -25,7 +52,7 @@ struct station* init_station_list(char lat_long[restrict static 1]) {
       cJSON_GetObjectItemCaseSensitive(stations_json, "features");
 
   station_count = cJSON_GetArraySize(features_json);
-  struct station* station_list = malloc(sizeof(struct station) * station_count);
+  struct station *station_list = malloc(station_count * sizeof *station_list);
   if (!station_list) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     exit(1);
