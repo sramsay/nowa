@@ -22,7 +22,7 @@ Version 0.18.10
 Quickstart
 ----------
 
-[See notes on building and installing `nowa` below]
+\[See notes on building and installing `nowa` below\]
 
 First, figure out the coordinates of the place for which you'd like to see weather information (there are lots of tools on the web for doing this).  Once you have this, you can ask `nowa` to list nearby weather stations:
 
