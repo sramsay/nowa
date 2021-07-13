@@ -13,7 +13,7 @@
 nowa
 =============
 
-Version 0.18.9
+Version 0.18.10
 
 `nowa` is a small, fast command-line application that retrieves weather data from the United States [National Weather Service](https://www.weather.gov/).
 
