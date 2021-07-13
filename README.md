@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/sramsay/nowa.svg?branch=master)](https://travis-ci.org/sramsay/nowa)
 [![Build Status](https://circleci.com/gh/sramsay/nowa.svg?style=svg)](https://app.circleci.com/github/sramsay/nowa/pipelines?branch=master)
 [![Coverity Scan Build Status](https://img.shields.io/coverity/scan/20749.svg)](https://scan.coverity.com/projects/sramsay-nowa)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fafa33d720a84726838a83c60be1e183)](https://app.codacy.com/manual/sramsay/nowa?utm_source=github.com&utm_medium=referral&utm_content=sramsay/nowa&utm_campaign=Badge_Grade_Settings)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/91e2c3bb854e4e58b53c25c6d8b8ae06)](https://www.codacy.com/gh/sramsay/nowa/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sramsay/nowa&amp;utm_campaign=Badge_Grade)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/sramsay/nowa.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/sramsay/nowa/alerts/)
 [![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/sramsay/nowa.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/sramsay/nowa/context:cpp)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4487/badge)](https://bestpractices.coreinfrastructure.org/projects/4487)
