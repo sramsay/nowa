@@ -92,7 +92,7 @@ struct alert *init_alerts(char station_id[restrict static 1]) {
 
     cJSON *description_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "description");
-    size_t description_size = strlen(description_json->valuestring);
+    size_t description_size = strlen(description_json->valuestring) + 1;
     alerts_list[count].description = malloc(description_size + 1);
     if (!alerts_list[count].description) {
       fprintf(stderr, "Fatal Error: No available memory\n");
