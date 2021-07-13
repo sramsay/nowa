@@ -52,10 +52,14 @@ bool print_alerts(char station_id[restrict static 1]) {
       free(alerts[i].headline);
       free(alerts[i].description);
       free(alerts[i].instruction);
+			alerts[i].headline = NULL;
+			alerts[i].description = NULL;
+      alerts[i].instruction = NULL;
     }
   }
 
   free(alerts);
+	alerts = NULL;
 
   return true;
 }
@@ -83,8 +87,14 @@ bool print_alerts_json(char station_id[restrict static 1]) {
   free(zinfo.name);
   free(zinfo.state);
   free(alerts_url);
+	zinfo.id = NULL;
+	zinfo.name = NULL;
+	zinfo.state = NULL;
+
   cJSON_Delete(alerts_json);
+	
   free(output);
+	output = NULL;
 
   return true;
 }

@@ -120,7 +120,13 @@ struct alert *init_alerts(char station_id[restrict static 1]) {
   free(zinfo.id);
   free(zinfo.name);
   free(zinfo.state);
+	zinfo.id = NULL;
+	zinfo.name = NULL;
+	zinfo.state = NULL;
+
   free(alerts_url);
+	alerts_url = NULL;
+
   cJSON_Delete(alerts_json);
 
   return alerts_list;

@@ -95,6 +95,9 @@ bool print_conditions(char station_id[restrict static 1]) {
   free(current);
   free(dms_latitude);
   free(dms_longitude);
+	current = NULL;
+	dms_latitude = NULL;
+	dms_longitude = NULL;
 
   return true;
 }
@@ -116,6 +119,8 @@ bool print_conditions_json(char station_id[restrict static 1]) {
 
   free(output);
   free(conditions_url);
+	output = NULL;
+	conditions_url = NULL;
 
   return true;
 }
