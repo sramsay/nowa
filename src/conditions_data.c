@@ -25,6 +25,7 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#define _GNU_SOURCE
 #include "conditions_data.h"
 
 #include <stdbool.h>
@@ -188,33 +189,29 @@ bool init_conditions(char station_id[restrict static 1],
   // Timestamp
   cJSON *timestamp_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "timestamp");
-  //size_t timestamp_size = strlen(timestamp_json->valuestring);
-  current->timestamp = malloc(sizeof timestamp_json->valuestring);
-  if (!current->timestamp) {
+  if (!asprintf(&current->timestamp, "%s", timestamp_json->valuestring)) {
     fprintf(stderr, "Fatal Error: No available memory\n");
     free(conditions_url);
     return false;
   }
-  strcpy(current->timestamp, timestamp_json->valuestring);
 
   // METAR
   cJSON *metar_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "rawMessage");
-  //size_t metar_size = strlen(metar_json->valuestring);
-  current->metar = malloc(sizeof metar_json->valuestring);
-  strcpy(current->metar, metar_json->valuestring);
+  if (!asprintf(&current->metar, "%s", metar_json->valuestring)) {
+    fprintf(stderr, "Fatal Error: No available memory\n");
+    free(conditions_url);
+    return false;
+  }
 
   // Summary
   cJSON *text_description_json =
       cJSON_GetObjectItemCaseSensitive(properties_json, "textDescription");
-  //size_t summary_size = strlen(text_description_json->valuestring);
-  current->summary = malloc(sizeof text_description_json->valuestring);
-  if (!current->summary) {
+  if (!asprintf(&current->summary, "%s", text_description_json->valuestring)) {
     fprintf(stderr, "Fatal Error: No available memory.\n");
     free(conditions_url);
     return false;
   }
-  strcpy(current->summary, text_description_json->valuestring);
 
   free(conditions_url);
   cJSON_Delete(conditions_json);
