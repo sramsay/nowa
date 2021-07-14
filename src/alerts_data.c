@@ -25,6 +25,7 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#define _GNU_SOURCE
 #include "alerts_data.h"
 
 #include <stdio.h>
@@ -81,35 +82,25 @@ struct alert *init_alerts(char station_id[restrict static 1]) {
 
     cJSON *headline_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "headline");
-    size_t headline_size = strlen(headline_json->valuestring) + 1;
-		alerts_list[count].headline = malloc(headline_size);
-    if (!alerts_list[count].headline) {
+    if (!asprintf(&alerts_list[count].headline, "%s", headline_json->valuestring)) {
       fprintf(stderr, "Fatal Error: No available memory\n");
       exit(1);
     }
-
-    strcpy(alerts_list[count].headline, headline_json->valuestring);
 
     cJSON *description_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "description");
-    size_t description_size = strlen(description_json->valuestring) + 1;
-    alerts_list[count].description = malloc(description_size);
-    if (!alerts_list[count].description) {
+    if (!asprintf(&alerts_list[count].description, "%s", description_json->valuestring)) {
       fprintf(stderr, "Fatal Error: No available memory\n");
       exit(1);
     }
-    strcpy(alerts_list[count].description, description_json->valuestring);
 
     cJSON *instruction_json =
         cJSON_GetObjectItemCaseSensitive(properties_json, "instruction");
     if (instruction_json->valuestring != NULL) {
-      size_t instruction_size = strlen(instruction_json->valuestring) + 1;
-      alerts_list[count].instruction = malloc(instruction_size);
-      if (!alerts_list[count].instruction) {
+      if (!asprintf(&alerts_list[count].instruction, "%s", instruction_json->valuestring)) {
         fprintf(stderr, "Fatal Error: No available memory\n");
         exit(1);
       }
-      strcpy(alerts_list[count].instruction, instruction_json->valuestring);
     } else {
       alerts_list[count].instruction = NULL;
     }
